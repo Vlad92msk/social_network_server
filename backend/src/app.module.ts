@@ -1,18 +1,18 @@
-import {Module} from '@nestjs/common'
-import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
-import {ConfigModule, ConfigService} from '@nestjs/config'
-import {TypeOrmModule} from '@nestjs/typeorm'
-import {GraphQLModule} from '@nestjs/graphql'
-import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core';
-import mainConfig from './config/main.config'
-import {AuthModule} from "./lib/auth/auth.module";
+import { Module } from '@nestjs/common';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import mainConfig from './config/main.config';
+import { AuthModule } from './lib/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [mainConfig],
       isGlobal: true,
-      envFilePath: '../.env'
+      envFilePath: '../.env',
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

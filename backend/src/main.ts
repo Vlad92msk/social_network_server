@@ -1,3 +1,6 @@
+if (!process.env.IS_TS_NODE) {
+	require('module-alias/register');
+}
 import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 import * as cookieParser from 'cookie-parser';
