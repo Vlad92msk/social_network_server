@@ -4,5 +4,5 @@
   "singleQuote": true,
   "bracketSpacing": false,
   "semi": false,
-  "quoteProps": "preserve"
+  "trailingComma": "es5"
 }
