@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserEntity } from '../../entities/user.entity'
 import { Repository } from 'typeorm'
+
+import { dbName } from '@db/db.providers';
+import { UserEntity } from '../../entities/user.entity'
 import { CreateUserInput } from '../../inputs/create-user.input'
 import { UpdateUserInput } from '../../inputs/update-user.input'
 
 @Injectable()
 export class UserService {
 	constructor(
-		@InjectRepository(UserEntity)
+		@InjectRepository(UserEntity, dbName.AUTH)
 		private readonly userRepository: Repository<UserEntity>,
 	) {
 	}
