@@ -1,9 +1,9 @@
-import { dbName } from '@db/db.providers'
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import {dbVariables} from '@utils/entity'
+import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, BaseEntity} from 'typeorm'
+import {Field, ID, ObjectType} from '@nestjs/graphql'
 
 @ObjectType()
-@Entity('users', { database: dbName.AUTH, schema: 'user' })
+@Entity(dbVariables('users'))
 export class UserEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -21,7 +21,7 @@ export class UserEntity {
   @Column()
   email: string
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field({nullable: true})
+  @Column({nullable: true})
   name: string
 }

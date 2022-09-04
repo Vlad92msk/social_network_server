@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
     this.usersService.updateUser(id, name, email).subscribe(user => {
       if (user) {
         this.change()
-        // this.router.navigate(['/users', user.id])
+        // this.router.navigate(['/users', users.id])
       }
     })
   }
