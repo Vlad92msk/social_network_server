@@ -5,7 +5,7 @@ import {NestFactory} from '@nestjs/core'
 import {ConfigService} from '@nestjs/config'
 import * as cookieParser from 'cookie-parser'
 import {config} from 'dotenv'
-import {AppModule} from './app.module'
+import {AppModule} from '@lib/app.module'
 
 config()
 

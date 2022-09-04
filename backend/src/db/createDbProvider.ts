@@ -1,11 +1,11 @@
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import {TypeOrmModuleAsyncOptions} from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface'
-import {DB_VIEW_TYPE} from '@db/db.providers'
+import {DB_MAP_TYPE} from '@db/db.map'
 
 /**
  * Фабрика для создания подключений
  */
-export const createDbProvider = ({dbName}: DB_VIEW_TYPE[0]): TypeOrmModuleAsyncOptions => ({
+export const createDbProvider = ({dbName}: DB_MAP_TYPE[0]): TypeOrmModuleAsyncOptions => ({
   imports: [ConfigModule],
   inject: [ConfigService],
   name: dbName,

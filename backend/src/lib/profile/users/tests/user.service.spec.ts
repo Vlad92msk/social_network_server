@@ -1,4 +1,4 @@
-import {UserService} from '@lib/auth/users/user.service'
+import {UserService} from '@lib/profile/users/user.service'
 import {Test, TestingModule} from '@nestjs/testing'
 
 describe('UserService', () => {
