@@ -2,37 +2,87 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateUserInput {
-  email: String!
-  name: String
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
 type Mutation {
-  createUser(createUser: CreateUserInput!): UserEntity!
   removeUser(id: Float!): Float!
-  updateUser(updateUser: UpdateUserInput!): UserEntity!
 }
 
 type Query {
-  getAllUsers: [UserEntity!]!
-  getOneUser(id: Float!): UserEntity!
+  getAllUsers: [RU_User!]!
+  getOneUser(id: Float!): RU_User!
 }
 
-input UpdateUserInput {
-  email: String
-  id: ID!
-  name: String
+"""Персональная информация (ru)"""
+type RU_Personal {
+  """Город"""
+  city: String!
+
+  """Страна"""
+  country: String!
+
+  """Гражданство"""
+  dateOfBirth: DateTime!
+
+  """Пол"""
+  gender: String!
+  id: Float!
+
+  """Фамилия"""
+  lastName: String!
+
+  """Имя"""
+  name: String!
+
+  """Гражданство"""
+  nationality: String!
+
+  """Отчество"""
+  patronymicName: String!
+  user: RU_User!
 }
 
-type UserEntity {
-  createdAt: DateTime!
-  email: String!
+"""Социальная информация (ru)"""
+type RU_Progress {
+  """Место работы"""
+  employment: String!
+
+  """Увлечения"""
+  hobbies: String!
+  id: Float!
+
+  """Место учебы"""
+  placeOfStudy: String!
+  user: RU_User!
+
+  """Владение языками"""
+  workingLanguages: String!
+}
+
+"""Социальная информация (ru)"""
+type RU_Social {
+  """Чаты"""
+  chats: String!
+
+  """Друзья"""
+  friends: String!
+  id: Float!
+
+  """Подписчики"""
+  subscribers: String!
+
+  """Подписки"""
+  subscription: String!
+  user: RU_User!
+}
+
+"""Пользователь (ru)"""
+type RU_User {
   id: ID!
-  name: String
-  updatedAt: DateTime!
+  personal: RU_Personal!
+  progress: RU_Progress!
+  social: RU_Social!
 }

@@ -2,7 +2,7 @@ import { InputType, Field } from '@nestjs/graphql'
 import { Connect, Personal, Progress, Social } from '../interfaces'
 
 @InputType()
-export class UpdateUserInput {
+export class FindUserInput {
   @Field({ nullable: true })
   id?: number
 

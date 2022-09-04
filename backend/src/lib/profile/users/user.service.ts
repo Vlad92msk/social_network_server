@@ -1,4 +1,4 @@
-import {UserEntity} from '@lib/profile/users/entities/user.entity'
+import {RU_User} from '@lib/profile/users/entities'
 import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
 import {UpdateUserInput} from '@lib/profile/users/inputs/update-user.input'
 import {Injectable} from '@nestjs/common'
@@ -10,19 +10,19 @@ import {db} from '@db/db.map'
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity, db.PROFILE)
-    private readonly userRepository: Repository<UserEntity>
+    @InjectRepository(RU_User, db.PROFILE)
+    private readonly userRepository: Repository<RU_User>
   ) {}
 
-  async createUser(createUserInput: CreateUserInput): Promise<UserEntity> {
-    return await this.userRepository.save({...createUserInput})
-  }
+  // async createUser(createUserInput: CreateUserInput): Promise<RU_User> {
+  //   return await this.userRepository.save({...createUserInput})
+  // }
 
-  async getOneUser(id: number): Promise<UserEntity> {
+  async getOneUser(id: number): Promise<RU_User> {
     return await this.userRepository.findOne({id})
   }
 
-  async getAllUsers(): Promise<UserEntity[]> {
+  async getAllUsers(): Promise<RU_User[]> {
     return await this.userRepository.find()
   }
 
@@ -31,8 +31,8 @@ export class UserService {
     return id
   }
 
-  async updateUser(updateUserInput: UpdateUserInput): Promise<UserEntity> {
-    await this.userRepository.update({id: updateUserInput.id}, {...updateUserInput})
-    return await this.getOneUser(updateUserInput.id)
-  }
+  // async updateUser(updateUserInput: UpdateUserInput): Promise<RU_User> {
+  //   await this.userRepository.update({id: updateUserInput.id}, {...updateUserInput})
+  //   return await this.getOneUser(updateUserInput.id)
+  // }
 }

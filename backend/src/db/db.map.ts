@@ -20,7 +20,7 @@ export const DB_MAP = [
   }, {
     dbName: db.PROFILE,
     schemas: [
-      {name: 'user', tables: ['users']},
+      {name: 'user', tables: ['ru_users', 'ru_social', 'ru_progress', 'ru_personal']},
     ] as const,
   },
 ]
