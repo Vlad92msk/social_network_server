@@ -17,7 +17,7 @@ export class RU_Personal extends BaseEntity implements PersonalType {
   name: string
 
   @Field({ description: 'Фамилия' })
-  @Column({ name: 'lastName', type: 'varchar', length: 20, })
+  @Column({ name: 'lastName', type: 'varchar', length: 20 })
   lastName: string
 
   @Field({ description: 'Отчество' })

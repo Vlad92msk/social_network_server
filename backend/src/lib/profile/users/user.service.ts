@@ -5,21 +5,21 @@ import {Injectable} from '@nestjs/common'
 import {InjectRepository} from '@nestjs/typeorm'
 import {Repository} from 'typeorm'
 
-import {db} from '@db/db.map'
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(RU_User, db.PROFILE)
-    private readonly userRepository: Repository<RU_User>
-  ) {}
+    @InjectRepository(RU_User)
+    private readonly userRepository: Repository<RU_User>,
+  ) {
+  }
 
   // async createUser(createUserInput: CreateUserInput): Promise<RU_User> {
   //   return await this.userRepository.save({...createUserInput})
   // }
 
   async getOneUser(id: number): Promise<RU_User> {
-    return await this.userRepository.findOne({id})
+    return await this.userRepository.findOne({where: {id}})
   }
 
   async getAllUsers(): Promise<RU_User[]> {

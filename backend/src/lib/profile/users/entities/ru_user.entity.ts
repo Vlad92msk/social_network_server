@@ -39,3 +39,9 @@ export class RU_User extends BaseEntity implements UserType {
   @JoinTable()
   progress: ProgressEntity
 }
+
+/**
+ * type: 'varchar' - Для строк до 65535 символов
+ * length: 30 - кол-во букв в строке (в т.ч пробелы)
+ * width: 4 - кол-во цифр в числе
+ */

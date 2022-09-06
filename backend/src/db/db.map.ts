@@ -1,24 +1,14 @@
 /**
- * Именя баз данных
- */
-export enum db {
-  CONNECT = 'connect',
-  PROFILE = 'profile',
-}
-
-/**
  * Карта базы данных
  */
 export const DB_MAP = [
   {
-    dbName: db.CONNECT,
     schemas: [
       {name: 'auth', tables: ['auth']},
       {name: 'roles', tables: ['roles']},
       {name: 'token', tables: ['tokens']},
     ] as const,
   }, {
-    dbName: db.PROFILE,
     schemas: [
       {name: 'user', tables: ['ru_users', 'ru_social', 'ru_progress', 'ru_personal']},
     ] as const,
