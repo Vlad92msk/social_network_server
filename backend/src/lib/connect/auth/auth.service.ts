@@ -1,14 +1,14 @@
+import {ConfigEnum} from '@config/config.enum'
+import {TokenService} from '@lib/connect/tokens/token.service'
+import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
+import {StatusEnum, UserType} from '@lib/profile/users/interfaces'
+import {UserService} from '@lib/profile/users/user.service'
 import {Injectable} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {GraphQLError} from 'graphql'
+import {addDays} from 'date-fns'
 import * as bcrypt from 'bcrypt'
-import * as moment from 'moment'
 
-import {UserType} from '@server/lib/connect/users/entities/user_ru.entity'
-import {UserService} from '../users/user.service'
-import {TokenService} from '../../../../../../SocialNetwork_v2/backend/src/lib/auth/tokens/token.service'
-import {CreateUsersInput} from '../users/inputs/create-user.input'
-import {StatusEnum} from '../users/interfaces/status'
 import {SignInInput} from './inputs/signIn.input'
 
 @Injectable()
@@ -18,15 +18,15 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
-    private readonly configService: ConfigService // private readonly mailService: MailService
+    private readonly configService: ConfigService,
   ) {
-    this.clientAppUrl = this.configService.get<string>('FE_APP_URL')
+    this.clientAppUrl = `http://${this.configService.get<string>(`${ConfigEnum.MAIN}.host`)}:${this.configService.get<string>(`${ConfigEnum.MAIN}.port`)}`
   }
 
   /**
    * Зарегистрироваться
    */
-  async signUp(createUser: CreateUsersInput) {
+  async signUp(createUser: CreateUserInput) {
     const user = await this.userService.createUser(createUser)
     const confirmLink = await this.sendConfirmation(user)
     return [user, confirmLink]
@@ -36,7 +36,7 @@ export class AuthService {
    * Отправить подтверждение
    */
   async sendConfirmation(user: UserType) {
-    const expireAt = moment().add(1, 'day').toISOString()
+    const expireAt = addDays(new Date(), 1)
     const token = this.tokenService.generateToken(user)
     const confirmLink = `${this.clientAppUrl}/auth/confirm?token=${token}`
     console.log(confirmLink)
@@ -75,7 +75,7 @@ export class AuthService {
       await this.tokenService.delete(user.id)
 
       const token = await this.tokenService.generateToken(user)
-      const expireAt = moment().add(1, 'day').toISOString()
+      const expireAt = addDays(new Date(), 1)
 
       await this.tokenService.saveToken({token, expireAt, uid: user.id})
       return [user, token]
@@ -97,7 +97,7 @@ export class AuthService {
           {id: user.id},
           {
             connect: {status: StatusEnum.active},
-          }
+          },
         )
       } catch (e) {
         console.log('e', e)

@@ -1,7 +1,7 @@
 import {ConfigEnum} from '@config/config.enum'
 import {Role} from '@lib/connect/roles/entities/role.entity'
 import {tokenErrors} from '@lib/connect/tokens/errors'
-import {StatusEnum} from '@lib/profile/users/interfaces'
+import {StatusEnum, UserType} from '@lib/profile/users/interfaces'
 import {Injectable} from '@nestjs/common'
 import {ConfigService} from '@nestjs/config'
 import {InjectRepository} from '@nestjs/typeorm'
@@ -10,7 +10,6 @@ import {Repository} from 'typeorm'
 import {sign, verify} from 'jsonwebtoken'
 import {config} from 'dotenv'
 
-import {RU_User} from '@lib/profile/users/entities'
 import {Token} from './entities/token.entity'
 import {TokenInput} from './inputs/create-token.input'
 
@@ -28,7 +27,7 @@ export class TokenService {
   /**
    * Генерация токена
    */
-  generateToken(user: RU_User): string {
+  generateToken(user: UserType): string {
     console.log('configService.jwt', this.configService.get(`${ConfigEnum.SECRET_KEY}.jwt`))
     return sign(
       {id: user.id, status: user.connect.status, roles: user.connect.roles},

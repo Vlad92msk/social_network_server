@@ -4,25 +4,31 @@ import {CookieOptions} from 'express'
 import {GraphQLError} from 'graphql'
 import {from} from 'rxjs'
 
-import {User_ru} from '@server/lib/connect/users/entities/user_ru.entity'
-import {Token} from '@server_lib/connect/users/decorators/user.decorator'
-import {CookieEnum} from '@server_lib/connect/auth/types/cookie'
+import {CookieEnum} from '@lib/connect/auth/types/cookie'
+import {Token} from '@lib/profile/users/decorators/user.decorator'
+import {RU_User} from '@lib/profile/users/entities'
+import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
 import {AuthService} from './auth.service'
-import {CreateUsersInput} from '../users/inputs/create-user.input'
 import {SignInInput} from './inputs/signIn.input'
 
-@Resolver(() => User_ru)
+@Resolver(() => RU_User)
 @UsePipes(new ValidationPipe())
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => User_ru, {description: 'Зарегистрироваться'})
-  authSignUp(@Args('user') createUserDto: CreateUsersInput) {
+  @Mutation(() => RU_User, {description: 'Зарегистрироваться'})
+  authSignUp(
+    @Args('user') createUserDto: CreateUserInput
+  ) {
     return from(this.authService.signUp(createUserDto))
   }
 
-  @Query(() => User_ru, {description: 'Войти'})
-  async authSignIn(@Context() context, @Token() userToken, @Args('signInInput') signInInput: SignInInput) {
+  @Query(() => RU_User, {description: 'Войти'})
+  async authSignIn(
+    @Context() context,
+    @Token() userToken,
+    @Args('signInInput') signInInput: SignInInput
+  ) {
     if (userToken) throw new GraphQLError('Пользователь уже авторизован. Для повторного входа необходимо выйти из системы.')
 
     const [user, token] = await this.authService.signIn(signInInput)
@@ -35,7 +41,10 @@ export class AuthResolver {
   }
 
   @Mutation(() => Boolean, {description: 'Выйти'})
-  async authSignOut(@Token() token, @Context() context) {
+  async authSignOut(
+    @Token() token,
+    @Context() context
+  ) {
     if (!token) return false
 
     await this.authService.signOut(token)

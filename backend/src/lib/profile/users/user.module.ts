@@ -12,6 +12,7 @@ import {Connect, RU_User, RU_Social, RU_Personal, RU_Progress} from './entities'
     RoleModule
   ],
   providers: [UserService, UserResolver],
+  exports: [UserService]
 })
 export class UserModule {
 }

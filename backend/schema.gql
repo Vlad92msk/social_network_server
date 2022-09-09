@@ -2,18 +2,72 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Инф о подключении"""
+type Connect {
+  """Почта"""
+  email: String!
+  id: Float!
+
+  """Чей токен"""
+  name: String!
+
+  """Пароль"""
+  password: String!
+  roles: [Role!]!
+
+  """Статус"""
+  status: String!
+  user: RU_User!
+}
+
+input CreateRoleInput {
+  description: String!
+  value: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String
+  password: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
+input FindRoleInput {
+  description: String
+  id: Float
+  value: String
+}
+
 type Mutation {
+  """Выйти"""
+  authSignOut: Boolean!
+
+  """Зарегистрироваться"""
+  authSignUp(user: CreateUserInput!): RU_User!
   removeUser(id: Float!): Float!
+
+  """Создать роль"""
+  rolesCreate(params: CreateRoleInput!): Role!
+
+  """Удалить роль"""
+  rolesDelete(params: FindRoleInput!): Boolean!
 }
 
 type Query {
+  """Войти"""
+  authSignIn(signInInput: SignInInput!): RU_User!
   getAllUsers: [RU_User!]!
   getOneUser(id: Float!): RU_User!
+
+  """Найти все роли"""
+  rolesFindAll: [Role!]!
+
+  """Найти роль"""
+  rolesFindOne(params: FindRoleInput!): Role!
 }
 
 """Персональная информация (ru)"""
@@ -81,8 +135,24 @@ type RU_Social {
 
 """Пользователь (ru)"""
 type RU_User {
+  connect: Connect!
   id: ID!
   personal: RU_Personal!
   progress: RU_Progress!
   social: RU_Social!
+}
+
+type Role {
+  """Описание роли"""
+  description: String!
+  id: ID!
+  users: [RU_User!]!
+
+  """Название роли"""
+  value: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
 }

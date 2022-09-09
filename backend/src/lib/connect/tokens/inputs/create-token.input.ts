@@ -9,5 +9,5 @@ export class TokenInput {
   uid: number
 
   @Field()
-  expireAt: string
+  expireAt: Date
 }

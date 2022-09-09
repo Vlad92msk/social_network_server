@@ -1,13 +1,12 @@
+import {CookieEnum} from '@lib/connect/auth/types/cookie'
+import {TokenService} from '@lib/connect/tokens/token.service'
+import {UserService} from '@lib/profile/users/user.service'
 import {Injectable, NestMiddleware} from '@nestjs/common'
+import {getNestCookie} from '@src/utils'
+import {differenceInMinutes, parseISO} from 'date-fns'
 import {NextFunction, Request} from 'express'
 import {Response} from 'express'
-import * as moment from 'moment'
 import {config} from 'dotenv'
-
-import {UserService} from '@server_lib/connect/users/user.service'
-import {TokenService} from '@server_lib/../../../../../../../SocialNetwork_v2/backend/src/lib/auth/tokens/token.service'
-import {getNestCookie} from '@server_utils/getNestCookie'
-import {CookieEnum} from '@server_lib/connect/auth/types/cookie'
 
 config()
 
@@ -38,9 +37,9 @@ export class AuthMiddleware implements NestMiddleware {
     const decode = await this.tokenService.verifyToken(requestCookieToken)
 
     const {expireAt} = await this.tokenService.exists({uid: decode.id, token: requestCookieToken})
-    const tokenExpireAt = moment(expireAt)
-    const now = moment()
-    const difference = tokenExpireAt.diff(now, 'minutes')
+    const tokenExpireAt = expireAt
+    const now = new Date()
+    const difference = differenceInMinutes(tokenExpireAt, now)
 
     /**
      * Время токена истекло
