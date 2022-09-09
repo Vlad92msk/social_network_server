@@ -4,7 +4,7 @@ import {CookieOptions} from 'express'
 import {GraphQLError} from 'graphql'
 import {from} from 'rxjs'
 
-import {User_ru} from '@server/lib/connect/users/entitys/user_ru.entity'
+import {User_ru} from '@server/lib/connect/users/entities/user_ru.entity'
 import {Token} from '@server_lib/connect/users/decorators/user.decorator'
 import {CookieEnum} from '@server_lib/connect/auth/types/cookie'
 import {AuthService} from './auth.service'

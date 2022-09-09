@@ -1,16 +1,15 @@
-import {forwardRef, Module} from '@nestjs/common'
+import {Module} from '@nestjs/common'
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {Connect, RU_User, RU_Personal, RU_Social, RU_Progress} from '@lib/profile/users/entities'
 
-import {UserService} from '@server_lib/connect/users/user.service'
-import {DatabaseModule} from '@server_db/db.module'
-import {RolesProviders} from './providers/role.providers'
+import {Role} from './entities/role.entity'
 import {RoleService} from './role.service'
 import {RoleResolver} from './role.resolver'
-import {User_ru, Connect, Personal_ru, Progress_ru, Social_ru} from '@server/lib/connect/users/entitys'
-import {UserModule} from '@server/lib/connect/users/user.module'
 
 @Module({
-  imports: [DatabaseModule],
-  providers: [...RolesProviders, RoleService, RoleResolver],
+  imports: [TypeOrmModule.forFeature([Role, Connect, RU_User, RU_Personal, RU_Social, RU_Progress])],
+  providers: [RoleService, RoleResolver],
   exports: [RoleService],
 })
-export class RoleModule {}
+export class RoleModule {
+}

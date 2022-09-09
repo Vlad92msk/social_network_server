@@ -1,12 +1,12 @@
 import {RU_User} from '@lib/profile/users/entities/ru_user.entity'
-import {dbVariables} from '@utils/entity'
+import {entity} from '@utils/entity'
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BaseEntity } from 'typeorm'
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Social as SocialType } from '../interfaces/social'
 
 
 @ObjectType({ description: 'Социальная информация (ru)' })
-@Entity(dbVariables('ru_social'))
+@Entity(entity('ru_social'))
 export class RU_Social extends BaseEntity implements SocialType {
   @Field()
   @PrimaryGeneratedColumn({ name: 'id' })

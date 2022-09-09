@@ -1,12 +1,12 @@
 import {RU_User} from '@lib/profile/users/entities/ru_user.entity'
-import {dbVariables} from '@utils/entity'
+import {entity} from '@utils/entity'
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BaseEntity } from 'typeorm'
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Progress as ProgressType } from '../interfaces/progress'
 
 
 @ObjectType({ description: 'Социальная информация (ru)' })
-@Entity(dbVariables('ru_progress'))
+@Entity(entity('ru_progress'))
 export class RU_Progress extends BaseEntity implements ProgressType {
   @Field()
   @PrimaryGeneratedColumn({ name: 'id' })

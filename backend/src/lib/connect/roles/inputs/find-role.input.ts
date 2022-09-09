@@ -1,10 +1,11 @@
 import {InputType, Field} from '@nestjs/graphql'
 import {IsString, IsNumber, IsEnum} from 'class-validator'
-import {RoleEnum} from '@server_lib/connect/roles/interfaces/role'
-import {enumMessage} from '@server_utils/enumeration'
+import {FindRole} from '@lib/connect/roles/interfaces/findRole'
+import {RoleEnum} from '@lib/connect/roles/interfaces/role'
+import {enumMessage} from '@src/utils'
 
 @InputType()
-export class FindRoleInput {
+export class FindRoleInput implements FindRole {
   @IsNumber()
   @Field({nullable: true})
   id?: number

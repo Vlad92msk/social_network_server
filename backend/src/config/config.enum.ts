@@ -1,4 +1,5 @@
 export const enum ConfigEnum {
   MAIN = 'main',
-  ORM = 'orm'
+  ORM = 'orm',
+  SECRET_KEY = 'secrets'
 }

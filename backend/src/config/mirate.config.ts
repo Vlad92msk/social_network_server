@@ -12,7 +12,7 @@ export default new DataSource({
   autoLoadEntities: true,
   synchronize: false,
   entities: [`${__dirname}/../lib/**/**/entities/*.entity{.ts,.js}`],
-  migrations: [`${__dirname}/migrations/**/**/*{.ts, .js}`],
+  migrations: [`${__dirname}/migrations/*{.ts, .js}`],
   cli: {
     migrationsDir: 'src/migrations',
   },

@@ -7,7 +7,7 @@ import {
 
 export interface UserType {
   id: number
-  // connect: ConnectEntity
+  connect: ConnectEntity
   personal: PersonalEntity
   social: SocialEntity
   progress: ProgressEntity

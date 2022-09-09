@@ -1,3 +1,4 @@
+import {ConnectModule} from '@lib/connect/connect.module'
 import {Module} from '@nestjs/common'
 import {ConfigModule} from '@nestjs/config'
 import {OrmModule} from '@db/orm.module'
@@ -15,6 +16,7 @@ import mainConfig from '@config/main.config'
     }),
     GQLModule,
     OrmModule,
+    ConnectModule,
     ProfileModule,
   ],
 })

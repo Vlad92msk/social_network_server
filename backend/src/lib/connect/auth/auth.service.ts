@@ -4,7 +4,7 @@ import {GraphQLError} from 'graphql'
 import * as bcrypt from 'bcrypt'
 import * as moment from 'moment'
 
-import {UserType} from '@server/lib/connect/users/entitys/user_ru.entity'
+import {UserType} from '@server/lib/connect/users/entities/user_ru.entity'
 import {UserService} from '../users/user.service'
 import {TokenService} from '../../../../../../SocialNetwork_v2/backend/src/lib/auth/tokens/token.service'
 import {CreateUsersInput} from '../users/inputs/create-user.input'

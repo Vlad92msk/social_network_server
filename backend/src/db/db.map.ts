@@ -4,13 +4,11 @@
 export const DB_MAP = [
   {
     schemas: [
-      {name: 'auth', tables: ['auth']},
-      {name: 'roles', tables: ['roles']},
-      {name: 'token', tables: ['tokens']},
+      {name: 'connect', tables: ['auth', 'roles', 'tokens']},
     ] as const,
   }, {
     schemas: [
-      {name: 'user', tables: ['ru_users', 'ru_social', 'ru_progress', 'ru_personal']},
+      {name: 'profile', tables: ['ru_users', 'ru_social', 'ru_progress', 'ru_personal', 'connect']},
     ] as const,
   },
 ]

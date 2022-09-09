@@ -5,7 +5,7 @@ import {switchMap} from 'rxjs/operators'
 import {AuthService} from './auth.service'
 import {CreateUsersInput} from '../users/inputs/create-user.input'
 import {ConfirmAccountInput} from './inputs/confirm-account.input'
-import {UserType} from '@server/lib/connect/users/entitys'
+import {UserType} from '@server/lib/connect/users/entities'
 
 @Controller('auth')
 export class AuthController {

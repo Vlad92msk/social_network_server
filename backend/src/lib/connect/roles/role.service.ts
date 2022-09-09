@@ -1,18 +1,19 @@
-import {Inject, Injectable} from '@nestjs/common'
+import {InjectRepository} from '@nestjs/typeorm'
 import {GraphQLError} from 'graphql'
 import {Repository} from 'typeorm'
+import {Injectable} from '@nestjs/common'
+import {Role} from '@lib/connect/roles/entities/role.entity'
+import {FindRoleInput} from '@lib/connect/roles/inputs/find-role.input'
 
-import {PostgreConstants} from '@server_db/db.constants'
 import {CreateRoleInput} from './inputs/create-role.input'
-import {Role} from '../../connect/roles/entitys/role.entity'
-import {FindRoleInput} from '../../connect/roles/inputs/find-role.input'
 
 @Injectable()
 export class RoleService {
   constructor(
-    @Inject(PostgreConstants.CONNECT.connect)
-    private readonly roleRepository: Repository<Role>
-  ) {}
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
+  ) {
+  }
 
   /**
    * Найти все роли
@@ -48,7 +49,7 @@ export class RoleService {
     if (!found) {
       throw new GraphQLError('Такой роли не существует')
     } else {
-      await this.roleRepository.delete(found)
+      await this.roleRepository.delete({id: found.id})
       return found
     }
   }

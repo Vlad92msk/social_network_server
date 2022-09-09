@@ -1,12 +1,12 @@
 import {RU_User} from '@lib/profile/users/entities/ru_user.entity'
-import {dbVariables} from '@utils/entity'
+import {entity} from '@utils/entity'
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BaseEntity } from 'typeorm'
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Personal as PersonalType } from '../interfaces/personal'
 
 
 @ObjectType({ description: 'Персональная информация (ru)' })
-@Entity(dbVariables('ru_personal'))
+@Entity(entity('ru_personal'))
 export class RU_Personal extends BaseEntity implements PersonalType {
   @Field()
   @PrimaryGeneratedColumn({ name: 'id' })
