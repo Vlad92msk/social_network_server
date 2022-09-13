@@ -1,3 +1,4 @@
+import { UserResolver } from "@lib/profile/users/user.resolver";
 import { INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'

@@ -5,7 +5,7 @@ import { CreateUserInput } from './inputs/create-user.input'
 
 import { UserService } from './user.service'
 
-@Resolver()
+@Resolver(() => RU_User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
