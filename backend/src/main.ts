@@ -1,12 +1,13 @@
 if (!process.env.IS_TS_NODE) {
   require('module-alias/register')
 }
-import {NestFactory} from '@nestjs/core'
-import {ConfigService} from '@nestjs/config'
+
+import { ConfigService } from '@nestjs/config'
+import { NestFactory } from '@nestjs/core'
 import * as cookieParser from 'cookie-parser'
-import {config} from 'dotenv'
-import {AppModule} from '@lib/app.module'
-import {ConfigEnum} from '@config/config.enum'
+import { config } from 'dotenv'
+import { ConfigEnum } from '@config/config.enum'
+import { AppModule } from '@lib/app.module'
 
 config()
 

@@ -1,14 +1,12 @@
-import {Token} from '@lib/connect/tokens/entities/token.entity'
 import { Module } from '@nestjs/common'
-import {ConfigModule} from '@nestjs/config'
-import {TypeOrmModule} from '@nestjs/typeorm'
+import { ConfigModule } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
+import { Token } from './entities/token.entity'
 import { TokenService } from './token.service'
 
 @Module({
-  imports: [
-    ConfigModule,
-    TypeOrmModule.forFeature([Token])
-  ],
+  imports: [ConfigModule, TypeOrmModule.forFeature([Token])],
   providers: [TokenService],
   exports: [TokenService],
 })

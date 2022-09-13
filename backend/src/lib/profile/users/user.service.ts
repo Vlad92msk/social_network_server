@@ -1,17 +1,17 @@
-import {RoleEnum} from '@lib/connect/roles/interfaces/role'
-import {RoleService} from '@lib/connect/roles/role.service'
-import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
-import {FindUserInput} from '@lib/profile/users/inputs/find-user.input'
-import {UpdateUserInput} from '@lib/profile/users/inputs/update-user.input'
-import {UpdateUserRolesInput} from '@lib/profile/users/inputs/update-userRoles.input'
-import {FindOneUser, StatusEnum, UserType} from '@lib/profile/users/interfaces'
-import {Injectable} from '@nestjs/common'
-import {InjectRepository} from '@nestjs/typeorm'
-import {GraphQLError} from 'graphql'
-import {Repository} from 'typeorm'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
-
-import {Connect, RU_Personal, RU_Progress, RU_Social, RU_User, UserTypeRelations} from '@lib/profile/users/entities'
+import { GraphQLError } from 'graphql'
+import { Repository } from 'typeorm'
+import { RoleEnum } from '@lib/connect/roles/interfaces/role'
+import { RoleService } from '@lib/connect/roles/role.service'
+import { GetUsersArgs } from '@lib/profile/users/args/get-users.args'
+import { Connect, RU_Personal, RU_Progress, RU_Social, RU_User, UserTypeRelations } from '@lib/profile/users/entities'
+import { CreateUserInput } from '@lib/profile/users/inputs/create-user.input'
+import { FindUserInput } from '@lib/profile/users/inputs/find-user.input'
+import { UpdateUserInput } from '@lib/profile/users/inputs/update-user.input'
+import { UpdateUserRolesInput } from '@lib/profile/users/inputs/update-userRoles.input'
+import { StatusEnum, UserType } from '@lib/profile/users/interfaces'
 
 @Injectable()
 export class UserService {
@@ -20,9 +20,8 @@ export class UserService {
   constructor(
     @InjectRepository(RU_User)
     private readonly userRepository: Repository<RU_User>,
-    private readonly roleService: RoleService,
-  ) {
-  }
+    private readonly roleService: RoleService
+  ) {}
 
   async hashPassword(password: string): Promise<string> {
     const salt = await bcrypt.genSalt(this.saltRounds)
@@ -34,25 +33,30 @@ export class UserService {
   // }
 
   async getOneUser(id: number): Promise<RU_User> {
-    return await this.userRepository.findOne({where: {id}})
+    return await this.userRepository.findOne({
+      where: { id },
+    })
   }
 
   /**
    * Найти 1 юзера по условию
    */
-  public findOneUserByParam = async (where: FindUserInput, relations?: UserTypeRelations) => {
-    return await this.userRepository.findOne({where})
+  public findOneUserByParam = async (where?: FindUserInput, relations?: UserTypeRelations) => {
+    return await this.userRepository.findOne({
+      where,
+      relations: ['connect', 'personal', 'social', 'progress'],
+    })
   }
 
   /**
    * Обновить данные юзера
    */
-  public updateUser = async (target: FindUserInput, param: UpdateUserInput) => {
-    const find = await this.findOneUserByParam(target)
+  public updateUser = async (where: FindUserInput, param: UpdateUserInput) => {
+    const find = await this.findOneUserByParam(where)
     if (!find) throw new GraphQLError('Пользователь не найден')
 
     try {
-      return await this.userRepository.update({ id: target.id }, param)
+      return await this.userRepository.update({ id: where.id }, param)
     } catch {
       throw new GraphQLError('Ошибка обновления данных пользователя')
     }
@@ -61,12 +65,14 @@ export class UserService {
   /**
    * Добавить роль пользователю
    */
-  public updateUserRoles = async (target: FindUserInput, {role}: UpdateUserRolesInput): Promise<boolean> => {
+  public updateUserRoles = async (target: FindUserInput, { role }: UpdateUserRolesInput): Promise<boolean> => {
     const findUser = await this.findOneUserByParam(target)
     if (!findUser) throw new GraphQLError('Потльзователь не найден')
 
     try {
-      const findRole = await this.roleService.getRoleByValue({value: role})
+      const findRole = await this.roleService.getRoleByValue({
+        value: role,
+      })
       const updateUser = await this.userRepository.create({
         ...findUser,
         connect: {
@@ -84,17 +90,19 @@ export class UserService {
   /**
    * Удалить роль у пользователя
    */
-  public deleteUserRoles = async (target: FindUserInput, {role}: UpdateUserRolesInput): Promise<boolean> => {
+  public deleteUserRoles = async (target: FindUserInput, { role }: UpdateUserRolesInput): Promise<boolean> => {
     const findUser = await this.findOneUserByParam(target)
     if (!findUser) throw new GraphQLError('Пользователь не найден')
 
     try {
-      const findRole = await this.roleService.getRoleByValue({value: role})
+      const findRole = await this.roleService.getRoleByValue({
+        value: role,
+      })
       const updateUser = await this.userRepository.create({
         ...findUser,
         connect: {
           ...findUser.connect,
-          roles: findUser.connect.roles.filter(role => role.id !== findRole.id),
+          roles: findUser.connect.roles.filter((role) => role.id !== findRole.id),
         },
       })
       await this.userRepository.save(updateUser)
@@ -108,20 +116,22 @@ export class UserService {
    * Создать юзера
    */
   public createUser = async (createUsersInput: CreateUserInput): Promise<UserType> => {
-    const found = await this.findOneUserByParam({
-      connect: {
-        name: createUsersInput.name,
-        email: createUsersInput.email,
-      },
-    })
-    if (found) throw new GraphQLError('Пользователь уже существует')
+    // const found = await this.findOneUserByParam({
+    //   connect: {
+    //     userName: createUsersInput.name,
+    //     email: createUsersInput.email,
+    //   },
+    // })
+    // if (found) throw new GraphQLError('Пользователь уже существует')
 
     try {
       const hash = await this.hashPassword(createUsersInput.password)
-      const role = await this.roleService.getRoleByValue({value: RoleEnum.visitor})
+      const role = await this.roleService.getRoleByValue({
+        value: RoleEnum.visitor,
+      })
 
       const userConnect = await Connect.create({
-        name: createUsersInput.name,
+        userName: createUsersInput.name,
         email: createUsersInput.email,
         password: hash,
         roles: [role],
@@ -146,7 +156,6 @@ export class UserService {
       await this.userRepository.manager.save(newUser)
 
       return newUser
-
     } catch {
       throw new GraphQLError('Ошибка создания пользователя')
     }
@@ -160,18 +169,28 @@ export class UserService {
     if (!found) throw new GraphQLError('Пользователь не найден')
 
     try {
-      return await this.userRepository.delete({id: found.id})
+      return await this.userRepository.delete({
+        id: found.id,
+      })
     } catch {
       throw new GraphQLError('Ошибка удаления пользователя')
     }
   }
 
-  public getAllUsers = async (where?: FindUserInput): Promise<RU_User[]> => {
-    return await this.userRepository.find({where})
+  public getAllUsers = async (where?: FindUserInput) => {
+    return await this.userRepository.find({
+      where,
+      relations: {
+        personal: true,
+        connect: true,
+        social: true,
+        progress: true,
+      },
+    })
   }
 
   async removeUser(id: number): Promise<number> {
-    await this.userRepository.delete({id})
+    await this.userRepository.delete({ id })
     return id
   }
 

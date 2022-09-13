@@ -1,41 +1,37 @@
-import {Entity, PrimaryGeneratedColumn, JoinTable, OneToOne, BaseEntity} from 'typeorm'
-import {Field, ID, ObjectType} from '@nestjs/graphql'
-import {UserType} from '@lib/profile/users/interfaces'
-import {entity} from '@utils/entity'
-import {
-  RU_Personal as PersonalEntity,
-  RU_Social as SocialEntity,
-  RU_Progress as ProgressEntity,
-  Connect as ConnectEntity,
-} from './index'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { BaseEntity, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { UserType } from '@lib/profile/users/interfaces'
+import { entity } from '@utils/entity'
+
+import { Connect as ConnectEntity, RU_Personal as PersonalEntity, RU_Progress as ProgressEntity, RU_Social as SocialEntity } from './index'
 
 export type UserTypeRelations = [keyof Omit<UserType, 'id'>]
 
-@ObjectType({description: 'Пользователь (ru)'})
+@ObjectType({ description: 'Пользователь (ru)' })
 @Entity(entity('ru_users'))
 export class RU_User extends BaseEntity implements UserType {
   @Field(() => ID)
-  @PrimaryGeneratedColumn({name: 'id'})
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number
 
   @Field(() => ConnectEntity)
-  @OneToOne(() => ConnectEntity, (connect) => connect.user, {cascade: true})
-  @JoinTable()
+  @OneToOne(() => ConnectEntity, (connect) => connect.user)
+  @JoinColumn()
   connect: ConnectEntity
 
   @Field(() => PersonalEntity)
-  @OneToOne(() => PersonalEntity, (personal) => personal.user, {cascade: true})
-  @JoinTable()
+  @OneToOne(() => PersonalEntity, (personal) => personal.user)
+  @JoinColumn()
   personal: PersonalEntity
 
   @Field(() => SocialEntity)
-  @OneToOne(() => SocialEntity, (social) => social.user, {cascade: true})
-  @JoinTable()
+  @OneToOne(() => SocialEntity, (social) => social.user)
+  @JoinColumn()
   social: SocialEntity
 
   @Field(() => ProgressEntity)
-  @OneToOne(() => ProgressEntity, (progress) => progress.user, {cascade: true})
-  @JoinTable()
+  @OneToOne(() => ProgressEntity, (progress) => progress.user)
+  @JoinColumn()
   progress: ProgressEntity
 }
 

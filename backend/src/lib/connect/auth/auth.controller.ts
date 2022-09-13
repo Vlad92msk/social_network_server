@@ -1,11 +1,11 @@
-import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
-import {UserType} from '@lib/profile/users/interfaces'
-import {Controller, Post, Body, ValidationPipe, Get, Query} from '@nestjs/common'
-import {from, Observable, of} from 'rxjs'
-import {switchMap} from 'rxjs/operators'
+import { Body, Controller, Get, Post, Query, ValidationPipe } from '@nestjs/common'
+import { from, Observable, of } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
+import { CreateUserInput } from '@lib/profile/users/inputs/create-user.input'
+import { UserType } from '@lib/profile/users/interfaces'
 
-import {AuthService} from './auth.service'
-import {ConfirmAccountInput} from './inputs/confirm-account.input'
+import { AuthService } from './auth.service'
+import { ConfirmAccountInput } from './inputs/confirm-account.input'
 
 @Controller('auth')
 export class AuthController {

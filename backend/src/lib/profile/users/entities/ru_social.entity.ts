@@ -1,9 +1,9 @@
-import {RU_User} from '@lib/profile/users/entities/ru_user.entity'
-import {entity} from '@utils/entity'
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BaseEntity } from 'typeorm'
 import { Field, ObjectType } from '@nestjs/graphql'
-import { Social as SocialType } from '../interfaces/social'
+import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { RU_User } from '@lib/profile/users/entities/ru_user.entity'
+import { entity } from '@utils/entity'
 
+import { Social as SocialType } from '../interfaces/social'
 
 @ObjectType({ description: 'Социальная информация (ru)' })
 @Entity(entity('ru_social'))
@@ -21,11 +21,11 @@ export class RU_Social extends BaseEntity implements SocialType {
   chats: string
 
   @Field({ description: 'Подписчики' })
-  @Column({ name: 'subscribers'})
+  @Column({ name: 'subscribers' })
   subscribers: string
 
   @Field({ description: 'Подписки' })
-  @Column({ name: 'subscription'})
+  @Column({ name: 'subscription' })
   subscription: string
 
   @Field(() => RU_User)

@@ -1,5 +1,5 @@
-import {RoleEnum} from '@lib/connect/roles/interfaces/role'
-import {Field, InputType} from '@nestjs/graphql'
+import { Field, InputType } from '@nestjs/graphql'
+import { RoleEnum } from '@lib/connect/roles/interfaces/role'
 
 @InputType()
 export class UpdateUserRolesInput {

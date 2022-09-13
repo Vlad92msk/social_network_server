@@ -1,9 +1,10 @@
-import {RoleType} from '@lib/connect/roles/interfaces/role'
+import { RoleType } from '@lib/connect/roles/interfaces/role'
 
 export interface Connect {
+  id: number
   email: string
   password: string
   status: string
-  name: string
+  userName: string
   roles: RoleType[]
 }

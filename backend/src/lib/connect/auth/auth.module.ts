@@ -1,11 +1,12 @@
-import {ConfigModule} from '@nestjs/config'
-import {Module} from '@nestjs/common'
-import {TokenModule} from '@lib/connect/tokens/token.module'
-import {UserModule} from '@lib/profile/users/user.module'
-import {AuthService} from './auth.service'
-import {AuthResolver} from './auth.resolver'
-import {AuthController} from './auth.controller'
-import {AuthGuard} from './guards/auth-guard'
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { TokenModule } from '@lib/connect/tokens/token.module'
+import { UserModule } from '@lib/profile/users/user.module'
+
+import { AuthController } from './auth.controller'
+import { AuthResolver } from './auth.resolver'
+import { AuthService } from './auth.service'
+import { AuthGuard } from './guards/auth-guard'
 
 @Module({
   imports: [ConfigModule, UserModule, TokenModule],
@@ -13,5 +14,4 @@ import {AuthGuard} from './guards/auth-guard'
   controllers: [AuthController],
   exports: [AuthService],
 })
-export class AuthModule {
-}
+export class AuthModule {}

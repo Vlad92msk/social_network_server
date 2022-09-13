@@ -1,34 +1,30 @@
-import {Resolver, Query, Mutation, Args, Context} from '@nestjs/graphql'
-import {UsePipes, ValidationPipe} from '@nestjs/common'
-import {CookieOptions} from 'express'
-import {GraphQLError} from 'graphql'
-import {from} from 'rxjs'
+import { UsePipes, ValidationPipe } from '@nestjs/common'
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { CookieOptions } from 'express'
+import { GraphQLError } from 'graphql'
+import { from } from 'rxjs'
+import { CookieEnum } from '@lib/connect/auth/types/cookie'
+import { Token } from '@lib/profile/users/decorators/user.decorator'
+import { RU_User } from '@lib/profile/users/entities'
+import { CreateUserInput } from '@lib/profile/users/inputs/create-user.input'
 
-import {CookieEnum} from '@lib/connect/auth/types/cookie'
-import {Token} from '@lib/profile/users/decorators/user.decorator'
-import {RU_User} from '@lib/profile/users/entities'
-import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
-import {AuthService} from './auth.service'
-import {SignInInput} from './inputs/signIn.input'
+import { AuthService } from './auth.service'
+import { SignInInput } from './inputs/signIn.input'
 
 @Resolver(() => RU_User)
 @UsePipes(new ValidationPipe())
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => RU_User, {description: 'Зарегистрироваться'})
-  authSignUp(
-    @Args('user') createUserDto: CreateUserInput
-  ) {
+  @Mutation(() => RU_User, {
+    description: 'Зарегистрироваться',
+  })
+  authSignUp(@Args('user') createUserDto: CreateUserInput) {
     return from(this.authService.signUp(createUserDto))
   }
 
-  @Query(() => RU_User, {description: 'Войти'})
-  async authSignIn(
-    @Context() context,
-    @Token() userToken,
-    @Args('signInInput') signInInput: SignInInput
-  ) {
+  @Query(() => RU_User, { description: 'Войти' })
+  async authSignIn(@Context() context, @Token() userToken, @Args('signInInput') signInInput: SignInInput) {
     if (userToken) throw new GraphQLError('Пользователь уже авторизован. Для повторного входа необходимо выйти из системы.')
 
     const [user, token] = await this.authService.signIn(signInInput)
@@ -40,11 +36,8 @@ export class AuthResolver {
     return user
   }
 
-  @Mutation(() => Boolean, {description: 'Выйти'})
-  async authSignOut(
-    @Token() token,
-    @Context() context
-  ) {
+  @Mutation(() => Boolean, { description: 'Выйти' })
+  async authSignOut(@Token() token, @Context() context) {
     if (!token) return false
 
     await this.authService.signOut(token)

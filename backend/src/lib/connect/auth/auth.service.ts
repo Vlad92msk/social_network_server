@@ -1,25 +1,21 @@
-import {ConfigEnum} from '@config/config.enum'
-import {TokenService} from '@lib/connect/tokens/token.service'
-import {CreateUserInput} from '@lib/profile/users/inputs/create-user.input'
-import {StatusEnum, UserType} from '@lib/profile/users/interfaces'
-import {UserService} from '@lib/profile/users/user.service'
-import {Injectable} from '@nestjs/common'
-import {ConfigService} from '@nestjs/config'
-import {GraphQLError} from 'graphql'
-import {addDays} from 'date-fns'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import * as bcrypt from 'bcrypt'
+import { addDays } from 'date-fns'
+import { GraphQLError } from 'graphql'
+import { ConfigEnum } from '@config/config.enum'
+import { TokenService } from '@lib/connect/tokens/token.service'
+import { CreateUserInput } from '@lib/profile/users/inputs/create-user.input'
+import { StatusEnum, UserType } from '@lib/profile/users/interfaces'
+import { UserService } from '@lib/profile/users/user.service'
 
-import {SignInInput} from './inputs/signIn.input'
+import { SignInInput } from './inputs/signIn.input'
 
 @Injectable()
 export class AuthService {
   private readonly clientAppUrl: string
 
-  constructor(
-    private readonly userService: UserService,
-    private readonly tokenService: TokenService,
-    private readonly configService: ConfigService,
-  ) {
+  constructor(private readonly userService: UserService, private readonly tokenService: TokenService, private readonly configService: ConfigService) {
     this.clientAppUrl = `http://${this.configService.get<string>(`${ConfigEnum.MAIN}.host`)}:${this.configService.get<string>(`${ConfigEnum.MAIN}.port`)}`
   }
 
@@ -53,16 +49,20 @@ export class AuthService {
     //             <p>Please use this <a href="${confirmLink}">link</a> to confirm your account.</p>
     //         `,
     // });
-    await this.tokenService.saveToken({token, uid: user.id, expireAt})
+    await this.tokenService.saveToken({
+      token,
+      uid: user.id,
+      expireAt,
+    })
     return confirmLink
   }
 
   /**
    * Войти
    */
-  async signIn({email, password}: SignInInput): Promise<[UserType, string]> {
+  async signIn({ email, password }: SignInInput): Promise<[UserType, string]> {
     const user = await this.userService.findOneUserByParam({
-      connect: {email},
+      connect: { email },
     })
 
     if (user && (await bcrypt.compare(password, user.connect.password))) {
@@ -77,7 +77,11 @@ export class AuthService {
       const token = await this.tokenService.generateToken(user)
       const expireAt = addDays(new Date(), 1)
 
-      await this.tokenService.saveToken({token, expireAt, uid: user.id})
+      await this.tokenService.saveToken({
+        token,
+        expireAt,
+        uid: user.id,
+      })
       return [user, token]
     }
     throw new GraphQLError('Указаны неверные реквизиты учетной записи')
@@ -88,16 +92,20 @@ export class AuthService {
    */
   async confirmRegistrationToLink(token: string) {
     const data = await this.confirmUserToken(token)
-    const user = await this.userService.findOneUserByParam({id: data.id})
+    const user = await this.userService.findOneUserByParam({
+      id: data.id,
+    })
     await this.tokenService.delete(data.id, token)
 
     if (user && user.connect.status === StatusEnum.pending) {
       try {
         return await this.userService.updateUser(
-          {id: user.id},
           {
-            connect: {status: StatusEnum.active},
+            id: user.id,
           },
+          {
+            connect: { status: StatusEnum.active },
+          }
         )
       } catch (e) {
         console.log('e', e)
@@ -111,7 +119,10 @@ export class AuthService {
    */
   async confirmUserToken(token: string) {
     const decodeTokenObject = this.tokenService.verifyToken(token)
-    await this.tokenService.exists({uid: decodeTokenObject.id, token})
+    await this.tokenService.exists({
+      uid: decodeTokenObject.id,
+      token,
+    })
     return decodeTokenObject
   }
 

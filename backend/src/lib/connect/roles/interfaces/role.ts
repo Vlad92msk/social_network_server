@@ -1,4 +1,4 @@
-import {Connect as ConnectType, UserType} from '@lib/profile/users/interfaces'
+import { Connect as ConnectType, UserType } from '@lib/profile/users/interfaces'
 /**
  * @description Роли
  * @property admin - админ

@@ -1,5 +1,5 @@
-import {UserService} from '@lib/profile/users/user.service'
-import {Test, TestingModule} from '@nestjs/testing'
+import { Test, TestingModule } from '@nestjs/testing'
+import { UserService } from '@lib/profile/users/user.service'
 
 describe('UserService', () => {
   let service: UserService

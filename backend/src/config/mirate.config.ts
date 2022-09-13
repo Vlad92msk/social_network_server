@@ -1,5 +1,6 @@
-import { DataSource } from "typeorm"
 import { config } from 'dotenv'
+import { DataSource } from 'typeorm'
+
 config()
 
 export default new DataSource({
@@ -16,4 +17,4 @@ export default new DataSource({
   cli: {
     migrationsDir: 'src/migrations',
   },
-});
+})

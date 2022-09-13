@@ -1,15 +1,14 @@
-import {Module} from '@nestjs/common'
-import {TypeOrmModule} from '@nestjs/typeorm'
-import {Connect, RU_User, RU_Personal, RU_Social, RU_Progress} from '@lib/profile/users/entities'
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { loadEntities } from '@src/utils'
 
-import {Role} from './entities/role.entity'
-import {RoleService} from './role.service'
-import {RoleResolver} from './role.resolver'
+import * as databases from './entities'
+import { RoleResolver } from './role.resolver'
+import { RoleService } from './role.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role, Connect, RU_User, RU_Personal, RU_Social, RU_Progress])],
+  imports: [TypeOrmModule.forFeature(loadEntities(databases))],
   providers: [RoleService, RoleResolver],
   exports: [RoleService],
 })
-export class RoleModule {
-}
+export class RoleModule {}

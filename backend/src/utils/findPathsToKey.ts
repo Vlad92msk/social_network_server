@@ -1,4 +1,4 @@
-import {mapKeys, isPlainObject} from 'lodash'
+import { isPlainObject, mapKeys } from 'lodash'
 
 export interface FindPathsToKey<T> {
   key: string
@@ -12,7 +12,7 @@ export interface FindPathsToKey<T> {
 export const findPathsToKey = <T extends Record<string, any>>(options: FindPathsToKey<T>): string => {
   const results: string[] = []
 
-  ;(function findKey({key, obj, pathToKey}: FindPathsToKey<T>) {
+  ;(function findKey({ key, obj, pathToKey }: FindPathsToKey<T>) {
     const oldPath = `${pathToKey ? `${pathToKey}.` : ''}`
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       results.push(`${oldPath}${key}`)

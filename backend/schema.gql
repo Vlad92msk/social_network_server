@@ -8,9 +8,6 @@ type Connect {
   email: String!
   id: Float!
 
-  """Чей токен"""
-  name: String!
-
   """Пароль"""
   password: String!
   roles: [Role!]!
@@ -18,6 +15,9 @@ type Connect {
   """Статус"""
   status: String!
   user: RU_User!
+
+  """Чей токен"""
+  userName: String!
 }
 
 input CreateRoleInput {
@@ -42,6 +42,18 @@ input FindRoleInput {
   value: String
 }
 
+"""ddd"""
+input FindUserInput {
+  city: String
+  country: String
+  gender: String
+  id: Float
+  lastName: String
+  name: String
+  nationality: String
+  patronymicName: String
+}
+
 type Mutation {
   """Выйти"""
   authSignOut: Boolean!
@@ -55,6 +67,9 @@ type Mutation {
 
   """Удалить роль"""
   rolesDelete(params: FindRoleInput!): Boolean!
+
+  """Создать юзера"""
+  usersCreate(user: CreateUserInput!): RU_User!
 }
 
 type Query {
@@ -68,6 +83,8 @@ type Query {
 
   """Найти роль"""
   rolesFindOne(params: FindRoleInput!): Role!
+  testing_getAllUsers(where: FindUserInput): [User!]!
+  testing_getOneUser(id: Float!): User!
 }
 
 """Персональная информация (ru)"""
@@ -155,4 +172,39 @@ type Role {
 input SignInInput {
   email: String!
   password: String!
+}
+
+"""Пользователь"""
+type User {
+  id: ID!
+  personal: UserPersonal!
+}
+
+"""Персональная инф"""
+type UserPersonal {
+  """Город"""
+  city: String!
+
+  """Страна"""
+  country: String!
+
+  """Гражданство"""
+  dateOfBirth: DateTime!
+
+  """Пол"""
+  gender: String!
+  id: ID!
+
+  """Фамилия"""
+  lastName: String!
+
+  """Имя"""
+  name: String!
+
+  """Гражданство"""
+  nationality: String!
+
+  """Отчество"""
+  patronymicName: String!
+  user: User!
 }

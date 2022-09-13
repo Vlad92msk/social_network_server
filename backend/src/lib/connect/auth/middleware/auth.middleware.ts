@@ -1,12 +1,11 @@
-import {CookieEnum} from '@lib/connect/auth/types/cookie'
-import {TokenService} from '@lib/connect/tokens/token.service'
-import {UserService} from '@lib/profile/users/user.service'
-import {Injectable, NestMiddleware} from '@nestjs/common'
-import {getNestCookie} from '@src/utils'
-import {differenceInMinutes, parseISO} from 'date-fns'
-import {NextFunction, Request} from 'express'
-import {Response} from 'express'
-import {config} from 'dotenv'
+import { Injectable, NestMiddleware } from '@nestjs/common'
+import { differenceInMinutes, parseISO } from 'date-fns'
+import { config } from 'dotenv'
+import { NextFunction, Request, Response } from 'express'
+import { getNestCookie } from '@src/utils'
+import { CookieEnum } from '@lib/connect/auth/types/cookie'
+import { TokenService } from '@lib/connect/tokens/token.service'
+import { UserService } from '@lib/profile/users/user.service'
 
 config()
 
@@ -27,7 +26,7 @@ export class AuthMiddleware implements NestMiddleware {
 
   async use(req: ExpressRequest, res: Response, next: NextFunction) {
     const getCookie = req.headers.cookie
-    const requestCookieToken = !!getCookie ? getNestCookie(CookieEnum.TOKEN, getCookie) : null
+    const requestCookieToken = getCookie ? getNestCookie(CookieEnum.TOKEN, getCookie) : null
 
     if (!requestCookieToken) {
       req.status = AuthStatus.userUnAuthorisation
@@ -36,7 +35,10 @@ export class AuthMiddleware implements NestMiddleware {
     }
     const decode = await this.tokenService.verifyToken(requestCookieToken)
 
-    const {expireAt} = await this.tokenService.exists({uid: decode.id, token: requestCookieToken})
+    const { expireAt } = await this.tokenService.exists({
+      uid: decode.id,
+      token: requestCookieToken,
+    })
     const tokenExpireAt = expireAt
     const now = new Date()
     const difference = differenceInMinutes(tokenExpireAt, now)
@@ -51,7 +53,9 @@ export class AuthMiddleware implements NestMiddleware {
       return
     }
 
-    const user = await this.userService.findOneUserByParam({id: decode.id})
+    const user = await this.userService.findOneUserByParam({
+      id: decode.id,
+    })
 
     /**
      * Пользователь с данным токеном не найден
