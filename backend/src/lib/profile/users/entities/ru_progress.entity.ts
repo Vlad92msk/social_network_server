@@ -9,35 +9,23 @@ import { Progress as ProgressType } from '../interfaces/progress'
 @Entity(entity('ru_progress'))
 export class RU_Progress extends BaseEntity implements ProgressType {
   @Field()
-  @PrimaryGeneratedColumn({ name: 'id' })
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field({ description: 'Увлечения' })
-  @Column({ name: 'hobbies', type: 'varchar', length: 20 })
+  @Column({ name: 'hobbies', type: 'varchar', length: 20, nullable: true })
   hobbies: string
 
   @Field({ description: 'Место учебы' })
-  @Column({
-    name: 'placeOfStudy',
-    type: 'varchar',
-    length: 20,
-  })
+  @Column({ name: 'placeOfStudy', type: 'varchar', length: 20, nullable: true })
   placeOfStudy: string
 
   @Field({ description: 'Место работы' })
-  @Column({
-    name: 'employment',
-    type: 'varchar',
-    length: 20,
-  })
+  @Column({ name: 'employment', type: 'varchar', length: 20, nullable: true })
   employment: string
 
   @Field({ description: 'Владение языками' })
-  @Column({
-    name: 'workingLanguages',
-    type: 'varchar',
-    length: 20,
-  })
+  @Column({ name: 'workingLanguages', type: 'varchar', length: 20, nullable: true })
   workingLanguages: string
 
   @Field(() => RU_User)

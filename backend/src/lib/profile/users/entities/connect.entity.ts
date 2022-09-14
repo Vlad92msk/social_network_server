@@ -10,7 +10,7 @@ import { Connect as ConnectType } from '../interfaces/connect'
 @Entity(entity('connect'))
 export class Connect extends BaseEntity implements ConnectType {
   @Field()
-  @PrimaryGeneratedColumn({ name: 'id' })
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field({ description: 'Чей токен' })

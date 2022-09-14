@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator'
 import { enumMessage } from '@src/utils'
-import { CreateRole } from '@lib/connect/roles/interfaces/createRole'
+import { CreateRole } from '../interfaces/createRole'
 
 import { RoleEnum } from '../interfaces/role'
 

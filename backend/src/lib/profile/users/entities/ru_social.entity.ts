@@ -9,23 +9,23 @@ import { Social as SocialType } from '../interfaces/social'
 @Entity(entity('ru_social'))
 export class RU_Social extends BaseEntity implements SocialType {
   @Field()
-  @PrimaryGeneratedColumn({ name: 'id' })
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field({ description: 'Друзья' })
-  @Column({ name: 'friends' })
+  @Column({ name: 'friends', nullable: true })
   friends: string
 
   @Field({ description: 'Чаты' })
-  @Column({ name: 'chats' })
+  @Column({ name: 'chats', nullable: true })
   chats: string
 
   @Field({ description: 'Подписчики' })
-  @Column({ name: 'subscribers' })
+  @Column({ name: 'subscribers', nullable: true })
   subscribers: string
 
   @Field({ description: 'Подписки' })
-  @Column({ name: 'subscription' })
+  @Column({ name: 'subscription', nullable: true })
   subscription: string
 
   @Field(() => RU_User)

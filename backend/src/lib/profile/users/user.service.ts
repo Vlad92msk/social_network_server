@@ -3,14 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
 import { GraphQLError } from 'graphql'
 import { Repository } from 'typeorm'
+
 import { RoleEnum } from '@lib/connect/roles/interfaces/role'
 import { RoleService } from '@lib/connect/roles/role.service'
-import { Connect, RU_Personal, RU_Progress, RU_Social, RU_User, UserTypeRelations } from '@lib/profile/users/entities'
-import { CreateUserInput } from '@lib/profile/users/inputs/create-user.input'
-import { FindUserInput } from '@lib/profile/users/inputs/find-user.input'
-import { UpdateUserInput } from '@lib/profile/users/inputs/update-user.input'
-import { UpdateUserRolesInput } from '@lib/profile/users/inputs/update-userRoles.input'
-import { StatusEnum, UserType } from '@lib/profile/users/interfaces'
+import { Connect, RU_Personal, RU_Progress, RU_Social, RU_User, UserTypeRelations } from './entities'
+import { CreateUserInput } from './inputs/create-user.input'
+import { FindUserInput } from './inputs/find-user.input'
+import { UpdateUserInput } from './inputs/update-user.input'
+import { UpdateUserRolesInput } from './inputs/update-userRoles.input'
+import { StatusEnum, UserType } from './interfaces'
 
 @Injectable()
 export class UserService {
@@ -115,19 +116,17 @@ export class UserService {
    * Создать юзера
    */
   public createUser = async (createUsersInput: CreateUserInput): Promise<UserType> => {
-    // const found = await this.findOneUserByParam({
-    //   connect: {
-    //     userName: createUsersInput.name,
-    //     email: createUsersInput.email,
-    //   },
-    // })
-    // if (found) throw new GraphQLError('Пользователь уже существует')
+    const found = await this.findOneUserByParam({
+      connect: {
+        userName: createUsersInput.name,
+        email: createUsersInput.email,
+      },
+    })
+    if (found) throw new GraphQLError('Пользователь уже существует')
 
     try {
       const hash = await this.hashPassword(createUsersInput.password)
-      const role = await this.roleService.getRoleByValue({
-        value: RoleEnum.visitor,
-      })
+      const role = await this.roleService.getRoleByValue({ value: RoleEnum.visitor })
 
       const userConnect = await Connect.create({
         userName: createUsersInput.name,
@@ -135,27 +134,18 @@ export class UserService {
         password: hash,
         roles: [role],
         status: StatusEnum.pending,
-      })
-      await userConnect.save()
-
+      }).save()
       const userPersonal = await RU_Personal.create()
-      await userPersonal.save()
-
       const userSocial = await RU_Social.create()
-      await userSocial.save()
-
       const userProgress = await RU_Progress.create()
-      await userProgress.save()
 
-      const newUser = await RU_User.create()
-      newUser.connect = userConnect
-      newUser.personal = userPersonal
-      newUser.social = userSocial
-      newUser.progress = userProgress
-      await this.userRepository.manager.save(newUser)
-
-      return newUser
-    } catch {
+      return await RU_User.create({
+        connect: userConnect,
+        personal: userPersonal,
+        social: userSocial,
+        progress: userProgress,
+      }).save()
+    } catch (e) {
       throw new GraphQLError('Ошибка создания пользователя')
     }
   }

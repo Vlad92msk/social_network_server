@@ -11,26 +11,26 @@ export type UserTypeRelations = [keyof Omit<UserType, 'id'>]
 @Entity(entity('ru_users'))
 export class RU_User extends BaseEntity implements UserType {
   @Field(() => ID)
-  @PrimaryGeneratedColumn({ name: 'id' })
+  @PrimaryGeneratedColumn()
   id: number
 
   @Field(() => ConnectEntity)
-  @OneToOne(() => ConnectEntity, (connect) => connect.user)
+  @OneToOne(() => ConnectEntity, (connect) => connect.user, { cascade: true })
   @JoinColumn()
   connect: ConnectEntity
 
   @Field(() => PersonalEntity)
-  @OneToOne(() => PersonalEntity, (personal) => personal.user)
+  @OneToOne(() => PersonalEntity, (personal) => personal.user, { cascade: true })
   @JoinColumn()
   personal: PersonalEntity
 
   @Field(() => SocialEntity)
-  @OneToOne(() => SocialEntity, (social) => social.user)
+  @OneToOne(() => SocialEntity, (social) => social.user, { cascade: true })
   @JoinColumn()
   social: SocialEntity
 
   @Field(() => ProgressEntity)
-  @OneToOne(() => ProgressEntity, (progress) => progress.user)
+  @OneToOne(() => ProgressEntity, (progress) => progress.user, { cascade: true })
   @JoinColumn()
   progress: ProgressEntity
 }
