@@ -1,6 +1,6 @@
 export interface Social {
-  friends: any
-  chats: any
-  subscribers: any
-  subscription: any
+  friends: string
+  chats: string
+  subscribers: string
+  subscription: string
 }

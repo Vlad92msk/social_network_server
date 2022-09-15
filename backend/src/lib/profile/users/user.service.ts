@@ -6,9 +6,9 @@ import { Repository } from 'typeorm'
 
 import { RoleEnum } from '@lib/connect/roles/interfaces/role'
 import { RoleService } from '@lib/connect/roles/role.service'
+import { GetUsersArgs } from '@lib/profile/users/args/get-users.args'
 import { Connect, RU_Personal, RU_Progress, RU_Social, RU_User, UserTypeRelations } from './entities'
 import { CreateUserInput } from './inputs/create-user.input'
-import { FindUserInput } from './inputs/find-user.input'
 import { UpdateUserInput } from './inputs/update-user.input'
 import { UpdateUserRolesInput } from './inputs/update-userRoles.input'
 import { StatusEnum, UserType } from './interfaces'
@@ -41,7 +41,7 @@ export class UserService {
   /**
    * Найти 1 юзера по условию
    */
-  public findOneUserByParam = async (where?: FindUserInput, relations?: UserTypeRelations) => {
+  public findOneUserByParam = async (where?: GetUsersArgs, relations?: UserTypeRelations) => {
     return await this.userRepository.findOne({
       where,
       relations: ['connect', 'personal', 'social', 'progress'],
@@ -51,7 +51,7 @@ export class UserService {
   /**
    * Обновить данные юзера
    */
-  public updateUser = async (where: FindUserInput, param: UpdateUserInput) => {
+  public updateUser = async (where: GetUsersArgs, param: UpdateUserInput) => {
     const find = await this.findOneUserByParam(where)
     if (!find) throw new GraphQLError('Пользователь не найден')
 
@@ -65,7 +65,7 @@ export class UserService {
   /**
    * Добавить роль пользователю
    */
-  public updateUserRoles = async (target: FindUserInput, { role }: UpdateUserRolesInput): Promise<boolean> => {
+  public updateUserRoles = async (target: GetUsersArgs, { role }: UpdateUserRolesInput): Promise<boolean> => {
     const findUser = await this.findOneUserByParam(target)
     if (!findUser) throw new GraphQLError('Потльзователь не найден')
 
@@ -90,7 +90,7 @@ export class UserService {
   /**
    * Удалить роль у пользователя
    */
-  public deleteUserRoles = async (target: FindUserInput, { role }: UpdateUserRolesInput): Promise<boolean> => {
+  public deleteUserRoles = async (target: GetUsersArgs, { role }: UpdateUserRolesInput): Promise<boolean> => {
     const findUser = await this.findOneUserByParam(target)
     if (!findUser) throw new GraphQLError('Пользователь не найден')
 
@@ -153,7 +153,7 @@ export class UserService {
   /**
    * Удалить юзера
    */
-  public deleteUser = async (userParam: FindUserInput) => {
+  public deleteUser = async (userParam: GetUsersArgs) => {
     const found = await this.findOneUserByParam(userParam)
     if (!found) throw new GraphQLError('Пользователь не найден')
 
@@ -166,7 +166,7 @@ export class UserService {
     }
   }
 
-  public getAllUsers = async (where?: FindUserInput) => {
+  public getAllUsers = async (where?: GetUsersArgs) => {
     return await this.userRepository.find({
       where,
       relations: {

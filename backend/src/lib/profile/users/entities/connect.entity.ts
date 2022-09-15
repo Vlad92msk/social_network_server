@@ -1,15 +1,15 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Role } from '@lib/connect/roles/entities/role.entity'
-import { RU_User } from '@lib/profile/users/entities/ru_user.entity'
 import { entity } from '@utils/entity'
 
 import { Connect as ConnectType } from '../interfaces/connect'
+import { RU_User } from './ru_user.entity'
 
 @ObjectType({ description: 'Инф о подключении' })
 @Entity(entity('connect'))
 export class Connect extends BaseEntity implements ConnectType {
-  @Field()
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number
 

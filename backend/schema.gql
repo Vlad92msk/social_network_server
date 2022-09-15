@@ -6,7 +6,7 @@
 type Connect {
   """Почта"""
   email: String!
-  id: Float!
+  id: ID!
 
   """Пароль"""
   password: String!
@@ -54,6 +54,72 @@ input FindUserInput {
   patronymicName: String
 }
 
+"""Поиск пользователя по авторизационным данным"""
+input FindUserToConnectInput {
+  email: String
+  id: Float
+  password: String
+  status: String
+  userName: String
+}
+
+"""Поиск пользователя по персональной информации"""
+input FindUserToPersonalInput {
+  """Город"""
+  city: String
+
+  """Страна"""
+  country: String
+
+  """Гражданство"""
+  dateOfBirth: DateTime
+
+  """Пол"""
+  gender: String
+
+  """Фамилия"""
+  lastName: String
+
+  """Имя"""
+  name: String!
+
+  """Гражданство"""
+  nationality: String
+
+  """Отчество"""
+  patronymicName: String
+}
+
+"""Поиск пользователя по уровню развития"""
+input FindUserToProgressInput {
+  """Место работы"""
+  employment: String
+
+  """Увлечения"""
+  hobbies: String
+
+  """Место учебы"""
+  placeOfStudy: String
+
+  """Владение языками"""
+  workingLanguages: String
+}
+
+"""Поиск пользователя по социальной информации"""
+input FindUserToSocialInput {
+  """Чаты"""
+  chats: String!
+
+  """Друзья"""
+  friends: String!
+
+  """Подписчики"""
+  subscribers: String!
+
+  """Подписки"""
+  subscription: String!
+}
+
 type Mutation {
   """Выйти"""
   authSignOut: Boolean!
@@ -75,7 +141,7 @@ type Mutation {
 type Query {
   """Войти"""
   authSignIn(signInInput: SignInInput!): RU_User!
-  getAllUsers: [RU_User!]!
+  getAllUsers(connect: FindUserToConnectInput, id: Float, personal: FindUserToPersonalInput, progress: FindUserToProgressInput, social: FindUserToSocialInput): [RU_User!]!
   getOneUser(id: Float!): RU_User!
 
   """Найти все роли"""
@@ -90,63 +156,63 @@ type Query {
 """Персональная информация (ru)"""
 type RU_Personal {
   """Город"""
-  city: String!
+  city: String
 
   """Страна"""
-  country: String!
+  country: String
 
   """Гражданство"""
-  dateOfBirth: DateTime!
+  dateOfBirth: DateTime
 
   """Пол"""
-  gender: String!
-  id: Float!
+  gender: String
+  id: ID!
 
   """Фамилия"""
-  lastName: String!
+  lastName: String
 
   """Имя"""
-  name: String!
+  name: String
 
   """Гражданство"""
-  nationality: String!
+  nationality: String
 
   """Отчество"""
-  patronymicName: String!
+  patronymicName: String
   user: RU_User!
 }
 
 """Социальная информация (ru)"""
 type RU_Progress {
   """Место работы"""
-  employment: String!
+  employment: String
 
   """Увлечения"""
-  hobbies: String!
-  id: Float!
+  hobbies: String
+  id: ID!
 
   """Место учебы"""
-  placeOfStudy: String!
+  placeOfStudy: String
   user: RU_User!
 
   """Владение языками"""
-  workingLanguages: String!
+  workingLanguages: String
 }
 
 """Социальная информация (ru)"""
 type RU_Social {
   """Чаты"""
-  chats: String!
+  chats: String
 
   """Друзья"""
-  friends: String!
-  id: Float!
+  friends: String
+  id: ID!
 
   """Подписчики"""
-  subscribers: String!
+  subscribers: String
 
   """Подписки"""
-  subscription: String!
+  subscription: String
   user: RU_User!
 }
 

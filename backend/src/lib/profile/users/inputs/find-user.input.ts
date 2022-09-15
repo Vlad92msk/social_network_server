@@ -2,20 +2,20 @@ import { Field, InputType } from '@nestjs/graphql'
 
 import { Connect, FindOneUser, Personal, Progress, Social } from '../interfaces'
 
-@InputType({ description: 'ddd' })
+@InputType()
 export class FindUserInput implements FindOneUser {
-  @Field({ nullable: true, name: 'id' })
+  @Field({ nullable: true })
   id?: number
 
-  @Field({ nullable: true, name: 'connect' })
+  @Field({ nullable: true })
   connect?: Partial<Connect>
 
-  @Field({ nullable: true, name: 'personal' })
+  @Field({ nullable: true })
   personal?: Partial<Personal>
 
-  @Field({ nullable: true, name: 'social' })
+  @Field({ nullable: true })
   social?: Partial<Social>
 
-  @Field({ nullable: true, name: 'progress' })
+  @Field({ nullable: true })
   progress?: Partial<Progress>
 }

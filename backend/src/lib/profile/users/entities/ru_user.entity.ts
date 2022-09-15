@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { BaseEntity, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { UserType } from '@lib/profile/users/interfaces'
 import { entity } from '@utils/entity'
+import { UserType } from '../interfaces'
 
 import { Connect as ConnectEntity, RU_Personal as PersonalEntity, RU_Progress as ProgressEntity, RU_Social as SocialEntity } from './index'
 
