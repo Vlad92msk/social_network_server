@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GetUsersArgs } from './args/get-users.args'
+import { GetUserArgs } from './args'
 import { RU_User } from './entities'
-import { CreateUserInput } from './inputs/create-user.input'
+import { CreateUserInput } from './inputs'
 import { UserService } from './user.service'
 
 @Resolver(() => RU_User)
@@ -24,7 +24,7 @@ export class UserResolver {
   }
 
   @Query(() => [RU_User])
-  async getAllUsers(@Args() findUser?: GetUsersArgs): Promise<RU_User[]> {
+  async getAllUsers(@Args() findUser?: GetUserArgs): Promise<RU_User[]> {
     return await this.userService.getAllUsers(findUser)
   }
 }
