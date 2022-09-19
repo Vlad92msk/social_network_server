@@ -10,7 +10,7 @@ type Connect {
 
   """Пароль"""
   password: String!
-  roles: [Role!]!
+  roles: [Role!]
 
   """Статус"""
   status: String!
@@ -136,11 +136,17 @@ type Mutation {
   """Удалить роль"""
   rolesDelete(params: FindRoleInput!): Boolean!
 
-  """Создать юзера"""
+  """Создать пользователя"""
   usersCreate(user: CreateUserInput!): RU_User!
+
+  """Удалить у пользователя имеющуюся роль"""
+  usersRemoveRole(roleId: Float!, userId: Float!): Boolean!
 
   """Обновить данные пользователя"""
   usersUpdate(connect: FindUserToConnectInput, id: Float!, personal: FindUserToPersonalInput, progress: FindUserToProgressInput, social: FindUserToSocialInput): RU_User!
+
+  """Дать пользователю новую роль"""
+  usersUpdateGiveNewRole(id: Float!, rolesInput: UpdateUserRolesInput!): Boolean!
 }
 
 type Query {
@@ -151,7 +157,7 @@ type Query {
   getAllUsers(connect: FindUserToConnectInput, id: Float, personal: FindUserToPersonalInput, progress: FindUserToProgressInput, social: FindUserToSocialInput): [RU_User!]!
 
   """Получить 1 пользователя"""
-  getOneUser(id: Float!): RU_User!
+  getOneUser(connect: FindUserToConnectInput, id: Float, personal: FindUserToPersonalInput, progress: FindUserToProgressInput, social: FindUserToSocialInput): RU_User!
 
   """Найти все роли"""
   rolesFindAll: [Role!]!
@@ -238,7 +244,7 @@ type Role {
   """Описание роли"""
   description: String!
   id: ID!
-  users: [RU_User!]!
+  users: [RU_User!]
 
   """Название роли"""
   value: String!
@@ -247,6 +253,10 @@ type Role {
 input SignInInput {
   email: String!
   password: String!
+}
+
+input UpdateUserRolesInput {
+  role: String!
 }
 
 """Пользователь"""

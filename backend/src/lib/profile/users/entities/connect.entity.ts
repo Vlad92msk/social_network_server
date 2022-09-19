@@ -29,9 +29,10 @@ export class Connect extends BaseEntity implements ConnectType {
   @Column({ name: 'status' })
   status: string
 
-  @Field(() => [Role])
+  @Field(() => [Role], { nullable: true })
   @ManyToMany(() => Role, (role) => role.users, {
-    cascade: true,
+    cascade: ['update', 'insert', 'remove', 'soft-remove'],
+    nullable: true,
   })
   @JoinTable()
   roles: Role[]

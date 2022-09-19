@@ -19,7 +19,7 @@ export class Role extends BaseEntity implements RoleType {
   @Column({ name: 'description' })
   description: string
 
-  @Field(() => [RU_User])
+  @Field(() => [RU_User], {nullable: true})
   @ManyToMany(() => Connect, (user) => user.roles)
   users: RU_User[]
 }

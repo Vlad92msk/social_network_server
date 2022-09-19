@@ -35,6 +35,15 @@ export class RU_User extends BaseEntity implements UserType {
   progress: ProgressEntity
 }
 
+export const userRelations = {
+  social: true,
+  connect: {
+    roles: true,
+  },
+  personal: true,
+  progress: true,
+}
+
 /**
  * type: 'varchar' - Для строк до 65535 символов
  * length: 30 - кол-во букв в строке (в т.ч пробелы)

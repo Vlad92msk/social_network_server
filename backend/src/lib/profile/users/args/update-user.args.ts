@@ -1,10 +1,5 @@
 import { ArgsType, Field } from '@nestjs/graphql'
-import {
-  FindUserToConnectInput,
-  FindUserToPersonalInput,
-  FindUserToProgressInput,
-  FindUserToSocialInput
-} from '@lib/profile/users/inputs'
+import { FindUserToConnectInput, FindUserToPersonalInput, FindUserToProgressInput, FindUserToSocialInput } from '../inputs'
 
 @ArgsType()
 export class UpdateUserArgs {
