@@ -64,6 +64,9 @@ export class UserService {
       const findRole = await this.roleService.getRoleByValue({
         value: rolesInput.role,
       })
+
+      if (findUser.connect.roles.some(({ id }) => id === findRole.id)) return true
+
       findUser.connect.roles.push(findRole)
       await findUser.save()
       return true
@@ -83,6 +86,8 @@ export class UserService {
       const findRole = await this.roleService.getRoleByValue({
         id: roleId,
       })
+      if (!findUser.connect.roles.some(({ id }) => id === findRole.id)) return true
+
       findUser.connect.roles = remove(findUser.connect.roles, ({ id }) => findRole.id !== id)
       await findUser.save()
       return true
