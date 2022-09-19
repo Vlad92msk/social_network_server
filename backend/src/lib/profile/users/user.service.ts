@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
 import { GraphQLError } from 'graphql'
+import { forIn, set } from 'lodash'
 import { Repository } from 'typeorm'
 
 import { RoleEnum } from '@lib/connect/roles/interfaces/role'
@@ -49,13 +50,16 @@ export class UserService {
   /**
    * Обновить данные юзера
    */
-  public updateUser = async (where: GetUserArgs, param: UpdateUserArgs) => {
-    const find = await this.findOneUserByParam(where)
+  public updateUser = async (targetUserId: number, newParams: Omit<UpdateUserArgs, 'id'>) => {
+    const find = await this.findOneUserByParam({
+      id: targetUserId,
+    })
     if (!find) throw new GraphQLError('Пользователь не найден')
 
     try {
-      return await this.userRepository.update({ id: where.id }, param)
-    } catch {
+      forIn(newParams, (value, key) => forIn(value, (v, p) => set(find[key], p, v)))
+      return await find.save()
+    } catch (e) {
       throw new GraphQLError('Ошибка обновления данных пользователя')
     }
   }
@@ -165,6 +169,7 @@ export class UserService {
   }
 
   public getAllUsers = async (where?: GetUserArgs) => {
+    console.log('where', where)
     return await this.userRepository.find({
       where,
       relations: {
@@ -180,9 +185,4 @@ export class UserService {
     await this.userRepository.delete({ id })
     return id
   }
-
-  // async updateUser(updateUserInput: UpdateUserInput): Promise<RU_User> {
-  //   await this.userRepository.update({id: updateUserInput.id}, {...updateUserInput})
-  //   return await this.getOneUser(updateUserInput.id)
-  // }
 }

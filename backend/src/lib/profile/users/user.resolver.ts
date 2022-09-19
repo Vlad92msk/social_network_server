@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GetUserArgs } from './args'
+import { omit } from 'lodash'
+import { GetUserArgs, UpdateUserArgs } from './args'
 import { RU_User } from './entities'
 import { CreateUserInput } from './inputs'
 import { UserService } from './user.service'
@@ -8,8 +9,8 @@ import { UserService } from './user.service'
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Mutation(() => Number)
-  async removeUser(@Args('id') id: number): Promise<number> {
+  @Mutation(() => Number, { description: 'Удалить пользователя' })
+  async removeUser(@Args('id') id: number) {
     return await this.userService.removeUser(id)
   }
 
@@ -18,13 +19,19 @@ export class UserResolver {
     return await this.userService.createUser(user)
   }
 
-  @Query(() => RU_User)
-  async getOneUser(@Args('id') id: number): Promise<RU_User> {
+  @Mutation(() => RU_User, { description: 'Обновить данные пользователя' })
+  async usersUpdate(@Args() param: UpdateUserArgs) {
+    const { id } = param
+    return await this.userService.updateUser(id, omit(param, 'id'))
+  }
+
+  @Query(() => RU_User, { description: 'Получить 1 пользователя' })
+  async getOneUser(@Args('id') id: number) {
     return await this.userService.getOneUser(id)
   }
 
-  @Query(() => [RU_User])
-  async getAllUsers(@Args() findUser?: GetUserArgs): Promise<RU_User[]> {
+  @Query(() => [RU_User], { description: 'Получить всех пользователей' })
+  async getAllUsers(@Args({ nullable: true }) findUser?: GetUserArgs) {
     return await this.userService.getAllUsers(findUser)
   }
 }

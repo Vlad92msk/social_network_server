@@ -81,7 +81,7 @@ input FindUserToPersonalInput {
   lastName: String
 
   """Имя"""
-  name: String!
+  name: String
 
   """Гражданство"""
   nationality: String
@@ -126,6 +126,8 @@ type Mutation {
 
   """Зарегистрироваться"""
   authSignUp(user: CreateUserInput!): RU_User!
+
+  """Удалить пользователя"""
   removeUser(id: Float!): Float!
 
   """Создать роль"""
@@ -136,12 +138,19 @@ type Mutation {
 
   """Создать юзера"""
   usersCreate(user: CreateUserInput!): RU_User!
+
+  """Обновить данные пользователя"""
+  usersUpdate(connect: FindUserToConnectInput, id: Float!, personal: FindUserToPersonalInput, progress: FindUserToProgressInput, social: FindUserToSocialInput): RU_User!
 }
 
 type Query {
   """Войти"""
   authSignIn(signInInput: SignInInput!): RU_User!
+
+  """Получить всех пользователей"""
   getAllUsers(connect: FindUserToConnectInput, id: Float, personal: FindUserToPersonalInput, progress: FindUserToProgressInput, social: FindUserToSocialInput): [RU_User!]!
+
+  """Получить 1 пользователя"""
   getOneUser(id: Float!): RU_User!
 
   """Найти все роли"""
@@ -220,9 +229,9 @@ type RU_Social {
 type RU_User {
   connect: Connect!
   id: ID!
-  personal: RU_Personal!
-  progress: RU_Progress!
-  social: RU_Social!
+  personal: RU_Personal
+  progress: RU_Progress
+  social: RU_Social
 }
 
 type Role {

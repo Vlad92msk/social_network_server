@@ -4,7 +4,7 @@ import { Personal } from '../interfaces'
 
 @InputType({ description: 'Поиск пользователя по персональной информации' })
 export class FindUserToPersonalInput implements Partial<Personal> {
-  @Field({ description: 'Имя' })
+  @Field({ description: 'Имя', nullable: true })
   @IsString()
   name?: string
 

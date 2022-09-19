@@ -99,14 +99,9 @@ export class AuthService {
 
     if (user && user.connect.status === StatusEnum.pending) {
       try {
-        return await this.userService.updateUser(
-          {
-            id: user.id,
-          },
-          {
-            connect: { status: StatusEnum.active },
-          }
-        )
+        return await this.userService.updateUser(user.id, {
+          connect: { status: StatusEnum.active },
+        })
       } catch (e) {
         console.log('e', e)
       }

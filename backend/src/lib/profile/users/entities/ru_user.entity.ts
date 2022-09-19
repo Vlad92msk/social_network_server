@@ -19,18 +19,18 @@ export class RU_User extends BaseEntity implements UserType {
   @JoinColumn()
   connect: ConnectEntity
 
-  @Field(() => PersonalEntity)
-  @OneToOne(() => PersonalEntity, (personal) => personal.user, { cascade: true })
+  @Field(() => PersonalEntity, { nullable: true })
+  @OneToOne(() => PersonalEntity, (personal) => personal.user, { nullable: true, cascade: true })
   @JoinColumn()
   personal: PersonalEntity
 
-  @Field(() => SocialEntity)
-  @OneToOne(() => SocialEntity, (social) => social.user, { cascade: true })
+  @Field(() => SocialEntity, { nullable: true })
+  @OneToOne(() => SocialEntity, (social) => social.user, { nullable: true, cascade: true })
   @JoinColumn()
   social: SocialEntity
 
-  @Field(() => ProgressEntity)
-  @OneToOne(() => ProgressEntity, (progress) => progress.user, { cascade: true })
+  @Field(() => ProgressEntity, { nullable: true })
+  @OneToOne(() => ProgressEntity, (progress) => progress.user, { nullable: true, cascade: true })
   @JoinColumn()
   progress: ProgressEntity
 }
