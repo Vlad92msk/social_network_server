@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
 import { GraphQLError } from 'graphql'
-import { forIn, set } from 'lodash'
+import { from, map, of, tap, withLatestFrom } from 'rxjs'
 import { Repository } from 'typeorm'
 
+import { tableOneToOneUpdate } from '@src/utils'
 import { RoleEnum } from '@lib/connect/roles/interfaces/role'
 import { RoleService } from '@lib/connect/roles/role.service'
 import { GetUserArgs, UpdateUserArgs } from './args'
@@ -50,15 +51,12 @@ export class UserService {
   /**
    * Обновить данные юзера
    */
-  public updateUser = async (targetUserId: number, newParams: Omit<UpdateUserArgs, 'id'>) => {
-    const find = await this.findOneUserByParam({
-      id: targetUserId,
-    })
+  public updateUser = async (id: number, newParams: Omit<UpdateUserArgs, 'id'>) => {
+    const find = await this.findOneUserByParam({ id })
     if (!find) throw new GraphQLError('Пользователь не найден')
 
     try {
-      forIn(newParams, (value, key) => forIn(value, (v, p) => set(find[key], p, v)))
-      return await find.save()
+      return await tableOneToOneUpdate(newParams, find)
     } catch (e) {
       throw new GraphQLError('Ошибка обновления данных пользователя')
     }
