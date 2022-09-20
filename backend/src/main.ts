@@ -1,3 +1,6 @@
+import { config } from 'dotenv'
+config()
+
 if (!process.env.IS_TS_NODE) {
   require('module-alias/register')
 }
@@ -5,11 +8,9 @@ if (!process.env.IS_TS_NODE) {
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import * as cookieParser from 'cookie-parser'
-import { config } from 'dotenv'
 import { ConfigEnum } from '@config/config.enum'
 import { AppModule } from '@lib/app.module'
 
-config()
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)

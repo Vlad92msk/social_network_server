@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import * as bcrypt from 'bcrypt'
 import { GraphQLError } from 'graphql'
 import { remove } from 'lodash'
-import { FindOptionsRelations, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
 import { tableOneToOneUpdate } from '@src/utils'
 import { RoleEnum } from '@lib/connect/roles/interfaces/role'
 import { RoleService } from '@lib/connect/roles/role.service'
 import { AddUserRoleArgs } from '@lib/profile/users/args/add-user-role.args'
 import { GetUserArgs, UpdateUserArgs } from './args'
-import { Connect, RU_Personal, RU_Progress, RU_Social, RU_User, userRelations, UserTypeRelations } from './entities'
-import { CreateUserInput, UpdateUserRolesInput } from './inputs'
+import { Connect, RU_Personal, RU_Progress, RU_Social, RU_User, userRelations } from './entities'
+import { CreateUserInput } from './inputs'
 import { StatusEnum, UserType } from './interfaces'
+
+const bcrypt = require('bcryptjs')
 
 @Injectable()
 export class UserService {

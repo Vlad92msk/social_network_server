@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import * as bcrypt from 'bcrypt'
 import { addDays } from 'date-fns'
 import { GraphQLError } from 'graphql'
 import { ConfigEnum } from '@config/config.enum'
@@ -10,6 +9,8 @@ import { StatusEnum, UserType } from '@lib/profile/users/interfaces'
 import { UserService } from '@lib/profile/users/user.service'
 
 import { SignInInput } from './inputs/signIn.input'
+
+const bcrypt = require('bcryptjs')
 
 @Injectable()
 export class AuthService {
