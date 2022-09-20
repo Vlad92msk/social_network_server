@@ -32,7 +32,7 @@ services:
   server:
     container_name: server
     build:
-      context: ./backend
+      context: ./server
     depends_on:
       - postgress
       - pgadmin
@@ -48,13 +48,12 @@ services:
       TYPEORM_DATABASE: ${TYPEORM_DATABASE}
       TYPEORM_PORT: ${TYPEORM_PORT}
       TYPEORM_HOST: postgress
-#  frontend:
-#    container_name: frontend-angular-lesson-1
+#  client:
+#    container_name: client
 #    build:
-#      context: ./frontend
+#      context: ./client
 #    depends_on:
-#      - db
-#      - backend
+#      - server
 #    restart: unless-stopped
 #    ports:
 #      - '80:80'

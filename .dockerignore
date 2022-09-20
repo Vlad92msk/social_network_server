@@ -1,27 +1,23 @@
 .dockerignore
-/backend/dist
-/backend/.env
-/backend/node_modules
+/server/dist
+/server/.env
+/server/node_modules
+/server/coverage
+/server/test
+/server/logs
+/server/*.log
+/server/yarn-debug.log*
+/server/yarn-error.log*
+/server/.DS_Store
+
 /node_modules
-/frontend
 
 /database
 /pgadmin
 .env
 
-# Logs
-/backend/logs
-/backend/*.log
-/backend/npm-debug.log*
-/backend/pnpm-debug.log*
-/backend/yarn-debug.log*
-/backend/yarn-error.log*
-/backend/lerna-debug.log*
+/frontend
+
 
 # OS
-/backend/.DS_Store
 
-# Tests
-/backend/coverage
-/backend/test
-/backend/.nyc_output
