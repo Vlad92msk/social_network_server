@@ -1,0 +1,64 @@
+{
+  "extends": [
+    "plugin:@next/next/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "next/core-web-vitals",
+    "next"
+  ],
+  "plugins": [
+//    "@typescript-eslint",
+    "simple-import-sort",
+    "import"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "next": {
+      "rootDir": "."
+    }
+  },
+  "rules": {
+    "semi": [2, "never"],
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "no-unused-vars": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "no-use-before-define": [0],
+    "react/function-component-definition": [2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "simple-import-sort/sort": "off",
+    "sort-imports": ["error", { "ignoreCase": true, "ignoreDeclarationSort": true }],
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [ "builtin", "external", "internal", ["parent", "sibling"] ],
+        "pathGroups": [
+          { "pattern": "@shared/**", "group": "external", "position": "after" },
+          { "pattern": "@public/**", "group": "external", "position": "after" },
+          { "pattern": "@pages/**", "group": "external", "position": "after" }
+        ],
+        "pathGroupsExcludedImportTypes": ["internal"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}

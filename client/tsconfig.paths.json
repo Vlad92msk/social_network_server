@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@client/*": ["client/*"],
-      "@client_shared/*": ["client/shared/*"],
-      "@client_public/*": ["client/public/*"],
-      "@client_projects/*": ["client/projects/*"],
-      "@client_pages/*": ["client/pages/*"]
+      "@shared/*": ["shared/*"],
+      "@public/*": ["public/*"],
+      "@pages/*": ["pages/*"]
     }
   }
 }
