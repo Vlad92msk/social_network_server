@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export const Home: NextPage = () => (
+const Home: NextPage = () => (
   <div className={styles.container}>
     <Head>
       <title>Create Next App</title>
@@ -69,3 +69,5 @@ export const Home: NextPage = () => (
     </footer>
   </div>
 )
+
+export default Home

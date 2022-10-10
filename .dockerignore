@@ -16,8 +16,6 @@
 /pgadmin
 .env
 
-/frontend
-
-
-# OS
+/client/node_modules
+/client/.next
 
