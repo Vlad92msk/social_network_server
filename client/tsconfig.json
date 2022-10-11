@@ -9,6 +9,12 @@
     На данный момент стандарт ES6, с небольшими оговорками, поддерживается 97.29% браузеров.
     Так что для frontend приложений ситуация аналогичная.*/
     "target": "ESNext",
+    "plugins": [
+      {
+        "transform": "typescript-react-loadable-plugin",
+        "moduleKind": "userRequest"
+      }
+    ],
     "lib": [
       "dom",
       "dom.iterable",
@@ -16,7 +22,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    //    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -25,7 +31,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "strict": false
   },
   "include": [
     "next-env.d.ts",

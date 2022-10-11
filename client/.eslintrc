@@ -1,10 +1,13 @@
 {
   "extends": [
+    "next",
+    "next/core-web-vitals",
     "plugin:@next/next/recommended",
     "airbnb",
     "airbnb/hooks",
-    "next/core-web-vitals",
-    "next"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+//    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "plugins": [
 //    "@typescript-eslint",
@@ -26,9 +29,26 @@
     }
   },
   "rules": {
-    "semi": [2, "never"],
+    "max-len": ["error", { "code": 180 }],
+    "semi": ["error", "never"],
+    "@typescript-eslint/semi": "off",
     "quotes": [2, "single", { "avoidEscape": true }],
+    "no-param-reassign": [2, { "props": false }],
+    "react/require-default-props": "off",
+    "react-hooks/rules-of-hooks": 0,
     "no-unused-vars": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never",
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
     "no-use-before-define": [0],
     "react/function-component-definition": [2,
@@ -44,6 +64,45 @@
     "import/no-duplicates": "error",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true
+    }],
+    "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0, "maxBOF": 0 }],
+    "no-useless-constructor": "off",
+    "@typescript-eslint/no-useless-constructor": ["error"],
+    "import/no-default-export": "error",
+    "react/prop-types": "off",
+    "react/jsx-props-no-multi-spaces": "off",
+    "@typescript-eslint/no-use-before-define": [1],
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "camelcase": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+
+    // Разрешает объявления теневых переменных во внешней области
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+
+    // Разрывные строки внутри фигурных скобок. Разрежает записывать объект в строку не более 6 значений (< 7)
+    "object-curly-newline": ["error", {
+      // Объектный литерал
+      "ObjectExpression": { "consistent": true, "minProperties": 7 },
+      // Деструктуризация объектов
+      "ObjectPattern": { "consistent": true, "minProperties": 7 },
+      // Именованный импорт
+      "ImportDeclaration": { "consistent": true, "minProperties": 7 },
+      // Именованный экспорт
+      "ExportDeclaration": { "consistent": true, "minProperties": 7 }
+    }],
+
+    /**
+     * Разрешает обраться к значениям объекта начинающихся с нижнего подчеркивания _
+     */
+    "no-underscore-dangle": "off",
+    "import/no-cycle": "off",
     "import/order": [
       "error",
       {
