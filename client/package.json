@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "next:dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "graphql:generate": "graphql-codegen --config codegen.ts --watch",
+    "next:start:dev": "concurrently \"yarn next:dev\" \"yarn graphql:generate\"",
     "lint": "eslint -c .eslintrc ./shared --ext .ts",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -55,6 +57,7 @@
     "svgo": "^2.8.0",
     "typescript": "4.8.3",
     "ts-loader": "^9.4.1",
-    "typescript-react-loadable-plugin": "^1.0.3"
+    "typescript-react-loadable-plugin": "^1.0.3",
+    "concurrently": "^7.4.0"
   }
 }
