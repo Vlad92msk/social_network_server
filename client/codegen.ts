@@ -10,7 +10,7 @@ const folder = 'src/apollo/graphql/'
  */
 const generates = fs.readdirSync(folder).reduce((acc, moduleName) => ({
   ...acc,
-  [`${folder}${moduleName}/generate-${moduleName}-hooks.ts`]: {
+  [`${folder}${moduleName}/generate.ts`]: {
     plugins: [
       'typescript',
       'typescript-operations',
