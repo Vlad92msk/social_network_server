@@ -1,7 +1,7 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { DEFAULT_LANGUAGE, isValidLanguage } from '@pages/_app'
-import { addApolloState, initializeApollo } from 'apollo/client'
+import { addApolloState, initializeApollo } from 'src/apollo/client'
 
 /**
  * Возвращает объект для редиректа

@@ -4,7 +4,9 @@
     "paths": {
       "@shared/*": ["shared/*"],
       "@public/*": ["public/*"],
-      "@pages/*": ["pages/*"]
+      "@pages/*": ["pages/*"],
+      "@modules/*": ["src/modules/*"],
+      "@my-apollo/*": ["src/apollo/*"]
     }
   }
 }
