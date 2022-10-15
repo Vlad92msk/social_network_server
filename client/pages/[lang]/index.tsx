@@ -1,8 +1,12 @@
 import { NextPage } from 'next'
 import { App } from '@modules/App'
+import { Page } from '@shared/components/Page/Page'
+import { PortfolioPages } from 'src/router/pages'
 
 const Home: NextPage = (props) => (
-  <App />
+  <Page page={PortfolioPages.PROFILE}>
+    <App />
+  </Page>
 )
 
 // export const getServerSideProps: GetServerSideProps = (ctx) => getSSR(ctx, async (apolloClient) => {

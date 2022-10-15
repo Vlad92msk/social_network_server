@@ -14,7 +14,7 @@ export enum RoleEnum {
 
 export interface RoleType {
   id: number
-  value: string
+  value: RoleEnum
   description: string
   users: UserType[]
 }

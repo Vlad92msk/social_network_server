@@ -1,10 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { DEFAULT_LANGUAGE } from '@pages/_app'
+import { GetServerSideProps, NextPage } from 'next'
+import { DEFAULT_LANGUAGE } from 'src/services/language'
 
 
-export default function redirect(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  res.redirect(`/${DEFAULT_LANGUAGE}/`)
-}
+const Home: NextPage = () => <template />
+export const getServerSideProps: GetServerSideProps = async () => ({
+  redirect: {
+    destination: `/${DEFAULT_LANGUAGE}`,
+    permanent: true,
+  },
+  props: {},
+})
+
+export default Home

@@ -1,7 +1,7 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { DEFAULT_LANGUAGE, isValidLanguage } from '@pages/_app'
 import { addApolloState, initializeApollo } from 'src/apollo/client'
+import { DEFAULT_LANGUAGE, isAvailableLanguage, Language } from 'src/services/language'
 
 /**
  * Возвращает объект для редиректа
@@ -15,7 +15,7 @@ export const createRedirectObj = (resolvedUrl: string) => ({
  * Валидирует запрос на корректность выбранного в URL языка
  */
 export const ssrLanguageValidate = (ctx: GetServerSidePropsContext) => {
-  const isValidLang = isValidLanguage(ctx.query.lang)
+  const isValidLang = isAvailableLanguage(ctx.query.lang as Language)
   if (!isValidLang) {
     return createRedirectObj(ctx.resolvedUrl)
   }

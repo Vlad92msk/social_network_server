@@ -1,9 +1,7 @@
-import { ApolloProvider } from '@apollo/client'
 import { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
-import { useApollo } from '@my-apollo/client'
-import { storageGet, storageSet } from '@shared/utils'
+import React, { Suspense } from 'react'
 import '@public/styles/base.scss'
+import { ServiceLanguage } from 'src/services/language'
 import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.min.css'
 import 'swiper/components/scrollbar/scrollbar.min.css'
@@ -22,35 +20,20 @@ import 'swiper/components/effect-cube/effect-cube.min.css'
 //   )
 // }
 
-export const languageVariants = ['ru', 'en']
-export const DEFAULT_LANGUAGE = 'ru'
 
-export const isValidLanguage = (lang: any) => languageVariants.includes(String(lang))
+interface App {
+  Component: NextPage
+  pageProps: Record<string, any>
+}
 
-export const ProjectLanguage = React.createContext({
-  language: '',
-  setLanguage: null,
-})
-
-
-const MyApp = ({ Component, pageProps }: { Component: NextPage; pageProps: Record<string, any> }) => {
-  const [language, setLanguage] = useState<string>(() => storageGet('userLanguage') || DEFAULT_LANGUAGE)
-
-  /**
-   * Меняем язык в меню - меняем и в сторе
-   */
-  useEffect(() => {
-    storageSet('userLanguage', language)
-  }, [language])
-
-  const apolloClient = useApollo(language, pageProps)
-
+const MyApp = (props: App) => {
+  const { Component, pageProps } = props
   return (
-    <ProjectLanguage.Provider value={{ language, setLanguage }}>
-      <ApolloProvider client={apolloClient}>
+    <Suspense fallback="Loading...">
+      <ServiceLanguage pageProps={pageProps}>
         <Component {...pageProps} />
-      </ApolloProvider>
-    </ProjectLanguage.Provider>
+      </ServiceLanguage>
+    </Suspense>
   )
 }
 
