@@ -80,7 +80,6 @@ export const addApolloState = (client: ApolloClient<NormalizedCacheObject>, page
 }
 
 export const useApollo = (lang: Language, pageProps: unknown): ApolloClient<NormalizedCacheObject> => {
-  // @ts-ignore
   const state = pageProps[APOLLO_STATE_PROP_NAME]
   return useMemo(() => initializeApollo(lang, state), [state, lang])
 }

@@ -1,28 +1,11 @@
 import { ApolloProvider } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { useObservableState } from 'observable-hooks'
-import React, { FC, PropsWithChildren, useEffect, useMemo } from 'react'
-import { filter, map, tap } from 'rxjs'
+import { useObservable, useObservableState, useSubscription } from 'observable-hooks'
+import React, { FC, PropsWithChildren} from 'react'
+import { distinctUntilChanged, filter, map, tap } from 'rxjs'
 import { useApollo } from '@my-apollo/client'
-import { withPreviousItem } from '@shared/rxUtils'
 import { storageGet, storageSet } from '@shared/utils'
 import { ContextService, DEFAULT_LANGUAGE, Language, LANGUAGE_VARIABLES } from './context'
-
-type TestProps = {
-  provideValues: any
-  apolloClient: any
-  children: any
-}
-const Test: FC<TestProps> = React.memo((props) => {
-  const { provideValues, apolloClient, children } = props
-  return (
-    <ContextService.Provider value={provideValues}>
-      <ApolloProvider client={apolloClient}>
-        {children}
-      </ApolloProvider>
-    </ContextService.Provider>
-  )
-})
 
 export interface ServiceLanguageProps extends PropsWithChildren{
   pageProps: Record<string, any>
@@ -30,60 +13,78 @@ export interface ServiceLanguageProps extends PropsWithChildren{
 
 export const ServiceLanguage: FC<ServiceLanguageProps> = React.memo((props) => {
   const { pageProps, children } = props
-  const { query, push } = useRouter()
+  const router = useRouter()
 
   const [language, setLanguage] = useObservableState<Language>(
     (event$, init) => event$.pipe(
       filter(Boolean),
-      map((lang) => {
-        const isUrlCorrect = Boolean(lang && LANGUAGE_VARIABLES.includes(lang))
-        return [lang, isUrlCorrect]
-      }),
-      tap(([lg, isCorrect]) => {
+      distinctUntilChanged(),
+      map((value) => {
+        const isCorrect = Boolean(value && LANGUAGE_VARIABLES.includes(value))
         const languageInStorage = storageGet('userLanguage') as Language
-        if (isCorrect && languageInStorage !== lg) {
-          storageSet('userLanguage', lg)
-          push({
-            query: {
-              lang: lg,
-            },
-          })
+
+        if (!languageInStorage) {
+          storageSet('userLanguage', isCorrect ? value : init)
         }
 
         if (!isCorrect) {
-          if (!languageInStorage) {
-            storageSet('userLanguage', languageInStorage || init)
-          }
-          push({
-            query: {
-              lang: languageInStorage || init,
-            },
-          })
+          return languageInStorage || init
         }
+
+        if (languageInStorage !== value) {
+          storageSet('userLanguage', value)
+        }
+
+        return value
       }),
-      withPreviousItem(),
-      map(({ current, previous }:{current: [Language, boolean], previous: [Language, boolean]}) => {
-        const [a, b] = current || []
-        const [c, d] = previous || []
-        // eslint-disable-next-line no-nested-ternary
-        return b ? a : d ? c : init
-      }),
+      distinctUntilChanged(),
+      tap((val) => router.push({
+        query: {
+          lang: val,
+        },
+      })),
     ),
     DEFAULT_LANGUAGE,
   )
 
+  const router$ = useObservable(
+    (inputs$) => inputs$.pipe(
+      filter(([query]) => Boolean(query)),
+      distinctUntilChanged(),
+      map(([query]: [Language]) => {
+        const isCorrect = Boolean(query && LANGUAGE_VARIABLES.includes(query))
+        const languageInStorage = storageGet('userLanguage') as Language
 
-  useEffect(() => {
-    setLanguage(query?.lang as Language)
-  }, [query?.lang, setLanguage])
+        if (!isCorrect) {
+          router.push({
+            query: {
+              lang: languageInStorage || DEFAULT_LANGUAGE,
+            },
+          })
+          return languageInStorage || DEFAULT_LANGUAGE
+        }
+
+        if (!languageInStorage || languageInStorage !== query) {
+          storageSet('userLanguage', query)
+        }
+
+        return query
+      }),
+      distinctUntilChanged(),
+      tap(setLanguage),
+    ),
+    [router.query?.lang],
+  )
+  useSubscription(router$)
 
 
   const apolloClient = useApollo(language, pageProps)
-  const provideValues = useMemo(() => ({ language, setLanguage }), [language, setLanguage])
-
+  console.log('111111111', 111111111)
   return (
-    <Test provideValues={provideValues} apolloClient={apolloClient}>
-      {children}
-    </Test>
+    <ContextService.Provider value={{ language, setLanguage }}>
+      <ApolloProvider client={apolloClient}>
+        {children}
+      </ApolloProvider>
+    </ContextService.Provider>
   )
 })
