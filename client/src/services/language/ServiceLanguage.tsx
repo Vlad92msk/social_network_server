@@ -1,61 +1,77 @@
 import { ApolloProvider } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { useObservable, useSubscription } from 'observable-hooks'
-import React, { FC, PropsWithChildren, useMemo, useState } from 'react'
-import {
-  combineLatest, distinctUntilChanged, filter, map, pairwise,
-} from 'rxjs'
+import React, { FC, PropsWithChildren, useState } from 'react'
+import { combineLatest, concat, distinctUntilChanged, filter, map, pairwise } from 'rxjs'
+import { take } from 'rxjs/operators'
 import { useApollo } from '@my-apollo/client'
+import { ErrorFallBack } from '@shared/components/ErrorFallBack'
+import { Loader } from '@shared/components/Loader'
 import { storageGet, storageSet } from '@shared/utils'
+import { languageMapValues } from 'src/services/language'
 import { ContextService, DEFAULT_LANGUAGE, Language, LANGUAGE_VARIABLES } from './context'
 
 export interface ServiceLanguageProps extends PropsWithChildren{
   pageProps: Record<string, any>
 }
 
-export const ServiceLanguage: FC<ServiceLanguageProps> = React.memo((props) => {
+export const ServiceLanguage: FC<ServiceLanguageProps> = (props) => {
   const { pageProps, children } = props
   const router = useRouter()
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE)
-  const [language1, setLanguage1] = useState(DEFAULT_LANGUAGE)
+  const [result, setResult] = useState(DEFAULT_LANGUAGE)
 
   const language$ = useObservable(
-    (event$) => event$.pipe(
-      filter(([value]) => Boolean(value)),
-      map(([value]) => {
-        const isCorrect = Boolean(value && LANGUAGE_VARIABLES.includes(value))
-        if (!isCorrect) return DEFAULT_LANGUAGE
-
-        return value
-      }),
-      distinctUntilChanged(),
-    ),
+    (event$) => event$.pipe(languageMapValues()),
     [language],
   )
 
   const router$ = useObservable(
-    (inputs$) => inputs$.pipe(
-      filter(([query]) => Boolean(query)),
-      map(([query]: [Language]) => {
-        const isCorrect = Boolean(query && LANGUAGE_VARIABLES.includes(query))
-        if (!isCorrect) return DEFAULT_LANGUAGE
-        setLanguage(query)
-
-        return query
-      }),
-      distinctUntilChanged(),
-    ),
+    (inputs$) => inputs$.pipe(languageMapValues()),
     [router.query?.lang],
   )
 
-  const result$ = useObservable(() => combineLatest(router$, language$).pipe(
-    pairwise(),
-    map(([prev, current]) => {
-      const currentRouter = current[0]
-      const currentLang = current[1]
 
-      const isChangedRouter = prev[0] !== currentRouter
-      const isChangedLang = prev[1] !== currentLang
+  const start$ = useObservable((action$) => action$.pipe(
+    filter(([query]: [Language]) => Boolean(query)),
+    take(1),
+    map(([query]) => {
+      const isCorrect = Boolean(query && LANGUAGE_VARIABLES.includes(query))
+      const languageInStorage = storageGet('userLanguage') as Language
+
+      if (!isCorrect) {
+        router.push({
+          query: {
+            lang: (languageInStorage || DEFAULT_LANGUAGE),
+          },
+        })
+      }
+
+      if (!languageInStorage) {
+        storageSet(
+          'userLanguage',
+          isCorrect ? query : DEFAULT_LANGUAGE,
+        )
+      }
+
+      if (languageInStorage && languageInStorage !== query) {
+        storageSet(
+          'userLanguage',
+          isCorrect ? query : languageInStorage,
+        )
+      }
+
+      return isCorrect ? query : (languageInStorage || DEFAULT_LANGUAGE)
+    }),
+  ), [router.query?.lang])
+
+  const result$ = useObservable(() => concat(start$, combineLatest(router$, language$).pipe(
+    pairwise(),
+    map(([[prevRouter, prevLang], [currentRouter, currentLang]]) => {
+      const isChangedRouter = prevRouter !== currentRouter
+      const isChangedLang = prevLang !== currentLang
+
+      const languageInStorage = storageGet('userLanguage') as Language
 
       if (isChangedLang) {
         router.push({
@@ -65,7 +81,6 @@ export const ServiceLanguage: FC<ServiceLanguageProps> = React.memo((props) => {
         })
       }
 
-      const languageInStorage = storageGet('userLanguage') as Language
       if (!languageInStorage || languageInStorage !== currentLang) {
         storageSet(
           'userLanguage',
@@ -80,24 +95,28 @@ export const ServiceLanguage: FC<ServiceLanguageProps> = React.memo((props) => {
       return DEFAULT_LANGUAGE
     }),
     distinctUntilChanged(),
-  ))
-  useSubscription(result$, setLanguage1)
+  )))
+  useSubscription(result$, setResult)
+  const client = useApollo(result, pageProps)
 
-  const apolloClient = useApollo(language1, pageProps)
-
-  return useMemo(() => {
-    return (
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const [component, setComponent] = useState(<Loader />)
+  const component$ = useObservable((action$) => action$.pipe(
+    filter(([value]: [Language]) => Boolean(value)),
+    map(([value]) => value),
+    distinctUntilChanged(),
+    map((lang) => (
       <ContextService.Provider value={{
-        language: language1,
+        language: lang,
         setLanguage,
       }}
       >
-        <ApolloProvider client={apolloClient}>
+        <ApolloProvider client={client}>
           {children}
         </ApolloProvider>
       </ContextService.Provider>
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [language1, children])
-})
+    )),
+  ), [result])
+  useSubscription(component$, setComponent, (error) => <ErrorFallBack error={error} />)
+
+  return component
+}
