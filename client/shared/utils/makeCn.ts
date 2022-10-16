@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ClassNameList, NoStrictEntityMods, withNaming } from '@bem-react/classname'
 
-declare interface IStyles {
+export declare interface IStyles {
   [className: string]: string;
 }
 
