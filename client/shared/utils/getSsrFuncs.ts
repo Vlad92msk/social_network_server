@@ -1,7 +1,7 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { addApolloState, initializeApollo } from 'src/apollo/client'
-import { DEFAULT_LANGUAGE, isAvailableLanguage, Language } from 'src/services/language'
+import { addApolloState, initializeApollo } from '@my-apollo/client'
+import { DEFAULT_LANGUAGE, isAvailableLanguage, Language } from '@services/language'
 
 /**
  * Возвращает объект для редиректа
@@ -31,7 +31,7 @@ export const ssrLanguageValidate = (ctx: GetServerSidePropsContext) => {
 export const ssrCompose = (
   params: {
     validates: any[],
-    resolve: <P> (apolloClient: ApolloClient<NormalizedCacheObject>) => Promise<GetServerSidePropsResult<P>>, lang: string
+    resolve: <P> (apolloClient: ApolloClient<NormalizedCacheObject>) => Promise<GetServerSidePropsResult<P>>, lang: Language
   },
 ) => {
   const { validates, resolve, lang } = params
@@ -71,7 +71,7 @@ export const getSSR = async (
   validates?: any[],
 ) => ssrCompose(
   {
-    lang: String(ctx.query.lang),
+    lang: ctx.query.lang as Language,
     validates: validates ? [ssrLanguageValidate(ctx), ...validates] : [ssrLanguageValidate(ctx)],
     resolve,
   },

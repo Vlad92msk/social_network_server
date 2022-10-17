@@ -1,3 +1,4 @@
+import { Loader } from '@shared/components/Loader'
 import { NextPage } from 'next'
 import React, { Suspense } from 'react'
 import '@public/styles/base.scss'
@@ -30,7 +31,7 @@ const MyApp = (props: App) => {
   const { Component, pageProps } = props
 
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <ServiceTheme>
         <ServiceLanguage pageProps={pageProps}>
           <Component {...pageProps} />

@@ -12,7 +12,7 @@ export interface AuthGuardType {
 }
 export const AuthGuard: FC<PropsWithChildren<AuthGuardType>> = (props) => {
   const { roles, page, children } = props
-// console.log('2', 2)
+
   /**
    * Если пользователь попал на 404 страницу - пропустить
    * Если не указано имя страницы и роли доступа к ней - пропустить

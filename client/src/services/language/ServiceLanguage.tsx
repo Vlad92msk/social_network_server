@@ -1,7 +1,7 @@
 import { ApolloProvider } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { useObservable, useSubscription } from 'observable-hooks'
-import React, { FC, PropsWithChildren, useState } from 'react'
+import React, { FC, PropsWithChildren, useMemo, useState } from 'react'
 import { combineLatest, concat, distinctUntilChanged, filter, map, pairwise } from 'rxjs'
 import { take } from 'rxjs/operators'
 import { useApollo } from '@my-apollo/client'
@@ -18,6 +18,8 @@ export interface ServiceLanguageProps extends PropsWithChildren{
 export const ServiceLanguage: FC<ServiceLanguageProps> = (props) => {
   const { pageProps, children } = props
   const router = useRouter()
+  const languageInStorage: Language = useMemo(() => storageGet('userLanguage'), [])
+
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE)
   const [result, setResult] = useState(DEFAULT_LANGUAGE)
 
@@ -37,7 +39,6 @@ export const ServiceLanguage: FC<ServiceLanguageProps> = (props) => {
     take(1),
     map(([query]) => {
       const isCorrect = Boolean(query && LANGUAGE_VARIABLES.includes(query))
-      const languageInStorage = storageGet('userLanguage') as Language
 
       if (!isCorrect) {
         router.push({
@@ -70,8 +71,6 @@ export const ServiceLanguage: FC<ServiceLanguageProps> = (props) => {
     map(([[prevRouter, prevLang], [currentRouter, currentLang]]) => {
       const isChangedRouter = prevRouter !== currentRouter
       const isChangedLang = prevLang !== currentLang
-
-      const languageInStorage = storageGet('userLanguage') as Language
 
       if (isChangedLang) {
         router.push({
