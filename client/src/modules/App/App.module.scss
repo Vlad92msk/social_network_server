@@ -7,8 +7,8 @@
   height: 80vh;
   position: relative;
   overflow: hidden;
-justify-content: center;
-  color: #d39f00;
+  justify-content: center;
+
   @include media-768 {
     height: 100vh;
     overflow-y: auto;

@@ -82,7 +82,10 @@
   --Color-LightGray--30: #f9f9fb;
   --Color-LightGray--50: #e8e8ef;
   --Color-LightGray--70: #dadada;
+}
 
+[data-theme='default']{
+  --Test: green;
   --Color-Text--title: var(--Color-Sunglow--50);
   --Color-Text--body: linear-gradient(180deg, var(--Color-BluePrimrose--40) -3%, var(--Color-AmethystStarling--40) 95%);
   --Color-Text--note: var(--Color-OldAsphalt--50);
@@ -114,4 +117,12 @@
   --Color-LoadingProgressBackground: #6394d8;
 
   --Color-Portfolio-Line: linear-gradient(to right, var(--Color-Sunglow--60), var(--Color-BluePrimrose--80));
+}
+
+[data-theme='red']{
+  --Test: red;
+}
+
+[data-theme='orange']{
+  --Test: orange;
 }
