@@ -1,0 +1,23 @@
+@use "public/styles/lib/functions" as *;
+@use "public/styles/lib/mixins" as *;
+@import "../../../App/App.module.scss";
+
+.Actions {
+  @include flex($justify: space-between);
+  margin-left: rem(20);
+
+  &-Button {
+    margin: rem(5);
+    align-items: center;
+
+    &:last-child {
+      justify-self: end;
+    }
+  }
+
+  &-ButtonText {
+    color: var(--SOCIAL--Color-Text-System);
+    margin-left: rem(5);
+  }
+}
+

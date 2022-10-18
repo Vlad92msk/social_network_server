@@ -1,0 +1,37 @@
+@use "public/styles/lib/functions" as *;
+@use "public/styles/lib/mixins" as *;
+@import "../../../App/App.module";
+
+.ChatContainer {
+  display: grid;
+  grid-template-rows: rem(50) auto rem(125);
+  color: var(--SOCIAL--Color-Text-Main);
+  height: 100%;
+
+  &-Header {
+    @include flex($justify: flex-end, $align-items: center);
+    border-bottom: rem(1) solid var(--SOCIAL--Color-Text-System);
+    position: relative;
+  }
+
+  &-Contact {
+    @include flex($direction: column, $align-items: center);
+    width: 100%;
+    position: absolute;
+  }
+
+  &-ContactOnline {
+    text-align: center;
+    font-style: italic;
+    color: var(--SOCIAL--Color-Text-System);
+  }
+
+  &-MainContainer {
+    @include flex($direction: column);
+    background: var(--SOCIAL--Background-Card-Opacity-02);
+    box-shadow: inset 0 0 rem(7) rem(2) #282b3299;
+    border-radius: $borderRadiusCard;
+    overflow-y: auto;
+    margin-top: rem(20);
+  }
+}

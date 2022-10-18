@@ -1,8 +1,10 @@
 import { classnames } from '@bem-react/classnames'
-import React from 'react'
+import { motion } from 'framer-motion'
+import React, { forwardRef } from 'react'
 import { Box, PolymorphicComponentProps } from 'react-polymorphic-box'
 
 import { makeCn } from '@shared/utils'
+
 import styles from './ButtonBox.module.scss'
 
 const cn = makeCn('ButtonBox', styles)
@@ -15,16 +17,20 @@ export type ButtonBoxProps<E extends React.ElementType> = PolymorphicComponentPr
 
 const DEFAULT_ELEMENT = 'button'
 
-export const ButtonBox = <E extends React.ElementType = typeof DEFAULT_ELEMENT>(props: ButtonBoxProps<E>): JSX.Element => {
-  const { className, children, ...rest } = props
+export const ButtonBox = forwardRef(
+  <E extends React.ElementType = typeof DEFAULT_ELEMENT>(props: ButtonBoxProps<E>, ref): JSX.Element => {
+    const { className, children, ...rest } = props
 
-  return (
-    <Box as={DEFAULT_ELEMENT} type="button" className={classnames(cn(), className)} {...rest}>
-      {children}
-    </Box>
-  )
-}
+    return (
+      <Box ref={ref} as={DEFAULT_ELEMENT} type="button" className={classnames(cn(), className)} {...rest}>
+        {children}
+      </Box>
+    )
+  },
+)
 
 ButtonBox.defaultProps = {
   className: null,
 }
+
+export const MButtonBox = motion(ButtonBox)

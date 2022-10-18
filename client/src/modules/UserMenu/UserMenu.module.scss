@@ -1,0 +1,96 @@
+@use "public/styles/lib/functions" as *;
+@use "public/styles/lib/mixins" as *;
+@import "../App/App.module";
+
+.UserMenu {
+  grid-area: userMenu;
+  @include flex($direction: column, $align-items: center);
+  @extend %section;
+  box-shadow: none;
+
+  &-User {
+    @include wh(100%, 100%);
+    display: flex;
+  }
+
+  &-UserRow {
+    @include flex($direction: column);
+    width: 100%;
+  }
+
+  &-UserName {
+    background: var(--SOCIAL--Background--Red-Gradient);
+    color: var(--SOCIAL--Color-Text-Main);
+    padding: 0 rem(15);
+  }
+
+  &-Hash {
+    color: var(--SOCIAL--Color-Text-System);
+    padding: rem(15) 0;
+    margin-left: rem(10);
+  }
+
+  &-UserStatus {
+    @include flex($align-items: center);
+  }
+
+  &-UserStatusDot {
+    @extend %user_status--dot;
+
+    &--status {
+      &_online {
+        @extend %user_status--online
+      }
+
+      &_offline {
+        @extend %user_status--offline
+      }
+    }
+  }
+
+  &-UserStatusText {
+    color: var(--SOCIAL--Color-Text-System);
+    margin-left: rem(5);
+  }
+
+  &-Photo {
+    @include flex($justify: center, $align-items: center);
+    @include wh(90%, 100%);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+
+  &-Description {
+    color: var(--SOCIAL--Color-Text-Main);
+    padding: $componentPadding;
+    max-height: 20vh;
+    overflow-y: auto;
+  }
+
+  &-VisitsCount {
+    color: var(--SOCIAL--Color-Text-System);
+    margin-left: rem(5);
+  }
+
+  &-Actions {
+    @include flex($justify: space-around);
+    margin-top: wSize(5, 5, 10);
+
+    & > * {
+      margin: 0 rem(5);
+    }
+  }
+
+
+  &-UserFIO {
+    @include flex($justify: space-between, $align-items: center);
+    gap: rem(10);
+  }
+
+  &-Row {
+    @include flex($justify: space-between);
+  }
+}

@@ -14,6 +14,7 @@ export interface TextOwnProps {
   color?: 'inherit' | 'body' | 'title' | 'note' | 'disabled'
   textTransform?: 'uppercase'
   className?: string
+  children?: any
 }
 
 export type TextProps<E extends React.ElementType> = PolymorphicComponentProps<E, TextOwnProps>

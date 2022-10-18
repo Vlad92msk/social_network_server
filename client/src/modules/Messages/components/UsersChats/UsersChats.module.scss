@@ -1,0 +1,15 @@
+@use "public/styles/lib/functions" as *;
+@use "public/styles/lib/mixins" as *;
+@import "../../../App/App.module";
+
+.UsersChats {
+  @include flex($direction: column);
+  overflow-y: auto;
+  max-height: 90%;
+
+  &-Title {
+    @include flex($justify: flex-end);
+    color: var(--SOCIAL--Color-Text-System);
+    text-transform: uppercase;
+  }
+}
