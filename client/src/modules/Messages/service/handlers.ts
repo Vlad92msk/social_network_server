@@ -65,7 +65,7 @@ export type MessageActionsKeys = keyof MessageActions
  */
 export type HandlersType = CreateHandlers<MessageActionsKeys, ServiceState, MessageActions>
 export const handlersCreator = (): HandlersType => {
-  const userInfo = storageGet(LocalStorageEnum.USER) as UserType
+  const userInfo = storageGet(LocalStorageEnum.CURRENT_USER) as UserType
 
   return ({
     SEARCH__CHAT: (state, { value }) => ({

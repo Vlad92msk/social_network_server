@@ -13,7 +13,7 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-const createApolloClient = (userLanguage: string) => new ApolloClient({
+const createApolloClient = (userLanguage: Language) => new ApolloClient({
   ssrMode: typeof window === 'undefined',
   link: new HttpLink({
     headers: { userLanguage },
@@ -61,7 +61,7 @@ export const initializeApollo = (lang: Language, initialState = null) => {
   if (typeof window === 'undefined') return client
 
   // Чистит localStorage если пользователь вышел/не авторизирован
-  if (!getCookie(CookieEnum.TOKEN)) storageRemove(LocalStorageEnum.USER)
+  if (!getCookie(CookieEnum.TOKEN)) storageRemove(LocalStorageEnum.CURRENT_USER)
 
   // Для SSG и SSR всегда создавайте нового клиента Apollo.
   if (!apolloClient) apolloClient = client

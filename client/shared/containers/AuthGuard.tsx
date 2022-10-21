@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
-import { Ru_User } from '@my-apollo/graphql/moduleName/generate'
+import { GetUserInfoQuery, Ru_User } from '@my-apollo/graphql/profile/generate'
 import { LocalStorageEnum } from '@public/models/localStorage'
 import { storageGet } from '@shared/utils'
 import { PortfolioPages } from 'src/router/pages'
@@ -29,7 +29,7 @@ export const AuthGuard: FC<PropsWithChildren<AuthGuardType>> = (props) => {
   if (page && allowRoles.includes(RoleEnum.visitor)) return <>{children}</>
 
 
-  const user = storageGet(LocalStorageEnum.USER) as Ru_User
+  const user = storageGet(LocalStorageEnum.CURRENT_USER) as GetUserInfoQuery['getOneUser']
 
   /* Если нет пользователя (не авторизован) - дальше проверять бессмысленно */
   if (!Boolean(user)) return <div>Недостаточно прав</div>

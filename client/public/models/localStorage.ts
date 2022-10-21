@@ -1,3 +1,4 @@
 export enum LocalStorageEnum {
-  USER= 'user'
+  CURRENT_USER= 'current_user',
+  VISIT_USER= 'visit_user',
 }

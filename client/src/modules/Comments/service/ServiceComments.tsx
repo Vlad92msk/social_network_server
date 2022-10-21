@@ -17,7 +17,7 @@ interface ServiceCommentsProps {
 
 export const ServiceComments: React.FC<ServiceCommentsProps> = (props) => {
   const { serviceName, provideProps } = props
-  const userInfo = storageGet(LocalStorageEnum.USER)
+  const userInfo = storageGet(LocalStorageEnum.CURRENT_USER)
   const [dispatch, store] = useCreateService<ServiceState, HandlersType, Reactions>({
     handlersCreator,
     reactions,

@@ -1,113 +1,92 @@
-import React from 'react'
-
-import { ButtonBox } from '@shared/components/ButtonBox'
-import { Icon } from '@shared/components/Icon'
-import { Text } from '@shared/components/Text'
-import { useReplaceRouterUrl } from '@shared/hooks/useRouterPush'
+import React, { useCallback } from 'react'
 import { makeCn } from '@shared/utils'
 import styles from './NavBar.module.scss'
+import { NavBarProvider, useNavBarDispatch, useNavBarSelector, useNavBarStore } from './service/provider'
 
 const cn = makeCn('NavBar', styles)
 
 export const USER_ID = 1
 
-type NavBarType = {
-  pathname: string
+
+export const NavBar = React.memo(() => (
+  <NavBarProvider>
+    <section className={cn()}>
+      <Watch />
+      <FormContainer />
+      <DisplayContainer />
+    </section>
+  </NavBarProvider>
+))
+
+const Watch = () => {
+  const store = useNavBarSelector((store1) => store1)
+console.log('Watch', store)
+  return (
+      <div>{JSON.stringify(store, null, 5)}</div>
+  )
 }
-export const NavBar: React.FC<NavBarType> = React.memo(({ pathname }) => {
-  const layout = pathname.split('/')[4]
-  const [handleGoProfile] = useReplaceRouterUrl(layout, '')
-  const [handleGoPhoto] = useReplaceRouterUrl(layout, '')
-  const [handleGoVideo] = useReplaceRouterUrl(layout, '')
-  const [handleGoGroups] = useReplaceRouterUrl(layout, '')
-  const [handleGoMusic] = useReplaceRouterUrl(layout, '')
+
+const DisplayContainer = () => (
+  <div className="container">
+    <h5>DisplayContainer</h5>
+    <Display value="first" />
+    <Display value="last" />
+  </div>
+)
+
+const Display = ({ value }: { value: 'first' | 'last' }) => {
+  const fieldValue = useNavBarSelector((store) => store[value])
+  return (
+    <div className="value">
+      {value}
+      :
+      {fieldValue}
+    </div>
+  )
+}
+
+const FormContainer = () => (
+  <div className="container">
+    <h5>FormContainer</h5>
+    <TextInput value="first" />
+    <TextInput value="last" />
+  </div>
+)
+const TextInput = ({ value }: { value: 'first' | 'last' }) => {
+  const dispatch = useNavBarDispatch()
+  const fieldValue = useNavBarSelector((store) => store[value])
+  const v1 = useNavBarSelector((store) => store.main.sub.value)
+
+  const handleSub = useCallback((e) => dispatch((s) => {
+    console.log('store sub', s)
+    return ({
+      main: {
+        sub: {
+          value: e.target.value
+        }
+      }
+    })
+  }), [dispatch])
 
   return (
-    <section className={cn()}>
-      <nav className={cn('Nav')}>
-        <ul>
-          <li>
-            <ButtonBox onClick={handleGoProfile}>
-              <Icon
-                className={cn('Icon', { active: false })}
-                size="medium"
-                icon="person"
-              />
-              <Text
-                className={cn('Text', { active: false })}
-                textTransform="uppercase"
-                size="5"
-              >
-                Профиль
-              </Text>
-            </ButtonBox>
-          </li>
-          <li>
-            <ButtonBox onClick={handleGoPhoto}>
-              <Icon
-                className={cn('Icon', { active: false })}
-                size="medium"
-                icon="photo"
-              />
-              <Text
-                className={cn('Text', { active: false })}
-                textTransform="uppercase"
-                size="5"
-              >
-                Фото
-              </Text>
-            </ButtonBox>
-          </li>
-          <li>
-            <ButtonBox onClick={handleGoVideo}>
-              <Icon
-                className={cn('Icon', { active: false })}
-                size="medium"
-                icon="video"
-              />
-              <Text
-                className={cn('Text', { active: false })}
-                textTransform="uppercase"
-                size="5"
-              >
-                Видео
-              </Text>
-            </ButtonBox>
-          </li>
-          <li>
-            <ButtonBox onClick={handleGoGroups}>
-              <Icon
-                className={cn('Icon', { active: false })}
-                size="medium"
-                icon="groups"
-              />
-              <Text
-                className={cn('Text', { active: false })}
-                textTransform="uppercase"
-                size="5"
-              >
-                Группы
-              </Text>
-            </ButtonBox>
-          </li>
-          <li>
-            <ButtonBox onClick={handleGoMusic}>
-              <Icon
-                className={cn('Icon', { active: false })}
-                size="medium"
-                icon="music"
-              />
-              <Text
-                className={cn('Text', { active: false })}
-                textTransform="uppercase"
-                size="5"
-              >
-                Музыка
-              </Text>
-            </ButtonBox>
-          </li>
-        </ul>
-      </nav>
-    </section>
+    <div className="field">
+      {value}
+      :
+      {' '}
+      <input
+        value={fieldValue}
+        onChange={(e) => dispatch((s) => {
+          console.log('store first-last', s)
+          return ({
+            [value]: e.target.value,
+          })
+        })}
+      />
+      <input
+        value={v1}
+        onChange={handleSub}
+      />
+      <div>{v1}</div>
+    </div>
   )
-})
+}

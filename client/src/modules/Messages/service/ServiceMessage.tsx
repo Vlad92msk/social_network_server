@@ -13,7 +13,7 @@ import { initial, ServiceState } from '.'
 
 
 export const ServiceMessage: React.FC = () => {
-  const userInfo = storageGet(LocalStorageEnum.USER) as any
+  const userInfo = storageGet(LocalStorageEnum.CURRENT_USER) as any
   const [dispatch, store] = useCreateService<ServiceState, HandlersType, Reactions>({
     handlersCreator,
     reactions,

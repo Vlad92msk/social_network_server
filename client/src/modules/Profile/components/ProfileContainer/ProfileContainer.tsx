@@ -49,22 +49,6 @@ const TABS = [
   },
 ]
 
-const variants = {
-  enter: (direction: 'left' | 'right') => ({
-    transform: direction === 'right' ? 'translateX(1000px)' : 'translateX(-1000px)',
-  }),
-  center: {
-    zIndex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    transform: 'translateX(0px)',
-    filter: 'blur(0px)',
-  },
-  exit: {
-    filter: 'blur(4px)',
-    transform: 'translateX(0px)',
-  },
-}
 
 type ProfileContainerProps = {
   tabs: DefaultObject<any>
@@ -79,35 +63,6 @@ export const ProfileContainer: React.FC<ProfileContainerProps> = React.memo((pro
   const checkPhoto = useReplaceRouterQuery({ layout: PROFILE_LAYOUTS.PHOTO }, ['isEditing'])
   const checkWork = useReplaceRouterQuery({ layout: PROFILE_LAYOUTS.WORK }, ['isEditing'])
   const checkAboutMe = useReplaceRouterQuery({ layout: PROFILE_LAYOUTS.ABOUT_ME }, ['isEditing'])
-
-  const [currentI, setCurrentI] = useState<number>(null)
-
-  const [direction, setDirection] = useState<'left' | 'right'>(null)
-  const animation: any = useMemo(() => ({
-    key: query.layout,
-    custom: direction,
-    variants,
-    initial: 'enter',
-    animate: 'center',
-    exit: 'exit',
-    transition: {
-      duration: 0.5,
-    },
-  }), [variants, query, direction])
-
-  useEffect(() => {
-    if (!query.layout) return
-
-    const activeTabId = TABS.find(({ activeLayout }) => activeLayout === query.layout)?.id
-
-    if (activeTabId > currentI) {
-      setDirection('right')
-    }
-    if (activeTabId < currentI) {
-      setDirection('left')
-    }
-    setCurrentI(activeTabId)
-  }, [query, currentI])
 
 
   const tabsChangeLayout = useMemo(() => ({
@@ -126,19 +81,8 @@ export const ProfileContainer: React.FC<ProfileContainerProps> = React.memo((pro
     if (!query.layout) {
       checkWall()
     }
-  }, [query])
+  }, [checkWall, query])
 
-
-  const handleChangeLeft = useCallback(() => {
-    if (!currentI) return
-    if (currentI >= TABS.length) return
-    return tabsChangeLayout[TABS.find(({ id }) => id === currentI + 1).activeLayout]()
-  }, [currentI, TABS, tabsChangeLayout])
-  const handleChangeRight = useCallback(() => {
-    if (!currentI) return
-    if (currentI <= 1) return
-    return tabsChangeLayout[TABS.find(({ id }) => id === currentI - 1).activeLayout]()
-  }, [currentI, TABS, tabsChangeLayout])
 
   return (
     <div className={cn()}>
@@ -150,33 +94,13 @@ export const ProfileContainer: React.FC<ProfileContainerProps> = React.memo((pro
             textTransform="uppercase"
             data-active={query.layout === activeLayout}
             onClick={tabsChangeLayout[activeLayout]}
-            children={title}
-          />
+          >
+            {title}
+          </Text>
         ))}
       </div>
       <div className={cn('Container')}>
-        <div className={cn('ChangeLayoutButtonsLeft')}>
-          <IconButton
-            icon="chevron-left"
-            onClick={handleChangeRight}
-            size="medium"
-          />
-        </div>
-        <AnimatePresence initial={false}>
-          <motion.div {...animation} style={{ width: '100%', height: '100%', position: 'absolute' }}>
-            {tabs[query.layout as PROFILE_LAYOUTS]}
-          </motion.div>
-        </AnimatePresence>
-        <div className={cn('ChangeLayoutButtonsRight')}>
-          <IconButton
-            icon="chevron-right"
-            onClick={handleChangeLeft}
-            size="medium"
-          />
-          <div className={cn('Actions')}>
-            {tabActions[query.layout as PROFILE_LAYOUTS]}
-          </div>
-        </div>
+        {tabs[query.layout as PROFILE_LAYOUTS]}
       </div>
     </div>
   )

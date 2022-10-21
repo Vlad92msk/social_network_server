@@ -68,17 +68,12 @@ $borderRadiusCard: rem(5);
 }
 
 .Application {
-  @include wh(100vw, 100vh);
-  align-content: end;
+  @include wh(100vw, 90vh);
+  overflow: hidden;
+  align-content: center;
   display: grid;
   column-gap: 1vw;
   position: relative;
-  grid-template: [start] "gap gap" 5vh [row2]
-                 [row2] "userMenu children" 80vh [row3]            // 80vh - высота строки
-                 [row2] "navBar navBar" 15vh [row-end] / 40vw auto; //40vw - ширина первой строки auto - ширина второй строки
+  grid-template: [start] "userMenu container"[end] / 40vw auto; //40vw - ширина первой строки auto - ширина второй строки
 
-  &-Gap {
-    grid-area: gap;
-    background: var(--SOCIAL--Background-Card-Opacity);
-  }
 }

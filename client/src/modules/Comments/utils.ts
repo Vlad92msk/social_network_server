@@ -1,8 +1,8 @@
+import { GetUserInfoQuery } from '@my-apollo/graphql/profile/generate'
 import { reduce } from 'lodash'
 import { useId } from 'react'
 import { CommentType } from '@modules/Comments/data/comments.data'
 import { ServiceCommentsType } from '@modules/Comments/service'
-import { User } from '@my-apollo/graphql/moduleName/generate'
 import { LocalStorageEnum } from '@public/models/localStorage'
 import { storageGet } from '@shared/utils'
 
@@ -10,13 +10,12 @@ import { storageGet } from '@shared/utils'
  * Создает объект комментария
  */
 export const createComment = (value, appealToCommentId: string, appealToAnswerId: string, findComment: CommentType) => {
-  const userInfo = storageGet(LocalStorageEnum.USER) as User
+  const userInfo = storageGet(LocalStorageEnum.CURRENT_USER) as GetUserInfoQuery['getOneUser']
   const currenUser = {
     id: 1,
     family: 'family',
     name: 'name',
   }
-
 
   return ({
     commentId: useId(),

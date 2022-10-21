@@ -3,5 +3,24 @@
 @import "../App/App.module.scss";
 
 .Profile {
+  @include flex();
+  grid-area: container;
+  position: relative;
+  &-LayoutContainer{
+    @include wh(100%, 100%);
+    overflow-y: auto;
+  }
 
+  &-Buttons{
+    @include flex($align-items: center, $justify: center, $direction: column);
+    @include wh(20%, 100%);
+    gap: 3vh;
+
+    & > * {
+      @include wh(rem(40), rem(40));
+      padding: rem(10);
+      background: rgba(58, 60, 104, 0.44);
+      border-radius: 50%;
+    }
+  }
 }

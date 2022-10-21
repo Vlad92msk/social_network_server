@@ -16,7 +16,6 @@ export interface ServiceState extends Service {
   openFolderId?: number
   openUserIdChat?: number
   search?: string
-  pokemons?: any
 }
 
 
@@ -27,5 +26,4 @@ export const initial: ServiceState = {
   openFolderId: null,
   openUserIdChat: 3,
   search: '',
-  pokemons: null
 }

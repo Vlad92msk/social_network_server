@@ -19,7 +19,6 @@ const cn = makeCn('ProfileLayoutWall', styles)
 
 type ProfileLayoutWallType = {
   userId: number
-  onCloseWallEditing: () => Promise<boolean>
 }
 
 const NEW_RECORD_BASE = {
@@ -38,7 +37,7 @@ const NEW_RECORD_BASE = {
  * Раздел Профиля - Контент-компонет для Видео или Фото
  */
 export const ProfileLayoutWall: React.FC<ProfileLayoutWallType> = React.memo((props) => {
-  const { userId, onCloseWallEditing } = props
+  const { userId } = props
 
   const { query } = useRouter()
 
@@ -66,8 +65,7 @@ export const ProfileLayoutWall: React.FC<ProfileLayoutWallType> = React.memo((pr
     // @ts-ignore
     setNewRecordText('')
     setNewRecordFiles([])
-    onCloseWallEditing()
-  }, [setNewRecordText, onCloseWallEditing, user.id, user.name, user.family, user.img, newRecordText, newRecordFiles])
+  }, [setNewRecordText, user.id, user.name, user.family, user.img, newRecordText, newRecordFiles])
 
   return (
     <>
@@ -80,7 +78,7 @@ export const ProfileLayoutWall: React.FC<ProfileLayoutWallType> = React.memo((pr
           }
         </div>
       </div>
-      <Modal className={cn('Modal')} open={Boolean(query.isEditing)} isBckOnClose onClose={onCloseWallEditing}>
+      <Modal className={cn('Modal')} open={Boolean(query.isEditing)} isBckOnClose>
         <div className={cn('CreateRecord')}>
           <div className={cn('RecordAdd')}>
             <FileUpLoad onApply={setNewRecordFiles} isConfirm />

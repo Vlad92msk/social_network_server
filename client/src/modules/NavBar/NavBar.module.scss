@@ -6,6 +6,7 @@
   display: grid;
   grid-area: navBar;
   background: var(--SOCIAL--Background-Card-Opacity);
+  position: relative;
 
   &-Nav {
     display: flex;

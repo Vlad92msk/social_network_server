@@ -20,7 +20,7 @@ export const ChatFolders: React.FC<ChatFoldersProps> = React.memo((props) => {
 
   const handleChangeFolder = useCallback((folderId: number) => {
     dispatch(messageActions.SET__OPEN_FOLDER_ID(openFolderId === folderId ? null : folderId))
-  }, [openFolderId])
+  }, [dispatch, openFolderId])
 
   return (
     <>
