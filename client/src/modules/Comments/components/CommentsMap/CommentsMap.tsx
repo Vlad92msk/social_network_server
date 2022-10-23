@@ -1,11 +1,10 @@
 import { values } from 'lodash'
 import React from 'react'
-
+import { ServiceCommentsType, useCommentsSelector } from '@modules/Comments/api'
 import { ArrayMap } from '@shared/components/ArrayMap'
 import { makeCn } from '@shared/utils'
 import { AnswerWrapper, InputComment, MainInfo } from '..'
 import { CommentType } from '../../data/comments.data'
-import { ServiceCommentsType, useServiceCommentsSelector } from '../../service'
 import styles from './CommentsMap.module.scss'
 
 const cn = makeCn('CommentsMap', styles)
@@ -19,7 +18,8 @@ export type CommentsMapProps = {
 
 export const CommentsMap: React.FC<CommentsMapProps> = (props) => {
   const { commentsHeight, isOverflow } = props
-  const commentsService = values(useServiceCommentsSelector('comments'))
+
+  const commentsService = values(useCommentsSelector((state) => state.comments))
 
   return (
     <div

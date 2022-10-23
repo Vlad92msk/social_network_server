@@ -1,1 +1,1 @@
-export * from './Comments'
+export { default as Comments } from './api/Component'

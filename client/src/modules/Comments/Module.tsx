@@ -2,7 +2,7 @@ import React from 'react'
 import { AnimateOpenComments, CommentsMap, CommentsOpenType, Filters, InputComment, ModalViewAnswersHOC } from '@modules/Comments/components'
 import { makeCn } from '@shared/utils'
 
-import styles from './Comments.module.scss'
+import styles from './Module.module.scss'
 
 const cn = makeCn('Comments', styles)
 
@@ -16,7 +16,7 @@ export type CommentsProps = {
   id: number
 }
 
-export const Comments: React.FC<CommentsProps> = React.memo((props) => {
+const Module: React.FC<CommentsProps> = React.memo((props) => {
   const { isOpenComments, width, commentsHeight, openType, isOverflow } = props
 
   return (
@@ -34,7 +34,9 @@ export const Comments: React.FC<CommentsProps> = React.memo((props) => {
   )
 })
 
-Comments.defaultProps = {
+Module.defaultProps = {
   openType: 'horizontal',
   isOverflow: true,
 }
+
+export default Module

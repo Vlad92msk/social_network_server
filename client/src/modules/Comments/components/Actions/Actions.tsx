@@ -1,5 +1,6 @@
 import { size } from 'lodash'
 import React, { PropsWithChildren, useCallback, useState } from 'react'
+import { ServiceCommentsType, useCommentsDispatch } from '@modules/Comments/api'
 import { ButtonBox } from '@shared/components/ButtonBox'
 import { Icon } from '@shared/components/Icon'
 import { IconButton } from '@shared/components/IconButton'
@@ -8,7 +9,6 @@ import { useToggle } from '@shared/hooks/useToggle'
 import { makeCn } from '@shared/utils'
 
 import { InputComment, MainInfoType } from '..'
-import { commentsActions, ServiceCommentsType, useServiceCommentsAction } from '../../service'
 import styles from './Actions.module.scss'
 
 const cn = makeCn('Actions', styles)
@@ -30,20 +30,20 @@ export const Actions: React.FC<ActionsType> = React.memo((props) => {
     answers,
     appealToCommentId,
   } = comment
-  const dispatch = useServiceCommentsAction()
+  const dispatch = useCommentsDispatch()
   const [isOpenAddAnswer, setOpenAddAnswer] = useToggle(false)
 
   const [toggle, setToggle] = useState(true)
 
   const handleOpenAnswer = useCallback(() => {
     if (toggle) {
-      dispatch(commentsActions.SET__OPEN_COMMENT_ID({
-        commentId,
+      dispatch(() => ({
+        openCommentId: commentId,
       }))
       setToggle(false)
     } else {
-      dispatch(commentsActions.SET__OPEN_COMMENT_ID({
-        commentId: null,
+      dispatch(() => ({
+        openCommentId: null,
       }))
       setToggle(true)
     }
@@ -51,9 +51,7 @@ export const Actions: React.FC<ActionsType> = React.memo((props) => {
 
   const handleOpenAnswers = useCallback(() => {
     if (!disableOpenSeeAnswers) {
-      dispatch(commentsActions.SET__OPEN_MODAL_FOR_VIEW_ANSWERS({
-        comment,
-      }))
+      dispatch(() => ({ modalComment: comment }))
     }
   }, [disableOpenSeeAnswers, dispatch, comment])
 

@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { ServiceCommentsType, useCommentsDispatch, useCommentsSelector } from '@modules/Comments/api'
 import { ArrayMap } from '@shared/components/ArrayMap'
 
 import { Modal } from '@shared/components/Modal'
-import { Action, makeCn } from '@shared/utils'
+import { makeCn } from '@shared/utils'
 import { Actions, Description, Header, MainInfo } from '..'
-import {
-  commentsActions, ServiceCommentsType,
-  useServiceCommentsAction, useServiceCommentsSelector,
-} from '../../service'
+
 import styles from './ModalViewAnswers.module.scss'
 
 const cn = makeCn('ModalViewAnswers', styles)
@@ -15,12 +13,13 @@ const cn = makeCn('ModalViewAnswers', styles)
 
 export type ModalViewAnswersProps = {
   modalComment: ServiceCommentsType
-  dispatch: (action: Action) => void
 }
 
 const ModalViewAnswers: React.FC<ModalViewAnswersProps> = React.memo((props) => {
-  const { modalComment, dispatch } = props
-  const commentsSelector = useServiceCommentsSelector('comments')
+  const { modalComment } = props
+  const commentsSelector = useCommentsSelector((state) => state.comments)
+  const dispatch = useCommentsDispatch()
+
   const [comment, setComment] = useState<ServiceCommentsType>(modalComment)
   const {
     appealToAnswerId,
@@ -37,8 +36,8 @@ const ModalViewAnswers: React.FC<ModalViewAnswersProps> = React.memo((props) => 
 
   const handleCloseModal = useCallback(() => {
     if (modalComment) {
-      dispatch(commentsActions.SET__OPEN_MODAL_FOR_VIEW_ANSWERS({
-        comment: null,
+      dispatch(() => ({
+        modalComment: null,
       }))
     }
   }, [dispatch, modalComment])
@@ -81,9 +80,8 @@ const ModalViewAnswers: React.FC<ModalViewAnswersProps> = React.memo((props) => 
 
 
 export const ModalViewAnswersHOC: React.FC = () => {
-  const modalComment = useServiceCommentsSelector('modalComment') || null
-  const dispatch = useServiceCommentsAction()
+  const modalComment = useCommentsSelector((state) => state.modalComment)
 
   if (!modalComment) return <></>
-  return <ModalViewAnswers modalComment={modalComment} dispatch={dispatch} />
+  return <ModalViewAnswers modalComment={modalComment} />
 }

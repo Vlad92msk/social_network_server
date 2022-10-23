@@ -1,6 +1,6 @@
+import { Comments } from '@modules/Comments'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { ServiceComments } from '@modules/Comments/service'
 
 import { Button } from '@shared/components/Button'
 import { ButtonBox } from '@shared/components/ButtonBox'
@@ -104,12 +104,9 @@ export const DigitalPage: React.FC<DigitalPageType> = React.memo((props) => {
         <Text className={cn('Title')}>{title}</Text>
         <Text className={cn('Description')}>{description}</Text>
       </div>
-      <ServiceComments
-        serviceName="DigitalPage"
-        provideProps={{
-          isOpenComments,
-          id,
-        }}
+      <Comments
+        id={id}
+        isOpenComments={isOpenComments}
       />
     </div>
   )

@@ -1,7 +1,7 @@
 import { reduce } from 'lodash'
 import { useId } from 'react'
+import { ServiceCommentsType } from '@modules/Comments/api'
 import { CommentType } from '@modules/Comments/data/comments.data'
-import { ServiceCommentsType } from '@modules/Comments/service'
 import { GetUserInfoQuery } from '@modules/UserMenu/graphql/generate'
 import { LocalStorageEnum } from '@public/models/localStorage'
 import { storageGet } from '@shared/utils'
@@ -35,9 +35,9 @@ export const createComment = (value, appealToCommentId: string, appealToAnswerId
 /**
  * Создает объект с комментариями для стора
  */
-export const createCommentsToService = (comments: CommentType[]):ServiceCommentsType => reduce(
+export const createCommentsToService = (comments: CommentType[]) => reduce(
   comments,
-  (acc: ServiceCommentsType, item) => (!item.appealToCommentId ? ({
+  (acc: Record<string, ServiceCommentsType>, item) => (!item.appealToCommentId ? ({
     ...acc,
     [item.commentId]: {
       ...item,
@@ -53,5 +53,5 @@ export const createCommentsToService = (comments: CommentType[]):ServiceComments
       ),
     },
   }) : acc),
-   {} as ServiceCommentsType,
+  {},
 )

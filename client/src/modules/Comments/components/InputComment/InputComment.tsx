@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react'
+import { useCommentsDispatch } from '@modules/Comments/api'
+import { CommentType } from '@modules/Comments/data/comments.data'
+import { createComment, createCommentsToService } from '@modules/Comments/utils'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
 import { AreaInput } from 'src/components'
-import { commentsActions, useServiceCommentsAction } from '../../service'
 import styles from './InputComment.module.scss'
 
 const cn = makeCn('InputComment', styles)
@@ -14,18 +16,26 @@ type InputCommentProps = {
 }
 export const InputComment: React.FC<InputCommentProps> = (props) => {
   const { targetCommentId, appealToCommentId, appealToAnswerId } = props
-  const dispatch = useServiceCommentsAction()
+  const dispatch = useCommentsDispatch()
   const [comment, setComment] = useState('')
 
   const sentComment = useCallback(() => {
-    dispatch(commentsActions.SET__SENT_COMMENT({
-      targetCommentId,
-      appealToCommentId,
-      appealToAnswerId,
-      value: comment,
-    }))
+    dispatch((state) => {
+      const find = state.commentsApi.find(({ commentId: id }) => id === targetCommentId)
+
+      const newComment: CommentType = {
+        appealToEntityId: state.appealToEntityId,
+        ...createComment(comment, appealToCommentId, appealToAnswerId, find),
+      }
+
+      return ({
+        newComment,
+        commentsApi: [...state.commentsApi, newComment],
+        comments: createCommentsToService([...state.commentsApi, newComment]),
+      })
+    })
     setComment('')
-  }, [dispatch, targetCommentId, appealToCommentId, appealToAnswerId, comment])
+  }, [dispatch, comment, appealToCommentId, appealToAnswerId, targetCommentId])
 
   return (
     <div className={cn()}>

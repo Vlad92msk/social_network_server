@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ServiceComments } from '@modules/Comments/service'
+import { Comments } from '@modules/Comments'
 import { WallRecordItemType } from '@modules/Profile/data/walls.data'
 
 import { Icon } from '@shared/components/Icon'
@@ -105,16 +105,13 @@ export const WallRecord: React.FC<WallRecordType> = React.memo((props) => {
             </div>
           </div>
         </div>
-        <ServiceComments
-          serviceName="Wall Record"
-          provideProps={{
-            commentsHeight: '40vh',
-            width: '100%',
-            isOverflow: false,
-            openType: 'vertical',
-            isOpenComments,
-            id,
-          }}
+        <Comments
+          commentsHeight="40vh"
+          width="100%"
+          isOverflow={false}
+          openType="vertical"
+          isOpenComments={isOpenComments}
+          id={id}
         />
       </div>
     </div>
