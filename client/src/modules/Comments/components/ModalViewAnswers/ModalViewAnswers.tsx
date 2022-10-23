@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { ServiceCommentsType, useCommentsDispatch, useCommentsSelector } from '@modules/Comments/api'
+import { ServiceCommentsType, useCommentsDispatch, useCommentsSelector } from '../../service'
 import { ArrayMap } from '@shared/components/ArrayMap'
 
 import { Modal } from '@shared/components/Modal'

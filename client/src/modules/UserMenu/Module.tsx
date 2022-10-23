@@ -5,9 +5,9 @@ import { IconButton } from '@shared/components/IconButton'
 import { Image } from '@shared/components/Image'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
-import { useUserMenuSelector } from './api'
 import { StatisticBox } from './components'
 import styles from './Module.module.scss'
+import { useUserMenuSelector } from './service'
 
 const cn = makeCn('UserMenu', styles)
 

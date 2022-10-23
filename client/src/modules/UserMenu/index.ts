@@ -1,1 +1,1 @@
-export { default as UserMenu } from './api/Component'
+export { default as UserMenu } from './service/Component'

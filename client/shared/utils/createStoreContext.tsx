@@ -6,6 +6,7 @@ import React, {
   useSyncExternalStore,
 } from 'react'
 import { DeepPartial } from '@public/models/deepPartial'
+import { log, LogColors } from '@shared/utils/logColors'
 
 
 export function createStoreContext<Store>(initialState: Store, name?: string) {
@@ -24,6 +25,12 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
       const assigned = { ...store.current, ...value }
       store.current = assigned
       subscribers.current.forEach((callback) => callback())
+
+      console.group(name)
+      log(LogColors.fg.magenta, ['prev state', store.current])
+      log(LogColors.fg.blue, ['payload', value])
+      log(LogColors.fg.red, ['final', assigned])
+      console.groupEnd()
 
       return assigned
     }, [])
@@ -94,14 +101,14 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
     return store.set
   }
 
-  if (Boolean(name)) {
-    return ({
-      [`${name}Provider`]: Provider,
-      [`use${name}Store`]: useStore,
-      [`use${name}Selector`]: useStoreSelector,
-      [`use${name}Dispatch`]: useStoreDispatch,
-    })
-  }
+  // if (Boolean(name)) {
+  //   return ({
+  //     [`${name}Provider`]: Provider,
+  //     [`use${name}Store`]: useStore,
+  //     [`use${name}Selector`]: useStoreSelector,
+  //     [`use${name}Dispatch`]: useStoreDispatch,
+  //   })
+  // }
 
   return ({
     Provider,

@@ -3,7 +3,7 @@ import { NavigationDrawer } from '@shared/components/NavigationDrawer'
 import { useBooleanState } from '@shared/hooks'
 import { makeCn } from '@shared/utils'
 import { UserSmall } from 'src/components'
-import { useUserMenuSelector } from '../../api'
+import { useUserMenuSelector } from '../../service'
 
 import styles from './StatisticButtons.module.scss'
 

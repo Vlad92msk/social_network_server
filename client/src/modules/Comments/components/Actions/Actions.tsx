@@ -1,6 +1,6 @@
 import { size } from 'lodash'
 import React, { PropsWithChildren, useCallback, useState } from 'react'
-import { ServiceCommentsType, useCommentsDispatch } from '@modules/Comments/api'
+import { ServiceCommentsType, useCommentsDispatch } from '@modules/Comments/service'
 import { ButtonBox } from '@shared/components/ButtonBox'
 import { Icon } from '@shared/components/Icon'
 import { IconButton } from '@shared/components/IconButton'

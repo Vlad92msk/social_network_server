@@ -7,4 +7,4 @@ export const {
   Provider,
   useSelector: useCommentsSelector,
   useDispatch: useCommentsDispatch,
-} = createStoreContext(initialState)
+} = createStoreContext(initialState, 'Comments')

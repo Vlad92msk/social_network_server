@@ -1,1 +1,1 @@
-export { default as Messages } from './api/Component'
+export { default as Messages } from './service/Component'

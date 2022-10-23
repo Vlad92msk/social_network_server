@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/api'
+import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/service'
 import { ButtonBox } from '@shared/components/ButtonBox'
 import { Icon } from '@shared/components/Icon'
 import { Text } from '@shared/components/Text'

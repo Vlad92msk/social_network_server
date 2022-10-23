@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { useCommentsDispatch } from '@modules/Comments/api'
+import { useCommentsDispatch } from '@modules/Comments/service'
 import { CommentType } from '@modules/Comments/data/comments.data'
 import { createComment, createCommentsToService } from '@modules/Comments/utils'
 import { Text } from '@shared/components/Text'

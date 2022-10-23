@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 import React, { useMemo } from 'react'
-import { useMessagesSelector } from '@modules/Messages/api'
 import { Friend } from '@modules/Messages/components'
+import { useMessagesSelector } from '@modules/Messages/service'
 import { ALL_USERS } from '@modules/UserMenu/data/all_users'
 
 import { Text } from '@shared/components/Text'

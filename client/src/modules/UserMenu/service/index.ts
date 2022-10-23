@@ -5,6 +5,6 @@ export * from './initialState'
 
 export const {
   Provider,
-  useSelector: useMessagesSelector,
-  useDispatch: useMessagesDispatch,
-} = createStoreContext(initialState)
+  useSelector: useUserMenuSelector,
+  useDispatch: useUserMenuDispatch,
+} = createStoreContext(initialState, 'UserMenu')

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { PropsWithChildren } from 'react'
-import { useCommentsSelector } from '@modules/Comments/api'
+import { useCommentsSelector } from '@modules/Comments/service'
 import { makeCn } from '@shared/utils'
 import styles from './AnswerWrapper.module.scss'
 

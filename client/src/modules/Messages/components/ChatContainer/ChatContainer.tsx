@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/api'
+import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/service'
 import { DefaultObject } from '@public/models/defaultObject.model'
 
 import { IconButton } from '@shared/components/IconButton'

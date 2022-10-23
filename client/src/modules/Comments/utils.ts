@@ -1,10 +1,10 @@
 import { reduce } from 'lodash'
 import { useId } from 'react'
-import { ServiceCommentsType } from '@modules/Comments/api'
 import { CommentType } from '@modules/Comments/data/comments.data'
 import { GetUserInfoQuery } from '@modules/UserMenu/graphql/generate'
 import { LocalStorageEnum } from '@public/models/localStorage'
 import { storageGet } from '@shared/utils'
+import { ServiceCommentsType } from './service'
 
 /**
  * Создает объект комментария

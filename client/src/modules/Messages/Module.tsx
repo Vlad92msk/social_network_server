@@ -1,6 +1,5 @@
 import lodash from 'lodash'
 import React, { useMemo } from 'react'
-import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/api'
 
 import { AreaInput } from '@shared/components/AreaInput'
 import { Modal } from '@shared/components/Modal'
@@ -9,6 +8,7 @@ import { makeCn } from '@shared/utils'
 
 import { ChatContainer, ChatFolders, OpenChatButton, UsersChats } from './components'
 import styles from './Module.module.scss'
+import { useMessagesDispatch, useMessagesSelector } from './service'
 
 const cn = makeCn('Messages', styles)
 

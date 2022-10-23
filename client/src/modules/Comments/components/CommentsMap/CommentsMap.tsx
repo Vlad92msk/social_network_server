@@ -1,6 +1,6 @@
 import { values } from 'lodash'
 import React from 'react'
-import { ServiceCommentsType, useCommentsSelector } from '@modules/Comments/api'
+import { ServiceCommentsType, useCommentsSelector } from '@modules/Comments/service'
 import { ArrayMap } from '@shared/components/ArrayMap'
 import { makeCn } from '@shared/utils'
 import { AnswerWrapper, InputComment, MainInfo } from '..'
