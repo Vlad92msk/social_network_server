@@ -1,8 +1,8 @@
-import { GetUserInfoQuery } from '@my-apollo/graphql/profile/generate'
 import { reduce } from 'lodash'
 import { useId } from 'react'
 import { CommentType } from '@modules/Comments/data/comments.data'
 import { ServiceCommentsType } from '@modules/Comments/service'
+import { GetUserInfoQuery } from '@modules/UserMenu/graphql/generate'
 import { LocalStorageEnum } from '@public/models/localStorage'
 import { storageGet } from '@shared/utils'
 

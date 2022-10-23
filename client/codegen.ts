@@ -6,11 +6,22 @@ require('dotenv').config({ path: '../.env' })
 const folder = 'src/modules/'
 
 /**
- * В какую папку положить сгенерированные хуки
+ * Получаем пути только до тех модулей где есть папка 'graphql'
+ * И создаем массив путей до них
  */
-const generates = fs.readdirSync(folder).reduce((acc, moduleName) => ({
+const gqlFolders = fs.readdirSync(folder).map((moduleName) => {
+  const isExist = fs.readdirSync(folder + moduleName).includes('graphql')
+  return isExist && (`${folder + moduleName}/graphql`)
+}).filter(Boolean)
+
+
+/**
+ * Проходимся по массиву путей где есть папка 'graphql'
+ * Создаем в ней файл 'generate.ts' где будут храниться все сгенерированные методы для каждого модуля
+ */
+const generates = gqlFolders.reduce((acc, folderPath) => ({
   ...acc,
-  [`${folder}${moduleName}/graphql/generate.ts`]: {
+  [`${folderPath}/generate.ts`]: {
     plugins: [
       'typescript',
       'typescript-operations',
@@ -23,6 +34,6 @@ module.exports = {
   /* Путь к схеме */
   schema: `http://${process.env.API_HOST}:${process.env.API_PORT}/graphql`,
   /* Путь к файлам где будут схемы запросов */
-  documents: `${folder}**/graphql/*.gql`,
+  documents: gqlFolders,
   generates,
 }
