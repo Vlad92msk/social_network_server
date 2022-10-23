@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 
+import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/api'
 import { ButtonBox } from '@shared/components/ButtonBox'
 import { Icon } from '@shared/components/Icon'
 import { Text } from '@shared/components/Text'
@@ -7,7 +8,6 @@ import { makeCn } from '@shared/utils'
 import { UserSmall } from 'src/components'
 
 import { UserType } from '../../../App/data/user'
-import { messageActions, useServiceMessageAction, useServiceMessageSelector } from '../../service'
 import styles from './Friend.module.scss'
 
 
@@ -22,12 +22,12 @@ export const Friend: React.FC<FriendComponent> = React.memo((props) => {
     friend: { status, name, id, img, family },
   } = props
 
-  const allMessages = useServiceMessageSelector('allMessages')
-  const openUserIdChat = useServiceMessageSelector('openUserIdChat')
-  const dispatch = useServiceMessageAction()
+  const allMessages = useMessagesSelector((state) => state.allMessages)
+  const openUserIdChat = useMessagesSelector((state) => state.openUserIdChat)
+  const dispatch = useMessagesDispatch()
 
   const handleOpenChat = useCallback(() => {
-    dispatch(messageActions.SET__OPEN_CHAT_ID({ userId: id }))
+    dispatch(() => ({ openUserIdChat: id }))
   }, [dispatch, id])
 
   const newMessageCount = useMemo(() => allMessages[id]?.filter(({ dateSeen }) => !Boolean(dateSeen)).length, [allMessages, id])

@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { USER } from '@modules/App/data/user'
-import { ServiceMessage } from '@modules/Messages/service'
+import { Messages } from '@modules/Messages'
 import { NavBar } from '@modules/NavBar'
 import { Profile } from '@modules/Profile'
 import { UserMenu } from '@modules/UserMenu'
@@ -31,6 +31,6 @@ export const App: React.FC = () => (
       {/* <ServiceUserMenu /> */}
       <Profile />
     </Section>
-    {/* <ServiceMessage /> */}
+    <Messages />
   </>
 )

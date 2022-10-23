@@ -1,7 +1,7 @@
+import { FoldersChat } from '@modules/Messages/data/foldersChats'
 import { Message } from '@modules/Messages/data/messages'
 import { DefaultObject } from '@public/models/defaultObject.model'
 import { Service } from '@public/models/service'
-import { FoldersChat } from '../data/foldersChats'
 
 export interface FoldersUI extends FoldersChat {
   friends: number[]
@@ -9,7 +9,7 @@ export interface FoldersUI extends FoldersChat {
 }
 
 export type FoldersUIObject = DefaultObject<FoldersUI>
-export interface ServiceState extends Service {
+export interface StateModule extends Service {
   folders?: FoldersUIObject
   allMessages?: DefaultObject<Message[]>
   newMessages?: DefaultObject<Message[]>
@@ -19,7 +19,7 @@ export interface ServiceState extends Service {
 }
 
 
-export const initial: ServiceState = {
+export const initialState: StateModule = {
   folders: {},
   allMessages: {},
   newMessages: {},

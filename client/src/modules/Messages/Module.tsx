@@ -1,5 +1,6 @@
 import lodash from 'lodash'
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
+import { useMessagesDispatch, useMessagesSelector } from '@modules/Messages/api'
 
 import { AreaInput } from '@shared/components/AreaInput'
 import { Modal } from '@shared/components/Modal'
@@ -7,16 +8,15 @@ import { useBooleanState } from '@shared/hooks'
 import { makeCn } from '@shared/utils'
 
 import { ChatContainer, ChatFolders, OpenChatButton, UsersChats } from './components'
-import styles from './Messages.module.scss'
-import { messageActions, useServiceMessageAction, useServiceMessageSelector } from './service'
+import styles from './Module.module.scss'
 
 const cn = makeCn('Messages', styles)
 
 
-export const Messages: React.FC = () => {
-  const newMessages = useServiceMessageSelector('newMessages')
-  const searchInput = useServiceMessageSelector('search')
-  const dispatch = useServiceMessageAction()
+const Module: React.FC = () => {
+  const newMessages = useMessagesSelector((state) => state.newMessages)
+  const searchInput = useMessagesSelector((state) => state.search)
+  const dispatch = useMessagesDispatch()
   const [isOpen, handleOpen, handleClose] = useBooleanState(false)
   /**
    * КОл-во новых сообщений
@@ -47,8 +47,8 @@ export const Messages: React.FC = () => {
               size: 'ordinary',
               fill: 'oldAsphalt40',
             }}
-            onIconClear={() => dispatch(messageActions.SEARCH__CHAT({ value: '' }))}
-            onChange={({ value }) => dispatch(messageActions.SEARCH__CHAT({ value }))}
+            onIconClear={() => dispatch(() => ({ search: '' }))}
+            onChange={({ value }) => dispatch(() => ({ search: value }))}
             value={searchInput}
           />
           <UsersChats />
@@ -60,3 +60,5 @@ export const Messages: React.FC = () => {
     </>
   )
 }
+
+export default Module
