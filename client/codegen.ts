@@ -3,14 +3,14 @@ import fs from 'fs'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config({ path: '../.env' })
 
-const folder = 'src/apollo/graphql/'
+const folder = 'src/modules/'
 
 /**
  * В какую папку положить сгенерированные хуки
  */
 const generates = fs.readdirSync(folder).reduce((acc, moduleName) => ({
   ...acc,
-  [`${folder}${moduleName}/generate.ts`]: {
+  [`${folder}${moduleName}/graphql/generate.ts`]: {
     plugins: [
       'typescript',
       'typescript-operations',
@@ -23,6 +23,6 @@ module.exports = {
   /* Путь к схеме */
   schema: `http://${process.env.API_HOST}:${process.env.API_PORT}/graphql`,
   /* Путь к файлам где будут схемы запросов */
-  documents: `${folder}**/*.gql`,
+  documents: `${folder}**/graphql/*.gql`,
   generates,
 }

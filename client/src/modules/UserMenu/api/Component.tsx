@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { GetArgTypes } from '@public/models/getArgTypes'
 import Module from '../Module'
 import { Provider, StateModule, useUserMenuDispatch } from '.'
@@ -18,7 +18,10 @@ const StartWith = (props?: Props) => {
     }
   }, [dispatch, state])
 
-  return (<Module {...rest} />)
+
+  return useMemo(() => (
+    <Module {...rest} />
+  ), [rest])
 }
 
 const Component = (props?: Props) => (

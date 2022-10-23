@@ -5,7 +5,7 @@ import { IconButton } from '@shared/components/IconButton'
 import { Image } from '@shared/components/Image'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
-import { StateModule, useUserMenuSelector } from './api'
+import { useUserMenuSelector } from './api'
 import { StatisticBox } from './components'
 import styles from './Module.module.scss'
 
@@ -13,11 +13,9 @@ const cn = makeCn('UserMenu', styles)
 
 
 interface UserMenuProps {
-  any?: any
 }
 
 const Module = (props?: UserMenuProps) => {
-  console.log('props', props)
   const {
     img,
     family,
@@ -26,7 +24,6 @@ const Module = (props?: UserMenuProps) => {
     id,
     status,
   } = useUserMenuSelector((store) => store.currenUser)
-
 
   return (
     <section className={cn()}>
