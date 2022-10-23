@@ -1,5 +1,4 @@
-import { get } from 'lodash'
-import createFastContext from '@services/createStoreContext/createStoreContext'
+import { createStoreContext } from '@shared/utils'
 
 const initialState = {
   first: '',
@@ -14,14 +13,9 @@ const initialState = {
   },
 }
 
-// const useNavBarSelector = (path: string) => {
-//   const [select, chenge] = useNavBarStore((store) => get(store, path))
-//   return select
-// })
-
 export const {
   Provider: NavBarProvider,
   useStore: useNavBarStore,
   useSelector: useNavBarSelector,
   useDispatch: useNavBarDispatch,
-} = createFastContext(initialState)
+} = createStoreContext(initialState)

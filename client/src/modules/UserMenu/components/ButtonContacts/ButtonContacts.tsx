@@ -1,18 +1,17 @@
-import React, { useCallback } from 'react'
 import { StatisticButton } from '@modules/UserMenu/components'
-import { useServiceUserMenuSelector } from '@modules/UserMenu/service'
 import { NavigationDrawer } from '@shared/components/NavigationDrawer'
 import { useBooleanState } from '@shared/hooks'
 import { makeCn } from '@shared/utils'
 import { UserSmall } from 'src/components'
+import { useUserMenuSelector } from '../../api'
 
 import styles from './StatisticButtons.module.scss'
 
 const cn = makeCn('ButtonContacts', styles)
 
 type ButtonContactsProps = {}
-export const ButtonContacts: React.FC<ButtonContactsProps> = (props) => {
-  const friends = useServiceUserMenuSelector('friends')
+export const ButtonContacts = (props: ButtonContactsProps) => {
+  const friends = useUserMenuSelector((s) => s.friends)
   const [isOpen, setOpen, setClose] = useBooleanState(false)
 
 

@@ -5,14 +5,19 @@ import { IconButton } from '@shared/components/IconButton'
 import { Image } from '@shared/components/Image'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
+import { StateModule, useUserMenuSelector } from './api'
 import { StatisticBox } from './components'
-import { useServiceUserMenuSelector } from './service'
-import styles from './UserMenu.module.scss'
+import styles from './Module.module.scss'
 
 const cn = makeCn('UserMenu', styles)
 
 
-export const UserMenu: React.FC = () => {
+interface UserMenuProps {
+  any?: any
+}
+
+const Module = (props?: UserMenuProps) => {
+  console.log('props', props)
   const {
     img,
     family,
@@ -20,7 +25,7 @@ export const UserMenu: React.FC = () => {
     name,
     id,
     status,
-  } = useServiceUserMenuSelector('currenUser')
+  } = useUserMenuSelector((store) => store.currenUser)
 
 
   return (
@@ -42,19 +47,27 @@ export const UserMenu: React.FC = () => {
       <div className={cn('User')}>
         <StatisticBox />
         <div className={cn('Photo')}>
-          <Image sizePriority="contain" path={{ project: 'social', img }} />
+          <Image
+            sizePriority="contain"
+            path={{
+              project: 'social',
+              img,
+            }}
+          />
         </div>
         {id !== 1 && (
-        <div className={cn('Actions')}>
-          <Button styleType="rounded" color="blue" icon="message-square" iconPosition="left">
-            <Text size="2">Написать</Text>
-          </Button>
-          <Button styleType="rounded" color="red" icon="plus" iconPosition="left">
-            <Text size="2">Добавить</Text>
-          </Button>
-        </div>
+          <div className={cn('Actions')}>
+            <Button styleType="rounded" color="blue" icon="message-square" iconPosition="left">
+              <Text size="2">Написать</Text>
+            </Button>
+            <Button styleType="rounded" color="red" icon="plus" iconPosition="left">
+              <Text size="2">Добавить</Text>
+            </Button>
+          </div>
         )}
       </div>
     </section>
   )
 }
+
+export default Module

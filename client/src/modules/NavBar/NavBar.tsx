@@ -58,7 +58,6 @@ const TextInput = ({ value }: { value: 'first' | 'last' }) => {
   const v1 = useNavBarSelector((store) => store.main.sub.value)
 
   const handleSub = useCallback((e) => dispatch((s) => {
-    console.log('store sub', s)
     return ({
       main: {
         sub: {

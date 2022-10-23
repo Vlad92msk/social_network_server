@@ -85,8 +85,9 @@ export const Actions: React.FC<ActionsType> = React.memo((props) => {
               <Text
                 className={cn('ButtonText')}
                 size="1"
-                text={size(answers)}
-              />
+              >
+                {size(answers)}
+              </Text>
             </ButtonBox>
           )}
           <ButtonBox className={cn('Button')}>
@@ -96,7 +97,9 @@ export const Actions: React.FC<ActionsType> = React.memo((props) => {
               icon="heart"
               fill="redRose40"
             />
-            <Text className={cn('ButtonText')} size="1" text={size(userIdsLikes)} />
+            <Text className={cn('ButtonText')} size="1">
+              {size(userIdsLikes)}
+            </Text>
           </ButtonBox>
           <ButtonBox className={cn('Button')}>
             <Icon
@@ -105,7 +108,9 @@ export const Actions: React.FC<ActionsType> = React.memo((props) => {
               icon="dislike"
               fill="bluePrimrose50"
             />
-            <Text className={cn('ButtonText')} size="1" text={size(userIdsDislikes)} />
+            <Text className={cn('ButtonText')} size="1">
+              {size(userIdsDislikes)}
+            </Text>
           </ButtonBox>
         </div>
       </div>

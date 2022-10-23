@@ -1,19 +1,16 @@
 import React, { useCallback } from 'react'
 
 import { makeCn } from '@shared/utils'
-import { ButtonContacts, ButtonHashes, ButtonNotifications } from '../../components'
+import { ButtonContacts, ButtonHashes, ButtonNotifications } from '..'
 import styles from './StatisticBox.module.scss'
 
 const cn = makeCn('StatisticBox', styles)
 
 type StatisticButtonsProps = {}
-export const StatisticBox: React.FC<StatisticButtonsProps> = React.memo((props) => {
-
-  return (
-    <div className={cn()}>
-      <ButtonContacts />
-      <ButtonHashes />
-      <ButtonNotifications />
-    </div>
-  )
-})
+export const StatisticBox: React.FC<StatisticButtonsProps> = React.memo((props) => (
+  <div className={cn()}>
+    <ButtonContacts />
+    <ButtonHashes />
+    <ButtonNotifications />
+  </div>
+))

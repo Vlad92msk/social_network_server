@@ -1,8 +1,9 @@
-import { Profile } from '@modules/Profile'
 import React, { PropsWithChildren } from 'react'
+import { USER } from '@modules/App/data/user'
 import { ServiceMessage } from '@modules/Messages/service'
 import { NavBar } from '@modules/NavBar'
-import { ServiceUserMenu } from '@modules/UserMenu/service'
+import { Profile } from '@modules/Profile'
+import { UserMenu } from '@modules/UserMenu'
 import { Section } from '@shared/components/Section'
 import { makeCn } from '@shared/utils'
 import styles from './App.module.scss'
@@ -22,13 +23,14 @@ export const App: React.FC = () => (
         },
       }}
     >
-      <ServiceUserMenu />
+      <UserMenu
+        state={{
+          currenUser: USER,
+        }}
+      />
+      {/* <ServiceUserMenu /> */}
       <Profile />
-       <NavBar />
     </Section>
-    {/*<ServiceMessage />*/}
+    {/* <ServiceMessage /> */}
   </>
 )
-
-
-

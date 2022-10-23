@@ -5,11 +5,13 @@ import React, {
   useRef,
   useSyncExternalStore,
 } from 'react'
+import { DeepPartial } from '@public/models/deepPartial'
 
-export default function createFastContext<Store>(initialState: Store) {
+
+export function createStoreContext<Store>(initialState: Store, name?: string) {
   function useStoreData(): {
     get: () => Store;
-    set: (v: (s: Store) => Partial<Store>) => Store
+    set: (v: (s: Store) => DeepPartial<Store>) => Store
     subscribe: (callback: () => void) => () => void;
     } {
     const store = useRef(initialState)
@@ -92,10 +94,19 @@ export default function createFastContext<Store>(initialState: Store) {
     return store.set
   }
 
-  return {
+  if (Boolean(name)) {
+    return ({
+      [`${name}Provider`]: Provider,
+      [`use${name}Store`]: useStore,
+      [`use${name}Selector`]: useStoreSelector,
+      [`use${name}Dispatch`]: useStoreDispatch,
+    })
+  }
+
+  return ({
     Provider,
     useStore,
     useSelector: useStoreSelector,
     useDispatch: useStoreDispatch,
-  }
+  })
 }
