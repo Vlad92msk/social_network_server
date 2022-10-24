@@ -6,6 +6,7 @@ import React, {
   useSyncExternalStore,
 } from 'react'
 import { DeepPartial } from '@public/models/deepPartial'
+import { compose } from '@shared/utils/compose'
 import { log, LogColors } from '@shared/utils/logColors'
 
 
@@ -27,16 +28,16 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
       subscribers.current.forEach((callback) => callback())
 
       console.group(name)
-      log(LogColors.fg.magenta, ['prev state', store.current])
+      // log(LogColors.fg.magenta, ['prev state', store.current])
       log(LogColors.fg.blue, ['payload', value])
-      log(LogColors.fg.red, ['final', assigned])
+      log(LogColors.fg.red, ['result', assigned])
       console.groupEnd()
 
       return assigned
     }, [])
 
-    const set1 = useCallback((dispatch: (s: Store) => Partial<Store>) => (
-      set(dispatch(get()))
+    const set1 = useCallback((dispatch: (s: Store) => Partial<Store>): Store => (
+      compose(set, dispatch)(get())
     ), [get, set])
 
     const subscribe = useCallback((callback: () => void) => {

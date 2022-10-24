@@ -1,0 +1,69 @@
+@use "functions" as *;
+@use "mixins" as *;
+@use "mediaQueries" as *;
+
+$sectionPadding: 0 clamp(0px, 8vw, 15vw);
+$componentPadding: clamp(2px, 1vh, rem(15)) clamp(2px, 2vw, rem(15));
+$borderRadiusCard: rem(5);
+
+
+%user_status--dot {
+  @include wh(rem(7), rem(7));
+  border-radius: 50%;
+  margin-left: rem(10);
+  position: absolute;
+  bottom: rem(-3);
+  right: rem(-3);
+}
+
+%user_status--online {
+  background: var(--SOCIAL--Color-Status-Online);
+}
+
+%user_status--offline {
+  background: var(--SOCIAL--Color-Status-Offline);
+}
+
+%d_n_d__Active {
+  border: rem(1) solid #6484c5 !important;
+  box-shadow: 0 0 0.4375rem 0.125rem rgb(63 77 105) !important;
+  background: #3675b71f !important;
+}
+
+%card {
+  @include flex($direction: column);
+  //border-radius: $borderRadiusCard;
+  padding: $componentPadding;
+  //box-shadow: 0 0 rem(7) rem(2) var(--SOCIAL--Background-Card);
+  background: var(--SOCIAL--Background-Card-Opacity-02);
+}
+
+%send_message {
+  $this: &;
+  color: var(--SOCIAL--Color-Text-Main);
+  align-self: end;
+  cursor: pointer;
+  flex: auto;
+  justify-content: flex-end;
+}
+
+%send_message--disable {
+  cursor: auto;
+  color: var(--SOCIAL--Color-Text-System);
+}
+
+%date_color {
+  display: inline-flex;
+  flex: 0 1 auto;
+  background: linear-gradient(to right, #ff3865, #ff7978);
+  color: var(--SOCIAL--Color-Text-Main);
+  text-shadow: 0 0 rem(4) #ffffffb8;
+  padding: rem(5) rem(15);
+  width: fit-content;
+}
+
+%section {
+  margin: rem(30);
+  box-shadow: rem(1) rem(1) rem(30) rgb(46 51 72);
+  padding: rem(20);
+}

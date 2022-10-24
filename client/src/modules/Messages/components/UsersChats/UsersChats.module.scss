@@ -1,6 +1,6 @@
 @use "public/styles/lib/functions" as *;
 @use "public/styles/lib/mixins" as *;
-@import "../../../App/App.module";
+@use "public/styles/lib/templates" as *;
 
 .UsersChats {
   @include flex($direction: column);

@@ -1,6 +1,6 @@
 @use "public/styles/lib/functions" as *;
 @use "public/styles/lib/mixins" as *;
-@import "../App/App.module";
+@use "public/styles/lib/templates" as *;
 
 .Messages {
   @include wh(80vw, 80vh);
