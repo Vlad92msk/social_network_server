@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
-import { GetUserInfoQuery } from '@modules/UserMenu/graphql/generate'
+import { GetUserInfoQuery } from '@my-apollo/generate'
 import { LocalStorageEnum } from '@public/models/localStorage'
 import { storageGet } from '@shared/utils'
 import { PortfolioPages } from 'src/router/pages'
