@@ -46,7 +46,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
       <section className={classnames(cn('Inner', { autoHeight }), className)}>
         {backgroundImg && (
           <Image
-            path={{ project: 'social', img: backgroundImg }}
+            path={{ moduleName: 'social', img: backgroundImg }}
           />
         )}
         {(onClose && isOnCloseIcon) && (

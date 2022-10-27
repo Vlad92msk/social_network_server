@@ -101,7 +101,7 @@ export const FileUpLoad: React.FC<FileUpLoadProps> = (props) => {
             </div>
           ))}
         </div>
-        <Button onClick={applyAttachments} styleType="filled" color="blue">
+        <Button onClick={applyAttachments} buttonName="filled" color="blue">
           Подтвердить
         </Button>
       </Modal>

@@ -11,25 +11,23 @@ import styles from './Button.module.scss'
 const cn = makeCn('Button', styles)
 
 export type ButtonStyleType = 'filled' | 'rounded';
+/**
+ * Названия берем из templates.scss
+ */
+export type ButtonNames = 'red' | 'green';
 
 export interface ButtonOwnProps<T extends ButtonStyleType> {
-  children: string | React.ReactNode;
-  className?: string;
-  styleType: T;
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
-  color: (
-    T extends 'filled' ?
-      'blue' | 'light' | 'red' :
-    T extends 'rounded' ?
-      'blue' | 'grey' | 'transparent' | 'red'
-    : never
-    );
-  icon?: IconName;
-  iconPosition?: 'left' | 'right';
-  iconClassName?: string;
-  loadable?: boolean;
-  loaded?: number;
+  children: string | React.ReactNode
+  className?: string
+  styleType: T
+  buttonName: ButtonNames
+  size?: 'small' | 'medium' | 'large'
+  disabled?: boolean
+  icon?: IconName
+  iconPosition?: 'left' | 'right'
+  iconClassName?: string
+  loadable?: boolean
+  loaded?: number
 }
 
 export type ButtonProps<E extends React.ElementType,
@@ -42,8 +40,8 @@ export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT, T e
   const {
     children,
     className,
+    buttonName,
     styleType,
-    color,
     size,
     disabled,
     icon,
@@ -58,7 +56,7 @@ export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT, T e
     <Box
       as={DEFAULT_ELEMENT}
       className={classnames(cn({
-        size, color, styleType, loading: loadable, icon: !!icon,
+        size, buttonName, styleType, loading: loadable, icon: !!icon,
       }), className)}
       disabled={disabled || loadable}
       loadable={loadable?.toString()}
@@ -73,7 +71,7 @@ export const Button = <E extends React.ElementType = typeof DEFAULT_ELEMENT, T e
             <ButtonContentLoader className={cn('LoadingContainer')} />
           </>
         )}
-        {icon && (<Icon className={classnames(cn('Icon', { color, styleType, iconPosition }), iconClassName)} icon={icon} />)}
+        {icon && (<Icon className={classnames(cn('Icon', { buttonName, styleType, iconPosition }), iconClassName)} icon={icon} />)}
         {children}
       </span>
     </Box>

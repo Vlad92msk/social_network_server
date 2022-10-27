@@ -2,11 +2,10 @@
 @use 'public/styles/lib/mixins' as * ;
 
 .Application {
-  @include wh(100vw, 90vh);
+  @include wh(100vw, 100vh);
+  background: var(--Color-Background-App);
   overflow: hidden;
-  align-content: center;
+  padding: wSize(10, 5, 50);
   display: grid;
-  column-gap: 1vw;
-  position: relative;
-  grid-template: [start] "userMenu container"[end] / 40vw auto; //40vw - ширина первой строки auto - ширина второй строки
+  grid-template: [start] "nav main sub" 100% [end] / clamp(rem(100), 20%, rem(250)) auto clamp(rem(100), 30%, rem(350)); //40vw - ширина первой строки auto - ширина второй строки
 }

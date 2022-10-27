@@ -31,7 +31,7 @@ export const ShowMore: React.FC<ShowMoreProps> = (props) => {
       size="small"
       onClick={handleClick}
       color="grey"
-      styleType="rounded"
+      buttonName="rounded"
       disabled={totalArrLength === showArrLength}
     >
       <Text size="1">

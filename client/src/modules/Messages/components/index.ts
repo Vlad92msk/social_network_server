@@ -1,7 +1,0 @@
-export * from './Friend/Friend'
-export * from './ChatContainer/ChatContainer'
-export * from './ChatMassage/ChatMassage'
-export * from './CreateChatMessage/CreateChatMessage'
-export * from './UsersChats/UsersChats'
-export * from './ChatFolders/ChatFolders'
-export * from './OpenChatButton/OpenChatButton'

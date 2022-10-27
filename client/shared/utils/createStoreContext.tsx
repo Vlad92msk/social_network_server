@@ -17,9 +17,7 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
     subscribe: (callback: () => void) => () => void;
     } {
     const store = useRef(initialState)
-
     const get = useCallback(() => store.current, [])
-
     const subscribers = useRef(new Set<() => void>())
 
     const set = useCallback((value: Partial<Store>): Store => {
@@ -36,7 +34,7 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
       return assigned
     }, [])
 
-    const set1 = useCallback((dispatch: (s: Store) => Partial<Store>): Store => (
+    const apply = useCallback((dispatch: (s: Store) => Partial<Store>): Store => (
       compose(set, dispatch)(get())
     ), [get, set])
 
@@ -48,7 +46,7 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
 
     return {
       get,
-      set: set1,
+      set: apply,
       subscribe,
     }
   }
@@ -57,7 +55,7 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
 
   const StoreContext = createContext<UseStoreDataReturnType | null>(null)
 
-  const Provider = ({ children }: { children: React.ReactNode }) => (
+  const ContextProvider = ({ children }: { children: React.ReactNode }) => (
     <StoreContext.Provider value={useStoreData()}>
       {children}
     </StoreContext.Provider>
@@ -67,9 +65,7 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
     selector: (store: Store) => SelectorOutput,
   ): [SelectorOutput, (v: (s: Store) => Partial<Store>) => Store] {
     const store = useContext(StoreContext)
-    if (!store) {
-      throw new Error('Store not found')
-    }
+    if (!store) throw new Error('Store not found')
 
     const state = useSyncExternalStore(
       store.subscribe,
@@ -83,9 +79,7 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
     selector: (store: Store) => SelectorOutput,
   ): SelectorOutput {
     const store = useContext(StoreContext)
-    if (!store) {
-      throw new Error('Store not found')
-    }
+    if (!store) throw new Error('Store not found')
 
     return useSyncExternalStore(
       store.subscribe,
@@ -95,26 +89,15 @@ export function createStoreContext<Store>(initialState: Store, name?: string) {
 
   function useStoreDispatch<SelectorOutput>() {
     const store = useContext(StoreContext)
-    if (!store) {
-      throw new Error('Store not found')
-    }
+    if (!store) throw new Error('Store not found')
 
     return store.set
   }
 
-  // if (Boolean(name)) {
-  //   return ({
-  //     [`${name}Provider`]: Provider,
-  //     [`use${name}Store`]: useStore,
-  //     [`use${name}Selector`]: useStoreSelector,
-  //     [`use${name}Dispatch`]: useStoreDispatch,
-  //   })
-  // }
-
   return ({
-    Provider,
+    ContextProvider,
     useStore,
-    useSelector: useStoreSelector,
-    useDispatch: useStoreDispatch,
+    useContextSelector: useStoreSelector,
+    useContextDispatch: useStoreDispatch,
   })
 }

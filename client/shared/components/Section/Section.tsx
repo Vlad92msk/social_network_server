@@ -37,7 +37,13 @@ export const Section: React.FC<SectionType> = React.memo((
       style={{ ...paddings }}
     >
       {bcgImg
-      && <Image className={classnames(imgClassName, cn('Img'))} path={bcgImg.path} sizePriority={bcgImg.sizePriority} />}
+      && (
+        <Image
+          className={classnames(imgClassName, cn('Img'))}
+          path={bcgImg.path}
+          sizePriority={bcgImg.sizePriority}
+        />
+      )}
       <ErrorBoundary FallbackComponent={ErrorFallBack} resetKeys={resetKeys}>
         {children || null}
       </ErrorBoundary>

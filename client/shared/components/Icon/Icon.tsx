@@ -13,7 +13,7 @@ export interface IconProps {
   className?: string
   icon: IconName
   fill?: IconFill
-  size?: 'small' | 'ordinary' | 'medium' | 'large'
+  size?: 'small' | 'ordinary' | 'medium' | 'large' | 'small_1'
   onClick?: () => void
   onMouseEnter?: (e: React.MouseEvent) => void
   onMouseLeave?: (e: React.MouseEvent) => void

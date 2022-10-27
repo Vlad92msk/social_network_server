@@ -11,8 +11,8 @@ const cn = makeCn('Image', styles)
 
 
 export interface ImagePath {
-  project?: string
-  page?: string
+  moduleName?: string
+  folder?: string
   img: string
 }
 
@@ -26,8 +26,8 @@ export interface ImageType {
 
 export const Image: React.FC<ImageType> = forwardRef((props, ref: any) => {
   const { className, sizePriority, path, isOpenFullScreen, withOptimized } = props
-  const { project, page, img } = path
-  const src = `/resources/images/${createString([project, page, img], '/')}`
+  const { moduleName, folder, img } = path
+  const src = `/resources/images/${createString([moduleName, folder, img], '/')}`
 
   const [isOpen, setOpen] = useToggle()
 

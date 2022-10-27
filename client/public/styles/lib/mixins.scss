@@ -1,5 +1,6 @@
 @use './functions' as *;
 @use './mediaQueries' as *;
+@use "sass:map";
 
 /* Миксин для работы с полифиллом селектора :focus-visible */
 @mixin focusVisible() {
@@ -169,6 +170,61 @@
   text-overflow: ellipsis;
 }
 
+
+
+@mixin button($buttonName, $variants, $styleType) {
+  $this: &;
+  $name: map.get($variants, $buttonName);
+
+  @if $styleType == 'filled' {
+      border: none;
+      font-style: italic;
+  }
+  @if $styleType == 'rounded' {
+      border-width: rem(1);
+      border-style: solid;
+  }
+
+  @if $name {
+    @each $property, $colors in $name {
+      @if ($property == 'hover') {
+        &:hover {
+          @each $prop, $color1 in $colors {
+            #{$prop}: $color1;
+          }
+        }
+      } @else if ($property == 'active') {
+        &:active {
+          @each $prop, $color1 in $colors {
+            #{$prop}: $color1;
+          }
+        }
+      } @else if ($property == 'icon') {
+        .Button-Icon {
+          @each $prop, $color1 in $colors {
+            #{$prop}: $color1;
+          }
+        }
+      } @else if ($property == 'loading') {
+        $bcg: map.get($colors, "background");
+        $proc: map.get($colors, "process");
+
+        @if $bcg {
+          .Button-LoadingBackground {
+            background: $bcg;
+          }
+        }
+        @if $proc {
+          .Button-LoadingProgress {
+            background-color: $proc;
+          }
+        }
+      } @else {
+        #{$property}: $colors;
+      }
+    }
+  }
+}
 
 // для всех экранов < 1920px
 @mixin media-1920 {

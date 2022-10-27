@@ -1,0 +1,29 @@
+@use 'public/styles/lib/functions' as *;
+@use 'public/styles/lib/mixins' as * ;
+
+
+.ButtonsList {
+  @include flex($direction: column);
+  flex: 1 1;
+  gap: rem(10);
+
+  &-Button {
+    @include flex($align-items: center);
+    width: 100%;
+    padding: rem(20);
+    gap: rem(20);
+    color: var(--Color-Text-Main);
+    fill: var(--Color-Background-icon);
+    border-radius: rem(30);
+
+    &--active {
+      background: var(--Color-Text-Sub-1);
+      color: var(--Color-Status-Offline);
+      fill: var(--Color-Status-Offline);
+    }
+  }
+
+  &-ButtonText {
+    margin-right: auto;
+  }
+}

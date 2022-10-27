@@ -30,7 +30,7 @@ export const UserSmall: React.FC<UserSmallType> = React.memo((props) => {
         <div className={classnames(avaClassName, cn('Img'))}>
           <Image path={{
             img,
-            project: 'social'
+            moduleName: 'social'
           }} />
         </div>
         <span className={cn('UserStatus', { status })} />

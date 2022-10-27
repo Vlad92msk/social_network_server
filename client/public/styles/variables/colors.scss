@@ -84,39 +84,48 @@
   --Color-LightGray--70: #dadada;
 }
 
+[data-theme='default1']{
+  --Color-Background-App: #1f233f;
+  --Color-Background-Sub: #2b2f4d;
+  --Color-Text-Main: #d8dbee;
+  --Color-Text-Sub-1: #1a1f3b;
+  --Color-Text-Sub-2: #787ea0;
+  --Color-Status-Online: #2ce25d;
+  --Color-Status-Offline: #ef181b;
+  --Color-Background-icon: #afb4d5;
+
+  --Color-Button-Background-Blue: var(--Color-BluePrimrose--50);
+  --Color-Button-Background-Blue-textColor: var(--Color-Light--100);
+  --Color-Button-Background-Blue-hover: var(--Color-BluePrimrose--40);
+  --Color-Button-Background-Blue-active: var(--Color-BluePrimrose--60);
+  --Color-Button-Background-Blue-loading: var(--Color-ProgressBackground);
+  --Color-Button-Background-Blue-loadingProgress: var(--Color-LoadingProgressBackground);
+  --Color-Button-Background-Blue-Icon: var(--Color-Light--100);
+
+  --Color-Button-Background-Light: var(--Color-Light--100);
+  --Color-Button-Background-Light-textColor: var(--Color-Text--body);
+  --Color-Button-Background-Light-hover: var(--Shadow-Tokyo);
+  --Color-Button-Background-Light-Icon: var(--Color-OldAsphalt--50);
+
+  --Color-Button-Background-Red: var(--Color-RedRose--50);
+  --Color-Button-Background-Red-textColor: var(--Color-Light--100);
+  --Color-Button-Background-Red-hover: var(--Color-BluePrimrose--40);
+  --Color-Button-Background-Red-active: var(--Color-RedRose--60);
+  --Color-Button-Background-Red-loading: var(--Color-RedRose--50);
+  --Color-Button-Background-Red-loadingProgress: var(--Color-RedRose--50);
+  --Color-Button-Background-Red-Icon: var(--Color-Light--100);
+}
+
 [data-theme='default']{
-  --Test: green;
-  --Color-Text--title: var(--Color-Sunglow--50);
-  --Color-Text--body: linear-gradient(180deg, var(--Color-BluePrimrose--40) -3%, var(--Color-AmethystStarling--40) 95%);
-  --Color-Text--note: var(--Color-OldAsphalt--50);
-  --Color-Text--disabled: var(--Color-OldAsphalt--40);
-
-
-  --Color-Background: var(--Color-Light--100);
-  --Color-Background--root: var(--Color-BluePrimrose--80);
-  --Color-Background--dark: var(--Color-OldAsphalt--10);
-  --Color-Background--darkest: #25314f;
-  --Color-Background--translucentGrey: rgba(244, 243, 248, 0.5);
-  --Color-Background--transparentGrey: rgba(232, 232, 239, 0.5);
-  --Color-Background--translucentGreen: rgba(244, 250, 251, 0.5);
-
-  --Color-Overlay--hover: rgba(36, 38, 47, 0.6);
-  --Color-Overlay--lite: rgba(12, 13, 16, 0.4);
-
-  --Color-Shadow--pale: rgba(146, 146, 146, 0.2);
-
-  --Color-Scrollbar: rgba(176, 179, 195, 0.6);
-  --Color-Scrollbar-hover: var(--Color-OldAsphalt--40);
-  --Color-Scrollbar-dark: rgba(139, 153, 187, 0.6);
-  --Color-Scrollbar-darkHover: #8b99bb;
-
-  --Color-ControlBorder: var(--Color-OldAsphalt--30);
-  --Color-TooltipBackground: rgba(43, 56, 88, 0.8);
-
-  --Color-ProgressBackground: #99bbea;
-  --Color-LoadingProgressBackground: #6394d8;
-
-  --Color-Portfolio-Line: linear-gradient(to right, var(--Color-Sunglow--60), var(--Color-BluePrimrose--80));
+  --Color-Background-App: #1f233f;
+  --Color-Background-Sub: #2b2f4d;
+  --Color-Text-Main: #d8dbee;
+  --Color-Text-Sub-1: #1a1f3b;
+  --Color-Text-Sub-2: #787ea0;
+  --Color-Status-Online: #2ce25d;
+  --Color-Status-Offline: #ef181b;
+  --Color-Background-icon: #afb4d5;
+  --Color-Button-Background-Blue: #afb4d5;
 }
 
 [data-theme='red']{
