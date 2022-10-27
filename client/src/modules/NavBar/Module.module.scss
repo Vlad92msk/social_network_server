@@ -3,4 +3,5 @@
 
 .NavBar {
   @include flex($direction: column);
+  position: relative;
 }

@@ -10,6 +10,11 @@ const cn = makeCn('Application', styles)
 export const App = () => (
   <Section
     className={cn()}
+    bcgImg={{
+      path:{
+        moduleName: 'app', folder: 'bcg', img: 'bcg1'
+      }
+    }}
   >
     <NavBar />
   </Section>
