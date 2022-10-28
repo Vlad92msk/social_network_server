@@ -2,8 +2,8 @@
 @use 'public/styles/lib/mixins' as * ;
 @use 'public/styles/lib/templates' as * ;
 
-.NavBar {
+
+.FriendsList {
   @include flex($direction: column);
-  grid-area: nav;
-  position: relative;
+  flex: 1 1;
 }

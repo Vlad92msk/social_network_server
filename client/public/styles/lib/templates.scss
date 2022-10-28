@@ -3,7 +3,10 @@
 @use "mediaQueries" as *;
 
 $borderRadiusButton: rem(5);
-
+$paddingComponent: wSize(10, 5, 25);
+$marginComponent: wSize(10, 5, 50);
+$border-radius-element: rem(30);
+$border-radius-small: rem(10);
 
 %section {
   margin: rem(30);

@@ -1,5 +1,6 @@
 @use 'public/styles/lib/functions' as *;
 @use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
 
 
 .ButtonsList {
@@ -15,12 +16,18 @@
     gap: rem(20);
     color: var(--Color-Text-Main);
     fill: var(--Color-Background-icon);
-    border-radius: rem(30);
+    border-radius: $border-radius-element;
+    transition: .5s;
 
     &--active {
       background: var(--Color-Text-Sub-1);
       color: var(--Color-Status-Offline);
       fill: var(--Color-Status-Offline);
+    }
+
+    &:not(&--active):hover {
+      background: var(--Color-Background-Sub1);
+      transition: .3s;
     }
   }
 

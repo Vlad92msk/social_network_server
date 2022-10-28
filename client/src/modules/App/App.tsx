@@ -1,4 +1,4 @@
-import React from 'react'
+import { DrawerBar } from '@modules/DrawerBar'
 import { NavBar } from '@modules/NavBar'
 import { Section } from '@shared/components/Section'
 import { makeCn } from '@shared/utils'
@@ -10,12 +10,14 @@ const cn = makeCn('Application', styles)
 export const App = () => (
   <Section
     className={cn()}
+    noPaddingRight
     bcgImg={{
-      path:{
-        moduleName: 'app', folder: 'bcg', img: 'bcg1'
-      }
+      path: {
+        moduleName: 'app', folder: 'bcg', img: 'bcg1',
+      },
     }}
   >
     <NavBar />
+    <DrawerBar />
   </Section>
 )

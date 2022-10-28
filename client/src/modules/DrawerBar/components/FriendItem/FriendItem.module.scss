@@ -1,0 +1,56 @@
+@use 'public/styles/lib/functions' as *;
+@use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
+
+.FriendItem {
+  $this: &;
+  position: relative;
+  @include flex($align-items: center);
+  @include wh(100%, rem(70));
+  padding: rem(10);
+  gap: rem(20);
+  color: var(--Color-Text-Main);
+  fill: var(--Color-Background-icon);
+  transition: .5s;
+
+  &:hover {
+    transition: .3s;
+
+  #{$this}-FriendFastActions {
+    opacity: 1;
+    z-index: 2;
+    transition: .5s;
+    }
+  }
+
+  &-TextContainer {
+    @include flex($direction: column);
+  }
+
+  &-FriendName {
+    margin-right: auto;
+  }
+
+  &-ImgContainer {
+    @include wh(rem(50), 100%);
+    border-radius: rem(17) rem(17) rem(17) rem(17) / rem(17);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  &-FriendFastActions {
+    @include flex($justify: flex-end);
+    position: absolute;
+    right: rem(40);
+    transition: .3s;
+    opacity: 0;
+    gap: rem(5);
+    margin-left: auto;
+  }
+
+  &-MenuButton {
+    margin-left: auto;
+    transform: rotate(90deg);
+  }
+
+}

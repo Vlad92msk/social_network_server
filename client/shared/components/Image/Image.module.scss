@@ -8,6 +8,13 @@
   left: 0;
   right: 0;
 
+  &-Container {
+    @include wh(100%, 100%);
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
   &-Img {
     &--sizePriority {
       &_width {
@@ -29,4 +36,5 @@
       }
     }
   }
+
 }

@@ -20,12 +20,16 @@ export interface ImageType {
   path: ImagePath
   sizePriority?: 'width' | 'height' | 'cover' | 'contain'
   className?: string
+  classNameContainer?: string
   isOpenFullScreen?: boolean
   withOptimized?: boolean
+  withContainer?: boolean
 }
 
 export const Image: React.FC<ImageType> = forwardRef((props, ref: any) => {
-  const { className, sizePriority, path, isOpenFullScreen, withOptimized } = props
+  const {
+    className, sizePriority, path, isOpenFullScreen, withOptimized, withContainer, classNameContainer,
+  } = props
   const { moduleName, folder, img } = path
   const src = `/resources/images/${createString([moduleName, folder, img], '/')}`
 
@@ -60,7 +64,9 @@ export const Image: React.FC<ImageType> = forwardRef((props, ref: any) => {
 
   return (
     <>
-      {picture}
+      {withContainer ? (
+        <div className={classnames(cn('Container'), classNameContainer)}>{picture}</div>
+      ) : picture}
       {
         isOpenFullScreen && (
           <Modal className={cn('Modal')} open={isOpen} onClose={setOpen}>
