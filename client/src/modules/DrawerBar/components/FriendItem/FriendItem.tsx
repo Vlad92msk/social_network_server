@@ -5,6 +5,7 @@ import { Image } from '@shared/components/Image'
 import { MenuListItem, MenuListWithButton } from '@shared/components/MenuList'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
+import { UserStatus, UserStatusEnum } from 'src/components'
 import styles from './FriendItem.module.scss'
 
 const cn = makeCn('FriendItem', styles)
@@ -42,7 +43,7 @@ export const FriendItem = (props: FriendItem) => {
       />
       <div className={cn('TextContainer')}>
         <Text className={cn('FriendName')}>{name}</Text>
-        <Text className={cn('FriendStatus')}>Online</Text>
+        <UserStatus status={UserStatusEnum.ONLINE} />
       </div>
       <div className={cn('FriendFastActions')}>
         <IconButton

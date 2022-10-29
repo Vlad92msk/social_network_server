@@ -1,11 +1,12 @@
 @use 'public/styles/lib/functions' as *;
 @use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
 
 .Header {
   @include flex($align-items: center);
   width: 100%;
   background: var(--Color-Background-Sub);
-  padding: rem(10);
+  padding: $paddingComponent;
   border-radius: rem(10);
   gap: rem(10);
 

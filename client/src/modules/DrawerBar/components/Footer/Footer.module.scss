@@ -1,7 +1,58 @@
 @use 'public/styles/lib/functions' as *;
 @use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
 
 .Footer {
-  @include flex($justify: center, $align-items: center);
+  @include flex($direction: column);
+  background: var(--Color-Background-App);
   width: 100%;
+  padding: $paddingComponent;
+  height: fit-content;
+  overflow: auto;
+  max-height: rem(120);
+  transition: .5s;
+
+  &--open{
+    max-height: 70%;
+    transition: .5s;
+  }
+
+  &-Title {
+    @include flex($justify: space-between);
+    cursor: pointer;
+  }
+
+  &-UserPreview {
+    @include flex();
+
+    & > *:first-child{
+      z-index: 2;
+    }
+
+    & > *:not(:first-child){
+      transform: translateX(rem(-10));
+      z-index: 1;
+    }
+
+    & > *:last-child{
+      transform: translateX(rem(-20));
+      z-index: 0;
+    }
+
+    &Img {
+      @include wh(rem(30), rem(30));
+      border: rem(3) solid var(--Color-Background-App);
+      border-radius: 50%;
+      overflow: hidden;
+    }
+  }
+
+  &-UsersPlus {
+    @include flex($align-items: center, $justify: center);
+    @include wh(rem(30), rem(30));
+    border: rem(3) solid var(--Color-Background-App);
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--Color-Background-icon);
+  }
 }
