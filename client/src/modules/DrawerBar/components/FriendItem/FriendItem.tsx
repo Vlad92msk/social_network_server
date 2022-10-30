@@ -1,7 +1,7 @@
 import { FriendsListItem } from '@modules/DrawerBar/components'
 import { ButtonBox } from '@shared/components/ButtonBox'
+import { Icon } from '@shared/components/Icon'
 import { IconButton } from '@shared/components/IconButton'
-import { Image } from '@shared/components/Image'
 import { MenuListItem, MenuListWithButton } from '@shared/components/MenuList'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
@@ -12,7 +12,6 @@ const cn = makeCn('FriendItem', styles)
 
 interface FriendItem {
   friend: FriendsListItem
-  isActive: boolean
   onClickFriendItem: (friendId: number) => void
 }
 
@@ -22,41 +21,43 @@ export const FriendItem = (props: FriendItem) => {
       id,
       name,
       img,
+      status,
+      messageCount
     },
-    isActive,
     onClickFriendItem,
   } = props
+
   return (
     <ButtonBox
-      className={cn({ active: isActive })}
+      className={cn()}
       onClick={() => onClickFriendItem(id)}
     >
       <IMGPreview moduleName="users" folder="photo" img={img} />
       <div className={cn('TextContainer')}>
         <Text className={cn('FriendName')}>{name}</Text>
         <div className={cn('Main')}>
-          <UserStatus status={UserStatusEnum.ONLINE} />
+          <UserStatus status={status} />
           <div className={cn('MainContainer')}>
-            <IconButton
-              icon="alert-circle"
-              fill="redRose40"
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation()
-                console.log('Оповестить')
-              }}
-            />
-            <IconButton
-              className={cn('Message')}
-              icon="message-square"
-              fill="bluePrimrose50"
-              size="small"
+            <ButtonBox
+              className={cn('Message', { visible: Boolean(messageCount) })}
               onClick={(e) => {
                 e.stopPropagation()
                 console.log('Написать')
               }}
-            />
-            <Text className={cn('LastTime')} size="1" color="body">
+            >
+              <Icon
+                icon="message-square"
+                fill="bluePrimrose50"
+                size="small_1"
+              />
+              <Text className={cn('MessageCount', { visible: Boolean(messageCount) })} size="1" color="body">
+                {messageCount}
+              </Text>
+            </ButtonBox>
+            <Text
+              className={cn('LastTime', { visible: status === UserStatusEnum.OFFLINE })}
+              size="1"
+            >
               13:42
             </Text>
           </div>
