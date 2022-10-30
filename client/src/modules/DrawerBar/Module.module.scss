@@ -4,7 +4,7 @@
 
 .DrawerBar {
   @include flex($direction: column);
-  width: clamp(rem(100), 25%, rem(350)) !important;
+  width: clamp(rem(100), 30%, rem(350)) !important;
   grid-area: drawer-bar;
   position: fixed !important;
   right: 0;

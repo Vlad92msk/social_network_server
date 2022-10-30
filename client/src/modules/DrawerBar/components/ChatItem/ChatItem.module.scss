@@ -5,21 +5,18 @@
 .ChatItem {
   $this: &;
   position: relative;
-  @include flex($align-items: center);
-  @include wh(100%, rem(70));
-  gap: rem(20);
-  color: var(--Color-Text-Main);
-  fill: var(--Color-Background-icon);
+  display: grid;
+  grid-template: [start] "img main menu" rem(75) [end] / 25% 65%;
+  gap: rem(10);
+  align-items: center;
   transition: .5s;
+  scroll-snap-align: start;
+  scroll-snap-stop: always !important;
 
-  &:hover {
-    transition: .3s;
-
-    #{$this}-FriendFastActions {
-      opacity: 1;
-      z-index: 2;
-      transition: .5s;
-    }
+  &-TextContainerMain {
+    grid-area: main;
+    width: 100%;
+    @include flex($justify: space-between);
   }
 
   &-TextContainer {
@@ -30,48 +27,33 @@
     margin-right: auto;
   }
 
-  &-ImgContainer {
-    @extend %img-container;
-  }
+  &-UsersForOf {
+    position: relative;
+    grid-area: img;
 
-  &-FriendFastActions {
-    @include flex($justify: flex-end);
-    position: absolute;
-    right: rem(40);
-    transition: .3s;
-    opacity: 0;
-    gap: rem(5);
-    margin-left: auto;
-  }
-
-  &-ActiveUsers {
-    @include flex();
-    gap: rem(5);
-    margin-left: auto;
-
-    &IconBox {
-      @include flex();
-      position: relative;
+    & > *:first-child {
+      width: 100%
     }
 
-    &Icon {
-
-    }
-
-    &Status {
-      @include wh(rem(5), rem(5));
-      border-radius: 50%;
-      background: var(--Color-Status-Online);
+    & > *:last-child {
+      background: var(--Color-Background-App);
       position: absolute;
-      bottom: 0;
-      right: rem(-2);
-      z-index: 1;
-      border: rem(2) solid var(--Color-Background-App);
-      padding: rem(2);
+      right: rem(-10);
+      top: rem(-15);
+      border-radius: rem(10);
+      padding: rem(5);
+      overflow: hidden;
+      background: var(--Color-Background-Sub);
     }
+  }
 
-    &Count {
-
-    }
+  &-MenuButton {
+    grid-area: menu;
+    position: absolute;
+    right: rem(-20);
+    height: rem(10);
+    display: flex;
+    transform: rotate(90deg);
+    margin-left: auto;
   }
 }

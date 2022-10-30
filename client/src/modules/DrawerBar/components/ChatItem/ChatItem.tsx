@@ -1,13 +1,10 @@
-import { ChatsItem, FriendsListItem } from '@modules/DrawerBar/components'
+import { AddNewMessageUsers, ChatsItem } from '@modules/DrawerBar/components'
 import { ButtonBox } from '@shared/components/ButtonBox'
-import { Icon } from '@shared/components/Icon'
-import { IconButton } from '@shared/components/IconButton'
-import { Image } from '@shared/components/Image'
 import { MenuListItem, MenuListWithButton } from '@shared/components/MenuList'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
-import { UserStatus, UserStatusEnum } from 'src/components'
-import styles from 'src/modules/DrawerBar/components/ChatItem/ChatItem.module.scss'
+import { IMGPreview, UserOlineForOf } from 'src/components'
+import styles from './ChatItem.module.scss'
 
 const cn = makeCn('ChatItem', styles)
 
@@ -28,56 +25,40 @@ export const ChatItem = (props: ChatItem) => {
       className={cn()}
       onClick={() => onClickFriendItem(id)}
     >
-      <Image
-        classNameContainer={cn('ImgContainer')}
-        withContainer
-        path={{
-          moduleName: 'users',
-          folder: 'photo',
-          img,
-        }}
-        sizePriority="contain"
-      />
-      <div className={cn('TextContainer')}>
-        <Text className={cn('FriendName')} size="2" weight="bold">{name}</Text>
-        <Text className={cn('FriendName')} size="1">{lastMessage}</Text>
+      <div className={cn('UsersForOf')}>
+        <IMGPreview moduleName="users" folder="photo" img={img} />
+        <UserOlineForOf status="c" />
       </div>
-      <div className={cn('FriendFastActions')}>
-        <IconButton
-          icon="message-square"
-          fill="bluePrimrose50"
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation()
-            console.log('Написать')
-          }}
-        />
-        <IconButton
-          icon="alert-circle"
-          fill="redRose40"
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation()
-            console.log('Скрыть')
-          }}
-        />
-        <IconButton
-          icon="alert-circle"
-          fill="redRose40"
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation()
-            console.log('Заблокировать на 30 мин')
-          }}
-        />
-      </div>
-      <div className={cn('ActiveUsers')}>
-        <div className={cn('ActiveUsersIconBox')}>
-          <Icon className={cn('ActiveUsersIcon')} icon="user" fill="oldAsphalt40" size="small" />
-          <span className={cn('ActiveUsersStatus')} />
+      <div className={cn('TextContainerMain')}>
+        <div className={cn('TextContainer')}>
+          <Text className={cn('FriendName')} size="2" weight="bold" color="title">{name}</Text>
+          <Text className={cn('FriendName')} size="1" color="body">{lastMessage}</Text>
         </div>
-        <Text className={cn('ActiveUsersCount')} size="1">{activeCount}</Text>
+        <AddNewMessageUsers lastUser="d" prevUser="d" addCount={60} />
       </div>
+
+      <MenuListWithButton classNameButton={cn('MenuButton')}>
+        <MenuListItem
+          className={cn('ListItem')}
+          text="Удалить"
+          onClick={() => console.log('Написать')}
+        />
+        <MenuListItem
+          className={cn('ListItem')}
+          text="Заблокировать"
+          onClick={() => console.log('Скрыть')}
+        />
+        <MenuListItem
+          className={cn('ListItem')}
+          text="Скрыться"
+          onClick={() => console.log('Заблокировать на 30 мин')}
+        />
+        <MenuListItem
+          className={cn('ListItem')}
+          text="Скрыться"
+          onClick={() => console.log('Выйти')}
+        />
+      </MenuListWithButton>
     </ButtonBox>
   )
 }

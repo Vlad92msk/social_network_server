@@ -5,7 +5,7 @@ import { Image } from '@shared/components/Image'
 import { MenuListItem, MenuListWithButton } from '@shared/components/MenuList'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
-import { UserStatus, UserStatusEnum } from 'src/components'
+import { IMGPreview, UserStatus, UserStatusEnum } from 'src/components'
 import styles from './FriendItem.module.scss'
 
 const cn = makeCn('FriendItem', styles)
@@ -31,15 +31,10 @@ export const FriendItem = (props: FriendItem) => {
       className={cn({ active: isActive })}
       onClick={() => onClickFriendItem(id)}
     >
-      <Image
-        classNameContainer={cn('ImgContainer')}
-        withContainer
-        path={{
-          moduleName: 'users',
-          folder: 'photo',
-          img,
-        }}
-        sizePriority="contain"
+      <IMGPreview
+        moduleName="users"
+        folder="photo"
+        img={img}
       />
       <div className={cn('TextContainer')}>
         <Text className={cn('FriendName')}>{name}</Text>

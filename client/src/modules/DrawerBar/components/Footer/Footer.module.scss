@@ -3,6 +3,7 @@
 @use 'public/styles/lib/templates' as * ;
 
 .Footer {
+  $this: &;
   @include flex($direction: column);
   background: var(--Color-Background-App);
   width: 100%;
@@ -11,9 +12,13 @@
   max-height: rem(150);
   transition: .5s;
 
-  &--open{
+  &--open {
     max-height: 70%;
     transition: .5s;
+
+    & #{$this}-ChatsContainer {
+      scroll-snap-type: y mandatory;
+    }
   }
 
   &-Title {
@@ -21,42 +26,13 @@
     cursor: pointer;
   }
 
-  &-UserPreview {
-    @include flex();
-
-    & > *:first-child{
-      z-index: 2;
-    }
-
-    & > *:not(:first-child){
-      transform: translateX(rem(-10));
-      z-index: 1;
-    }
-
-    & > *:last-child{
-      transform: translateX(rem(-20));
-      z-index: 0;
-    }
-
-    &Img {
-      @include wh(rem(30), rem(30));
-      border: rem(3) solid var(--Color-Background-App);
-      border-radius: 50%;
-      overflow: hidden;
-    }
-  }
-
-  &-UsersPlus {
-    @include flex($align-items: center, $justify: center);
-    @include wh(rem(30), rem(30));
-    border: rem(3) solid var(--Color-Background-App);
-    border-radius: 50%;
-    overflow: hidden;
-    background: var(--Color-Background-icon);
-  }
-
-  &-ChatsContainer{
+  &-ChatsContainer {
+    @include flex($direction: column);
+    scroll-snap-type: y mandatory;
     overflow-y: auto;
-
+    overflow-x: hidden;
+    transition: .5s;
+    gap: rem(25);
+    margin-top: rem(15);
   }
 }

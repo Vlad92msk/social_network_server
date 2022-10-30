@@ -31,10 +31,6 @@
     margin-right: auto;
   }
 
-  &-ImgContainer {
-    @extend %img-container;
-  }
-
   &-FriendFastActions {
     @include flex($justify: flex-end);
     position: absolute;
