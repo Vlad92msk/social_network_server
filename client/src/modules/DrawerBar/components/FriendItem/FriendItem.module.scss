@@ -4,27 +4,48 @@
 
 .FriendItem {
   $this: &;
-  position: relative;
-  @include flex($align-items: center);
+  @include flex($align-items: center, $justify: space-between);
   @include wh(100%, rem(70));
   padding: rem(10);
-  gap: rem(20);
+  gap: rem(10);
   color: var(--Color-Text-Main);
   fill: var(--Color-Background-icon);
   transition: .5s;
 
+  & > *:first-child {
+    @include wh(rem(50), rem(50))
+  }
+
   &:hover {
     transition: .3s;
 
-  #{$this}-FriendFastActions {
-    opacity: 1;
-    z-index: 2;
-    transition: .5s;
+    #{$this}-FriendFastActions {
+      opacity: 1;
+      z-index: 2;
+      transition: .5s;
     }
+
+    #{$this}-MenuButton {
+      opacity: 1;
+      z-index: 2;
+      transition: .5s;
+    }
+  }
+
+  &-Main{
+    @include flex($align-items: center, $justify: space-between);
+    width: 100%;
   }
 
   &-TextContainer {
     @include flex($direction: column);
+    width: 100%;
+  }
+
+  &-MainContainer {
+    @include flex($align-items: center);
+    gap: rem(5);
+    position: relative;
   }
 
   &-FriendName {
@@ -42,8 +63,16 @@
   }
 
   &-MenuButton {
-    margin-left: auto;
+    @include flex($justify: center, $align-items: center);
+    @include wh(rem(10), 0);
+    opacity: 0;
     transform: rotate(90deg);
+  }
+
+  &-LastTime {
+  }
+
+  &-Message {
   }
 
 }

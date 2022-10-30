@@ -16,7 +16,7 @@ $border-radius-small: rem(10);
 }
 
 %img-container{
-  @include wh(rem(70), rem(40));
+  @include wh(rem(70), rem(55));
   border-radius: rem(17) rem(17) rem(17) rem(17) / rem(17);
   overflow: hidden;
   flex-shrink: 0;
