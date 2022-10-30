@@ -19,7 +19,7 @@ export const UserStatus = React.memo((props: UserSmallType) => {
   return (
     <div className={cn()}>
       <span className={cn('Status', { status })} />
-      <Text className={cn('Description')}>{ status }</Text>
+      <Text className={cn('Description')} size="1">{ status }</Text>
     </div>
   )
 })

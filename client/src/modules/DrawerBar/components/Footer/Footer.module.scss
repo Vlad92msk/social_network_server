@@ -8,8 +8,7 @@
   width: 100%;
   padding: $paddingComponent;
   height: fit-content;
-  overflow: auto;
-  max-height: rem(120);
+  max-height: rem(150);
   transition: .5s;
 
   &--open{
@@ -54,5 +53,10 @@
     border-radius: 50%;
     overflow: hidden;
     background: var(--Color-Background-icon);
+  }
+
+  &-ChatsContainer{
+    overflow-y: auto;
+
   }
 }

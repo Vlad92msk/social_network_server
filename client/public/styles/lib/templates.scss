@@ -14,6 +14,13 @@ $border-radius-small: rem(10);
   padding: rem(20);
 }
 
+%img-container{
+  @include wh(rem(50), rem(40));
+  border-radius: rem(17) rem(17) rem(17) rem(17) / rem(17);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
 $buttons: (
         red: (
                 color: var(--Color-Button-Background-Blue-textColor),
