@@ -1,8 +1,9 @@
 @use 'public/styles/lib/functions' as *;
-@use 'public/styles/lib/mixins';
+@use 'public/styles/lib/mixins' as *;
 
 
 .TextInput {
+  @include wh(100%, 100%);
   position: relative;
 
   &-Icon {
@@ -25,8 +26,9 @@
   }
 
   &-Input {
-    @include mixins.placeholderColor(var(--Color-Text--disabled));
-    width: 100%;
+    @include placeholderColor(var(--Color-Text--disabled));
+    @include wh(100%, 100%);
+    background: inherit;
     padding: 0 rem(16) rem(2) rem(16);
     border-width: rem(1);
     border-style: solid;
