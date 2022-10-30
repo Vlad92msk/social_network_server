@@ -1,5 +1,5 @@
-import { orderBy } from 'lodash'
-import { useCallback } from 'react'
+import { filter, orderBy } from 'lodash'
+import { useContextSelector } from '@modules/DrawerBar/service'
 import { makeCn } from '@shared/utils'
 import { UserStatusEnum } from 'src/components'
 import { FriendItem } from '..'
@@ -34,16 +34,17 @@ const friendsListItems: FriendsListItem[] = [
 ]
 
 export const FriendsList = () => {
-  const handleClickFriend = useCallback((friendId: number) => {
-    console.log(`Кликнул по пользователю ${friendId}`)
-  }, [])
+  const search = useContextSelector((state) => state.search)
   return (
     <div className={cn()}>
-      {orderBy(friendsListItems, ['status', 'messageCount'], ['desc', 'asc']).map((friend) => (
+      {orderBy(
+        filter(friendsListItems, ({ name }) => name.toLowerCase().includes(search.toLowerCase())),
+        ['status', 'messageCount'],
+        ['desc', 'asc'],
+      ).map((friend) => (
         <FriendItem
           key={friend.id}
           friend={friend}
-          onClickFriendItem={handleClickFriend}
         />
       ))}
     </div>

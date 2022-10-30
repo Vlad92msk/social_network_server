@@ -1,7 +1,7 @@
+import { useCallback } from 'react'
 import { FriendsListItem } from '@modules/DrawerBar/components'
 import { ButtonBox } from '@shared/components/ButtonBox'
 import { Icon } from '@shared/components/Icon'
-import { IconButton } from '@shared/components/IconButton'
 import { MenuListItem, MenuListWithButton } from '@shared/components/MenuList'
 import { Text } from '@shared/components/Text'
 import { makeCn } from '@shared/utils'
@@ -12,7 +12,6 @@ const cn = makeCn('FriendItem', styles)
 
 interface FriendItem {
   friend: FriendsListItem
-  onClickFriendItem: (friendId: number) => void
 }
 
 export const FriendItem = (props: FriendItem) => {
@@ -22,15 +21,18 @@ export const FriendItem = (props: FriendItem) => {
       name,
       img,
       status,
-      messageCount
+      messageCount,
     },
-    onClickFriendItem,
   } = props
+
+  const handleClickFriend = useCallback((friendId: number) => {
+    console.log(`Кликнул по пользователю ${friendId}`)
+  }, [])
 
   return (
     <ButtonBox
       className={cn()}
-      onClick={() => onClickFriendItem(id)}
+      onClick={() => handleClickFriend(id)}
     >
       <IMGPreview moduleName="users" folder="photo" img={img} />
       <div className={cn('TextContainer')}>
