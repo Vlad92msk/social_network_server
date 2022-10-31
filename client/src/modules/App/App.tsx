@@ -1,4 +1,5 @@
 import { DrawerBar } from '@modules/DrawerBar'
+import { Main } from '@modules/Main'
 import { NavBar } from '@modules/NavBar'
 import { Section } from '@shared/components/Section'
 import { makeCn } from '@shared/utils'
@@ -18,6 +19,7 @@ export const App = () => (
     }}
   >
     <NavBar />
+    <Main />
     <DrawerBar />
   </Section>
 )

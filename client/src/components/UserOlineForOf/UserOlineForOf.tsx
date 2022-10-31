@@ -7,18 +7,19 @@ import styles from './UserOlineForOf.module.scss'
 const cn = makeCn('UserOlineForOf', styles)
 
 export type UserOlineForOfProps = {
-  status: any
+  activeCount: number
+  totalCount: number
 }
 
 export const UserOlineForOf = React.memo((props: UserOlineForOfProps) => {
-  const { status } = props
+  const { activeCount, totalCount } = props
   return (
     <div className={cn()}>
       <div className={cn('IconBox')}>
         <Icon className={cn('Icon')} icon="user" fill="oldAsphalt40" size="small" />
         <span className={cn('Status')} />
       </div>
-      <Text className={cn('Count')} size="1">1 / 5</Text>
+      <Text className={cn('Count')} size="1">{`${activeCount} / ${totalCount}`}</Text>
     </div>
   )
 })

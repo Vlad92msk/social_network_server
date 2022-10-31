@@ -16,7 +16,7 @@ export interface FriendsListItem{
 }
 
 const friendsListItems: FriendsListItem[] = [
-  { id: 1, name: 'Jack', img: '1', status: UserStatusEnum.ONLINE, messageCount: 985 },
+  { id: 1, name: 'JackJa ckJackJackJac kJackJackJack', img: '1', status: UserStatusEnum.ONLINE, messageCount: 985 },
   { id: 2, name: 'Denis', img: '1', status: UserStatusEnum.OFFLINE, messageCount: null },
   { id: 3, name: 'John', img: '1', status: UserStatusEnum.ONLINE, messageCount: null },
   { id: 4, name: 'Carl', img: '1', status: UserStatusEnum.ONLINE, messageCount: null },
@@ -38,7 +38,7 @@ export const FriendsList = () => {
   return (
     <div className={cn()}>
       {orderBy(
-        filter(friendsListItems, ({ name }) => name.toLowerCase().includes(search.toLowerCase())),
+        search ? filter(friendsListItems, ({ name }) => name.toLowerCase().includes(search.toLowerCase())) : friendsListItems,
         ['status', 'messageCount'],
         ['desc', 'asc'],
       ).map((friend) => (

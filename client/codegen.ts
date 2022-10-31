@@ -15,20 +15,6 @@ const gqlFolders = fs.readdirSync(folder).map((moduleName) => {
 }).filter(Boolean)
 
 
-/**
- * Проходимся по массиву путей где есть папка 'graphql'
- * Создаем в ней файл 'generate.ts' где будут храниться все сгенерированные методы для каждого модуля
- */
-// const generates = gqlFolders.reduce((acc, folderPath) => ({
-//   ...acc,
-//   [`${folderPath}/generate.ts`]: {
-//     plugins: [
-//       'typescript',
-//       'typescript-operations',
-//       'typescript-react-apollo',
-//     ],
-//   },
-// }), {})
 
 module.exports = {
   /* Путь к схеме */

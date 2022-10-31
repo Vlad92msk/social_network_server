@@ -27,7 +27,7 @@ export const ChatItem = (props: ChatItem) => {
     >
       <div className={cn('UsersForOf')}>
         <IMGPreview moduleName="users" folder="photo" img={img} />
-        <UserOlineForOf status="c" />
+        <UserOlineForOf activeCount={1} totalCount={500} />
       </div>
       <div className={cn('TextContainerMain')}>
         <div className={cn('TextContainer')}>

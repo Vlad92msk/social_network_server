@@ -18,6 +18,8 @@
 
   &:hover {
     transition: .3s;
+    background: var(--Color-Background-Sub);
+    border-radius: $border-radius-small;
 
     #{$this}-FriendFastActions {
       opacity: 1;
@@ -30,6 +32,7 @@
       z-index: 2;
       transition: .5s;
     }
+
     #{$this}-Message {
       opacity: 1;
       z-index: 2;
@@ -44,8 +47,9 @@
 
   &-TextContainer {
     @include flex($direction: column);
-    width: 100%;
+    width: 60%;
     gap: rem(5);
+    flex: 1 1;
   }
 
   &-MainContainer {
@@ -55,6 +59,10 @@
   }
 
   &-FriendName {
+    @include textEllipsis;
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
     margin-right: auto;
   }
 
@@ -99,6 +107,7 @@
       padding: rem(5);
       font-size: rem(10);
     }
+
     &--visible {
       opacity: 1;
     }
