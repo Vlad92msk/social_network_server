@@ -1,5 +1,5 @@
 import { classnames } from '@bem-react/classnames'
-import React, { PropsWithChildren } from 'react'
+import React, { CSSProperties, PropsWithChildren } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { ErrorFallBack } from '@shared/components/ErrorFallBack'
@@ -10,6 +10,7 @@ import styles from './Section.module.scss'
 const cn = makeCn('Base', styles)
 
 interface SectionType extends PropsWithChildren {
+  style?: CSSProperties
   className?: string
   bcgImg?: ImageType
   imgClassName?: string
@@ -21,7 +22,11 @@ interface SectionType extends PropsWithChildren {
 }
 export const Section: React.FC<SectionType> = React.memo((
   {
-    bcgImg, className, imgClassName, noPaddingLeft, noPaddingRight, noPaddingTop, noPaddingBottom, resetKeys, children,
+    bcgImg, className,
+    style, imgClassName,
+    noPaddingLeft, noPaddingRight,
+    noPaddingTop, noPaddingBottom,
+    resetKeys, children,
   },
 ) => {
   const paddings = [
@@ -34,7 +39,7 @@ export const Section: React.FC<SectionType> = React.memo((
   return (
     <section
       className={classnames(cn(), className)}
-      style={{ ...paddings }}
+      style={{ ...paddings, ...style }}
     >
       {bcgImg
       && (

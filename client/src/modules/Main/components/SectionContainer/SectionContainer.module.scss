@@ -50,8 +50,8 @@
 
   &-Content {
     @include flex($wrap: wrap);
+    align-content: start;
     overflow-y: auto;
     gap: rem(20);
-    height: 80vh;
   }
 }

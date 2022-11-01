@@ -1,5 +1,5 @@
 import { classnames } from '@bem-react/classnames'
-import { ChangeEvent, PropsWithChildren, useCallback, useState } from 'react'
+import React, { ChangeEvent, PropsWithChildren, ReactElement, useCallback, useMemo, useState } from 'react'
 import { Icon } from '@shared/components/Icon'
 import { Text } from '@shared/components/Text'
 import { useRect } from '@shared/hooks'
@@ -18,20 +18,28 @@ export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>
   const { title, lastAdded, className, children } = props
   const [language, setLanguage] = useState('ru')
 
-  const [top, contentEl] = useRect<HTMLDivElement>('top')
+  const [rect, contentEl] = useRect<HTMLDivElement>(['top', 'width'], false)
 
   const changeLang = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setLanguage(e.target.value)
   }, [])
 
+  const childrenMemo = useMemo(() => React.Children.map(children, (child: ReactElement<any, string>) => React.cloneElement(child, {
+    containerWidth: rect.width,
+  })), [children, rect.width])
+
+  const calendarMemo = useMemo(() => (
+    <div className={cn('Calendar')}>
+      <Icon className={cn('CalendarIcon')} icon="calendar-not-filled" fill="redRose40" />
+      <Text color="title" size="2">{createDateFormat(lastAdded, DateFormats.FORMAT_3)}</Text>
+    </div>
+  ), [lastAdded])
+
   return (
     <div className={classnames(cn(), className)}>
       <div className={cn('Title')}>
         <Text color="title" size="7" weight="bold" textTransform="uppercase">{title}</Text>
-        <div className={cn('Calendar')}>
-          <Icon className={cn('CalendarIcon')} icon="calendar-not-filled" fill="redRose40" />
-          <Text color="title" size="2">{createDateFormat(lastAdded, DateFormats.FORMAT_3)}</Text>
-        </div>
+        {calendarMemo}
         <div style={{
           display: 'flex',
           overflow: 'hidden',
@@ -66,9 +74,9 @@ export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>
       <div
         className={cn('Content')}
         ref={contentEl}
-        style={{ height: `calc(100vh - ${top + 10}px)` }}
+        style={{ height: `calc(100vh - ${rect.top + 10}px)` }}
       >
-        {children}
+        {childrenMemo}
       </div>
     </div>
   )

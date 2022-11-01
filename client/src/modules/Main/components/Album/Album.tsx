@@ -17,16 +17,20 @@ interface SectionContainerProps {
   description?: string
   elementsCount?: number
   img?: string
+  containerWidth?: number
 }
 
 export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
-  const { title, description, img, elementsCount, className, children } = props
+  const {
+    title, description, img, elementsCount, containerWidth, className,
+  } = props
   const src = `/resources/images${createString(['users', 'photo', img], '/')}`
   const [background, hex, color] = useGetAccentImageColor(`${src}.webp`, 0.4)
-
+  console.log('width', containerWidth)
   return (
     <Section
       className={classnames(cn(), className)}
+      style={{ height: `clamp(200px, calc(${containerWidth / 3 + 50}px), 380px)` }}
       bcgImg={{
         path: {
           moduleName: 'users',
@@ -42,6 +46,9 @@ export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
           <Text className={cn('ButtonOpenTitle')} style={{ color }}>Открыть</Text>
           <Icon className={cn('ButtonOpenIcon')} icon="play" size="medium" style={{ fill: color }} />
         </ButtonBox>
+      </div>
+      <div>
+        1
       </div>
     </Section>
   )

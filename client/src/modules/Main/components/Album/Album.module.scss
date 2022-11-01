@@ -3,15 +3,16 @@
 @use 'public/styles/lib/templates' as * ;
 
 .Album {
-  @include wh(rem(550), rem(400));
   @extend %img-container;
+  @include wh(clamp(rem(400), 45%, 100%), rem(400));
+  flex-grow: 1;
   border-radius: $border-radius-album;
   padding: rem(40);
   position: relative;
   z-index: 1;
 
   &-Preview {
-    @include wh(60%, 100%);
+    @include wh(clamp(rem(200), 60%, rem(400)), 100%);
     @include flex($direction: column);
     border-radius: $border-radius-album;
     padding: rem(25);
