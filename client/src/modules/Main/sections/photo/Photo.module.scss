@@ -2,6 +2,6 @@
 @use 'public/styles/lib/mixins' as * ;
 @use 'public/styles/lib/templates' as * ;
 
-.Photo{
-
+.Photo {
+  position: relative;
 }

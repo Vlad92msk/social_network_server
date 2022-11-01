@@ -1,0 +1,36 @@
+@use 'public/styles/lib/functions' as *;
+@use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
+
+.Album {
+  @include wh(rem(550), rem(400));
+  @extend %img-container;
+  border-radius: $border-radius-album;
+  padding: rem(40);
+  position: relative;
+  z-index: 1;
+
+  &-Preview {
+    @include wh(60%, 100%);
+    @include flex($direction: column);
+    border-radius: $border-radius-album;
+    padding: rem(25);
+    background: rgba(69, 50, 123, 0.4);
+    backdrop-filter: blur(5px);
+  }
+
+  &-ButtonOpen {
+    z-index: 1;
+    @include flex($justify: space-between, $align-items: center);
+    background: rgba(69, 50, 123, 0.4);
+    backdrop-filter: blur(5px);
+    width: 100%;
+    border-radius: $border-radius-album;
+    padding: rem(10);
+    margin-top: auto;
+
+    &Title {
+      transform: translateX(rem(20));
+    }
+  }
+}
