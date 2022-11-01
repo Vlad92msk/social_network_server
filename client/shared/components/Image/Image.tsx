@@ -4,7 +4,6 @@ import React, { forwardRef, useMemo } from 'react'
 import { Modal } from '@shared/components/Modal'
 import { useToggle } from '@shared/hooks/useToggle'
 import { createString, makeCn } from '@shared/utils'
-
 import styles from './Image.module.scss'
 
 const cn = makeCn('Image', styles)
@@ -31,7 +30,7 @@ export const Image: React.FC<ImageType> = forwardRef((props, ref: any) => {
     className, sizePriority, path, isOpenFullScreen, withOptimized, withContainer, classNameContainer,
   } = props
   const { moduleName, folder, img } = path
-  const src = `/resources/images/${createString([moduleName, folder, img], '/')}`
+  const src = `/resources/images${createString([moduleName, folder, img], '/')}`
 
   const [isOpen, setOpen] = useToggle()
 

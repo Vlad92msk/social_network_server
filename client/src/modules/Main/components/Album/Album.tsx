@@ -4,8 +4,10 @@ import { ButtonBox } from '@shared/components/ButtonBox'
 import { Icon } from '@shared/components/Icon'
 import { Section } from '@shared/components/Section'
 import { Text } from '@shared/components/Text'
-import { makeCn } from '@shared/utils'
+import { useGetAccentImageColor } from '@shared/hooks'
+import { createString, makeCn } from '@shared/utils'
 import styles from './Album.module.scss'
+
 
 const cn = makeCn('Album', styles)
 
@@ -19,6 +21,8 @@ interface SectionContainerProps {
 
 export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
   const { title, description, img, elementsCount, className, children } = props
+  const src = `/resources/images${createString(['users', 'photo', img], '/')}`
+  const [background, hex, color] = useGetAccentImageColor(`${src}.webp`, 0.4)
 
   return (
     <Section
@@ -31,12 +35,12 @@ export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
         },
       }}
     >
-      <div className={cn('Preview')}>
-        <Text color="title" weight="bold" size="6">{title}</Text>
-        <Text color="title">{description}</Text>
-        <ButtonBox className={cn('ButtonOpen')}>
-          <Text className={cn('ButtonOpenTitle')} color="title">Открыть</Text>
-          <Icon className={cn('ButtonOpenIcon')} icon="play" size="medium" fill="redRose40" />
+      <div className={cn('Preview')} style={{ background }}>
+        <Text weight="bold" size="6" style={{ color }}>{title}</Text>
+        <Text style={{ color }}>{description}</Text>
+        <ButtonBox className={cn('ButtonOpen')} style={{ background }}>
+          <Text className={cn('ButtonOpenTitle')} style={{ color }}>Открыть</Text>
+          <Icon className={cn('ButtonOpenIcon')} icon="play" size="medium" style={{ fill: color }} />
         </ButtonBox>
       </div>
     </Section>

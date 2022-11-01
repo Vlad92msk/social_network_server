@@ -1,6 +1,6 @@
 import { classnames } from '@bem-react/classnames'
 import dynamic from 'next/dynamic'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { IconName } from '@public/models/icon.model'
 import { makeCn } from '../../utils'
 import styles from './Icon.module.scss'
@@ -14,13 +14,14 @@ export interface IconProps {
   icon: IconName
   fill?: IconFill
   size?: 'small' | 'ordinary' | 'medium' | 'large' | 'small_1'
+  style?: CSSProperties
   onClick?: () => void
   onMouseEnter?: (e: React.MouseEvent) => void
   onMouseLeave?: (e: React.MouseEvent) => void
 }
 
 export const Icon: React.FunctionComponent<IconProps> = ({
-  className, icon, fill, size, onClick, onMouseEnter, onMouseLeave,
+  className, icon, fill, size, onClick, onMouseEnter, onMouseLeave, style
 }) => {
   const DynamicComponent = dynamic(() => import(`../../../public/resources/icons/${icon}.svg`), {
     ssr: false,
@@ -31,6 +32,7 @@ export const Icon: React.FunctionComponent<IconProps> = ({
     onClick,
     onMouseEnter,
     onMouseLeave,
+    style,
   }
 
   return <DynamicComponent />

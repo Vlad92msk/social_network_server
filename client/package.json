@@ -14,9 +14,11 @@
   "dependencies": {
     "@apollo/client": "^3.7.0",
     "@bem-react/classnames": "^1.3.9",
+    "@material-ui/core": "^4.11.4",
     "@popperjs/core": "^2.11.6",
     "date-fns": "^2.29.3",
     "emoji-mart": "^5.2.2",
+    "fast-average-color": "^9.1.1",
     "framer-motion": "^7.5.3",
     "lodash": "^4.17.21",
     "next": "12.3.1",
@@ -32,8 +34,7 @@
     "rxjs-hooks": "^0.8.0-alpha.0",
     "swiper": "^6.8.4",
     "use-context-selector": "^1.4.1",
-    "yup": "^0.32.11",
-    "@material-ui/core": "^4.11.4"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@bem-react/classname": "^1.5.8",
