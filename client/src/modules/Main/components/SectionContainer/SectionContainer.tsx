@@ -1,7 +1,8 @@
 import { classnames } from '@bem-react/classnames'
-import { ChangeEvent, ChangeEventHandler, PropsWithChildren, useCallback, useState } from 'react'
+import { ChangeEvent, PropsWithChildren, useCallback, useState } from 'react'
 import { Icon } from '@shared/components/Icon'
 import { Text } from '@shared/components/Text'
+import { useRect } from '@shared/hooks'
 import { createDateFormat, DateFormats, makeCn } from '@shared/utils'
 import styles from './SectionContainer.module.scss'
 
@@ -16,13 +17,16 @@ interface SectionContainerProps {
 export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>) => {
   const { title, lastAdded, className, children } = props
   const [language, setLanguage] = useState('ru')
+
+  const [top, contentEl] = useRect<HTMLDivElement>('top')
+
   const changeLang = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setLanguage(e.target.value)
-  }, []);
+  }, [])
 
   return (
     <div className={classnames(cn(), className)}>
-      <title className={cn('Title')}>
+      <div className={cn('Title')}>
         <Text color="title" size="7" weight="bold" textTransform="uppercase">{title}</Text>
         <div className={cn('Calendar')}>
           <Icon className={cn('CalendarIcon')} icon="calendar-not-filled" fill="redRose40" />
@@ -33,7 +37,7 @@ export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>
           overflow: 'hidden',
           borderRadius: '15px',
           width: 'fit-content',
-          marginLeft: 'auto'
+          marginLeft: 'auto',
         }}
         >
           <input
@@ -58,8 +62,14 @@ export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>
           />
           <label className={cn('RadioLabel')} htmlFor="en">Альбомы</label>
         </div>
-      </title>
-      {children}
+      </div>
+      <div
+        className={cn('Content')}
+        ref={contentEl}
+        style={{ height: `calc(100vh - ${top + 10}px)` }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

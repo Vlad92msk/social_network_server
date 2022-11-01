@@ -3,6 +3,11 @@
 @use 'public/styles/lib/templates' as * ;
 
 .SectionContainer {
+  @include flex($direction: column);
+  gap: rem(20);
+  padding-bottom: rem(20);
+  border-bottom: rem(1) solid var(--Color-Background-Sub);
+
   &-Title {
     @include flex($align-items: center);
     gap: rem(20);
@@ -41,5 +46,12 @@
     &:not(:last-of-type) {
       border-right: rem(1) solid transparent;
     }
+  }
+
+  &-Content {
+    @include flex($wrap: wrap);
+    overflow-y: auto;
+    gap: rem(20);
+    height: 80vh;
   }
 }

@@ -1,4 +1,3 @@
-import { Record } from 'immutable'
 import { useEffect, useMemo } from 'react'
 import { GetArgTypes } from '@public/models/getArgTypes'
 import Module from '../Module'
