@@ -15,6 +15,19 @@ export interface ImagePath {
   img: string
 }
 
+
+const createPath = (path: ImagePath) => {
+  const { img, folder, moduleName } = path
+  if (
+    !moduleName || !moduleName.length
+    || !folder || !folder.length
+    || !img || !img.length
+  ) {
+    return `/resources/images${createString(['app', 'bcg', 'noImg'], '/')}`
+  }
+  return `/resources/images${createString([moduleName, folder, img], '/')}`
+}
+
 export interface ImageType {
   path: ImagePath
   sizePriority?: 'width' | 'height' | 'cover' | 'contain'
@@ -29,8 +42,8 @@ export const Image: React.FC<ImageType> = forwardRef((props, ref: any) => {
   const {
     className, sizePriority, path, isOpenFullScreen, withOptimized, withContainer, classNameContainer,
   } = props
-  const { moduleName, folder, img } = path
-  const src = `/resources/images${createString([moduleName, folder, img], '/')}`
+  const { img } = path
+  const src = createPath(path)
 
   const [isOpen, setOpen] = useToggle()
 

@@ -36,7 +36,7 @@ export const FileUpLoad: React.FC<FileUpLoadProps> = (props) => {
   const removeAttach = useCallback((e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setAddedFiles((prev) => prev.filter(({ name }) => name !== e?.currentTarget.name))
-  }, [])
+  }, [setAddedFiles])
 
   /**
    * Модалка предпросмотра материалов
@@ -54,13 +54,13 @@ export const FileUpLoad: React.FC<FileUpLoadProps> = (props) => {
        */
       closePrevFiles()
     }
-  }, [addedFiles])
+  }, [addedFiles, closePrevFiles, openPrevFiles])
 
 
   const applyAttachments = useCallback(() => {
     onApply(addedFiles)
     setAddedFiles([])
-  }, [addedFiles])
+  }, [addedFiles, onApply, setAddedFiles])
 
   /**
    * Если не нужно вызывать модалку с подтверждением - просто добавляет файлы
@@ -69,7 +69,7 @@ export const FileUpLoad: React.FC<FileUpLoadProps> = (props) => {
     if (!isConfirm && addedFiles.length) {
       setTimeout(() => applyAttachments(), 500)
     }
-  }, [isConfirm, addedFiles])
+  }, [isConfirm, addedFiles, applyAttachments])
 
   return (
     <>
@@ -101,7 +101,7 @@ export const FileUpLoad: React.FC<FileUpLoadProps> = (props) => {
             </div>
           ))}
         </div>
-        <Button onClick={applyAttachments} buttonName="filled" color="blue">
+        <Button onClick={applyAttachments} buttonName="green" color="blue">
           Подтвердить
         </Button>
       </Modal>
