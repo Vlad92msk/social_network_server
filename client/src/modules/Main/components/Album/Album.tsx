@@ -16,17 +16,17 @@ interface SectionContainerProps {
   title: string
   description?: string
   elementsCount?: number
-  img?: string
+  bcg?: string
   containerWidth?: number
 }
 
 export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
   const {
-    title, description, img, elementsCount, containerWidth, className,
+    title, description, bcg, elementsCount, containerWidth, className,
   } = props
-  const src = `/resources/images${createString(['users', 'photo', img], '/')}`
+  const src = `/resources/images${createString(['users', 'photo', bcg], '/')}`
   const [background, hex, color] = useGetAccentImageColor(`${src}.webp`, 0.4)
-  console.log('width', containerWidth)
+
   return (
     <Section
       className={classnames(cn(), className)}
@@ -35,7 +35,7 @@ export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
         path: {
           moduleName: 'users',
           folder: 'photo',
-          img: '1',
+          img: bcg,
         },
       }}
     >
@@ -44,11 +44,11 @@ export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
         <Text style={{ color }}>{description}</Text>
         <ButtonBox className={cn('ButtonOpen')} style={{ background }}>
           <Text className={cn('ButtonOpenTitle')} style={{ color }}>Открыть</Text>
-          <Icon className={cn('ButtonOpenIcon')} icon="play" size="medium" style={{ fill: color }} />
+          <Icon className={cn('ButtonOpenIcon')} icon="play" size="ordinary" style={{ fill: color }} />
         </ButtonBox>
       </div>
-      <div>
-        1
+      <div className={cn('Hover')}>
+        <Text size="8" style={{ color: background }}>{elementsCount}</Text>
       </div>
     </Section>
   )

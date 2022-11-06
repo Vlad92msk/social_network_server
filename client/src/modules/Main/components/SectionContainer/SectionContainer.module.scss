@@ -11,6 +11,10 @@
   &-Title {
     @include flex($align-items: center);
     gap: rem(20);
+    position: sticky;
+    top: rem(-30);
+    z-index: 2;
+    background: var(--Color-Background-App);
   }
 
   &-Calendar {
@@ -27,31 +31,9 @@
     }
   }
 
-  &-RadioInput {
-    display: none;
-
-    &:checked + label {
-      background: #536989;
-    }
-  }
-
-  &-RadioLabel {
-    padding: rem(3) rem(14);
-    color: white;
-    background: #7d8ecd;
-
-    cursor: pointer;
-    transition: .5s;
-
-    &:not(:last-of-type) {
-      border-right: rem(1) solid transparent;
-    }
-  }
-
   &-Content {
     @include flex($wrap: wrap);
     align-content: start;
-    overflow-y: auto;
     gap: rem(20);
   }
 }

@@ -1,0 +1,33 @@
+@use "public/styles/lib/functions" as *;
+@use "public/styles/lib/mixins" as *;
+@use "public/styles/lib/templates" as *;
+
+
+.Switch {
+  display: flex;
+  overflow: hidden;
+  border-radius: rem(15);
+  width: fit-content;
+  margin-left: auto;
+
+  &-RadioInput {
+    display: none;
+
+    &:checked + label {
+      background: #536989;
+    }
+  }
+
+  &-RadioLabel {
+    padding: rem(3) rem(14);
+    color: white;
+    background: #7d8ecd;
+
+    cursor: pointer;
+    transition: .5s;
+
+    &:not(:last-of-type) {
+      border-right: rem(1) solid transparent;
+    }
+  }
+}
