@@ -1,12 +1,9 @@
 import { classnames } from '@bem-react/classnames'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useCallback } from 'react'
 import { MediaItemType } from '@modules/Main/types/mediaItem'
-import { ButtonBox } from '@shared/components/ButtonBox'
-import { Icon } from '@shared/components/Icon'
 import { Section } from '@shared/components/Section'
-import { Text } from '@shared/components/Text'
-import { useGetAccentImageColor } from '@shared/hooks'
-import { createString, makeCn } from '@shared/utils'
+import { makeCn } from '@shared/utils'
+import { IconCount } from 'src/components'
 import styles from './MediaItem.module.scss'
 
 
@@ -21,6 +18,11 @@ interface SectionContainerProps {
 export const MediaItem = (props: PropsWithChildren<SectionContainerProps>) => {
   const { containerWidth, className, item } = props
 
+  const handleOpenComments = useCallback(() => {
+    console.log('item', item)
+  }, [item])
+
+
   return (
     <Section
       className={classnames(cn(), className)}
@@ -33,7 +35,18 @@ export const MediaItem = (props: PropsWithChildren<SectionContainerProps>) => {
         withContainer: true,
       }}
     >
-      MediaItem
+      <div className={cn('Buttons')}>
+        <IconCount
+          icon="message-square"
+          value={item.commentsCount}
+          isButton
+          onClick={handleOpenComments}
+          item={item}
+        />
+        <IconCount icon="eye" value={item.viewCount} countBcg="other" />
+        <IconCount icon="heart" value={item.likeCount} countBcg="other" />
+        <IconCount icon="dislike" value={item.disLikeCounts} countBcg="other" />
+      </div>
     </Section>
   )
 }

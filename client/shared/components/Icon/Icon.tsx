@@ -7,13 +7,14 @@ import styles from './Icon.module.scss'
 
 const cn = makeCn('Icon', styles)
 
-export type IconFill = 'oldAsphalt50' | 'oldAsphalt40' | 'bluePrimrose50' | 'light100' | 'redRose40';
+export type IconFill = 'oldAsphalt50' | 'oldAsphalt40' | 'bluePrimrose50' | 'light100' | 'redRose40'
+export type IconSize = 'small' | 'ordinary' | 'medium' | 'large' | 'small_1'
 
 export interface IconProps {
   className?: string
   icon: IconName
   fill?: IconFill
-  size?: 'small' | 'ordinary' | 'medium' | 'large' | 'small_1'
+  size?: IconSize
   style?: CSSProperties
   onClick?: () => void
   onMouseEnter?: (e: React.MouseEvent) => void

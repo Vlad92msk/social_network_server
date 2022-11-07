@@ -47,8 +47,10 @@ export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
           <Icon className={cn('ButtonOpenIcon')} icon="play" size="ordinary" style={{ fill: color }} />
         </ButtonBox>
       </div>
-      <div className={cn('Hover')}>
-        <Text size="8" style={{ color: background }}>{elementsCount}</Text>
+      <div className={cn('Hover')} style={{ background }}>
+        <Text size="6" style={{ color }}>
+          {elementsCount > 99 ? '+99' : elementsCount}
+        </Text>
       </div>
     </Section>
   )

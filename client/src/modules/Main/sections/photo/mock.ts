@@ -20,6 +20,7 @@ export const PHOTOS: MediaItemType[] = [
     albumId: 1,
     type: MediaType.PHOTO,
     path: '1',
+    viewCount: 88,
   },
   {
     id: '1-2', // Наверно хеширвоать с userID + DataCreate
@@ -38,6 +39,7 @@ export const PHOTOS: MediaItemType[] = [
     albumId: 1,
     type: MediaType.PHOTO,
     path: null,
+    viewCount: 88,
   },
   {
     id: '1-3', // Наверно хеширвоать с userID + DataCreate
@@ -56,6 +58,7 @@ export const PHOTOS: MediaItemType[] = [
     albumId: 1,
     type: MediaType.PHOTO,
     path: '',
+    viewCount: 88,
   },
 ]
 export const ALBUMS : AlbumType[] = [

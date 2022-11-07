@@ -16,7 +16,7 @@ export interface ImagePath {
 }
 
 
-const createPath = (path: ImagePath) => {
+export const createImagePath = (path: ImagePath) => {
   const { img, folder, moduleName } = path
   if (
     !moduleName || !moduleName.length
@@ -43,7 +43,7 @@ export const Image: React.FC<ImageType> = forwardRef((props, ref: any) => {
     className, sizePriority, path, isOpenFullScreen, withOptimized, withContainer, classNameContainer,
   } = props
   const { img } = path
-  const src = createPath(path)
+  const src = createImagePath(path)
 
   const [isOpen, setOpen] = useToggle()
 

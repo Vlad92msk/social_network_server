@@ -17,4 +17,5 @@ export interface MediaItemType {
   albumId: number
   path: string
   type: MediaType
+  viewCount: number
 }
