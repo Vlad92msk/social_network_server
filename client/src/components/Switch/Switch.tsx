@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useId, useState } from 'react'
 import { makeCn } from '@shared/utils'
 import styles from './Switch.module.scss'
 
@@ -26,6 +26,7 @@ export const Switch = (props: SwitchProps) => {
     onChange(value)
   }, [onChange])
 
+  const uuid = useId()
 
   return (
     <div className={cn()}>
@@ -36,11 +37,11 @@ export const Switch = (props: SwitchProps) => {
             className={cn('RadioInput')}
             type="radio"
             value={value}
-            name={groupName}
-            id={String(groupName + value)}
+            name={uuid + groupName}
+            id={String(uuid + groupName + value)}
             checked={result === value}
           />
-          <label className={cn('RadioLabel')} htmlFor={String(groupName + value)}>
+          <label className={cn('RadioLabel')} htmlFor={String(uuid + groupName + value)}>
             {label}
           </label>
         </React.Fragment>

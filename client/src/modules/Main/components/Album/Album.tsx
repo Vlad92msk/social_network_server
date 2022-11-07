@@ -1,5 +1,5 @@
 import { classnames } from '@bem-react/classnames'
-import { PropsWithChildren, useMemo, useState } from 'react'
+import { PropsWithChildren, useMemo } from 'react'
 import { MediaItem } from '@modules/Main/components'
 import { PHOTOS } from '@modules/Main/sections/photo/mock'
 import { AlbumType } from '@modules/Main/types/album'
@@ -52,7 +52,12 @@ export const Album = (props: PropsWithChildren<SectionContainerProps>) => {
       <div className={cn('Preview')} style={{ background }}>
         <Text weight="bold" size="6" style={{ color }}>{title}</Text>
         <Text style={{ color }}>{description}</Text>
-        <ButtonBox className={cn('ButtonOpen')} style={{ background }} onClick={closeAlbum}>
+        <ButtonBox
+          className={cn('ButtonOpen')}
+          style={{ background }}
+          onClick={closeAlbum}
+          disabled={!Boolean(elementsCount)}
+        >
           <Text className={cn('ButtonOpenTitle')} style={{ color }}>Открыть</Text>
           <Icon className={cn('ButtonOpenIcon')} icon="play" size="ordinary" style={{ fill: color }} />
         </ButtonBox>
