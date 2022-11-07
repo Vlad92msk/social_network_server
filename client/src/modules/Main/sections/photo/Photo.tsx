@@ -24,7 +24,7 @@ export const Photo = () => {
           <Album
             key={album.id}
             elementsCount={album.elements.length}
-            {...album}
+            album={album}
           />
         ))
       ) : (

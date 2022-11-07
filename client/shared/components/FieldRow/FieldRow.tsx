@@ -14,16 +14,17 @@ export interface FieldRowProps {
   width?: '100' | '50' | '25'
   direction?: 'row' | 'column' | 'columnreverse' | 'rowreverse'
   style?: React.CSSProperties
+  gap?: string
 }
 
 export const FieldRow: React.FunctionComponent<FieldRowProps> = (props) => {
   const {
-    children, className, align, justify, wrap, width, direction, style,
+    children, className, align, justify, wrap, width, direction, style, gap,
   } = props
 
   return (
     <div
-      style={style}
+      style={{ ...style, gap }}
       className={classnames(
         cn({
           align,
