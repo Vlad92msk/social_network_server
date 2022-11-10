@@ -13,6 +13,7 @@ export enum DateFormats {
    */
   FORMAT_2='LLLL dd, yyyy',
   FORMAT_3='dd.MM.yyyy',
+  FORMAT_4='yyyy',
 }
 
 

@@ -1,12 +1,12 @@
 import { makeCn } from '@shared/utils'
 import styles from './Module.module.scss'
-import { Photo, Video, WithMe } from './sections'
+import { Photo, Video, Resume } from './sections'
 
 const cn = makeCn('Main', styles)
 
 const Module = () => (
   <div className={cn()}>
-    <WithMe />
+    <Resume />
     <Photo />
     <Video />
   </div>

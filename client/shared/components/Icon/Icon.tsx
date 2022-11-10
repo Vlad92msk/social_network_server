@@ -11,6 +11,7 @@ export type IconFill = 'oldAsphalt50' | 'oldAsphalt40' | 'bluePrimrose50' | 'lig
 export type IconSize = 'small' | 'ordinary' | 'medium' | 'large' | 'small_1'
 
 export interface IconProps {
+  basePath?: 'users/hobbies/' | 'users/skills/'
   className?: string
   icon: IconName
   fill?: IconFill
@@ -22,9 +23,9 @@ export interface IconProps {
 }
 
 export const Icon: React.FunctionComponent<IconProps> = ({
-  className, icon, fill, size, onClick, onMouseEnter, onMouseLeave, style
+  className, icon, fill, size, onClick, onMouseEnter, onMouseLeave, style, basePath,
 }) => {
-  const DynamicComponent = dynamic(() => import(`../../../public/resources/icons/${icon}.svg`), {
+  const DynamicComponent = dynamic(() => import(`../../../public/resources/icons/${basePath || 'share/'}${icon}.svg`), {
     ssr: false,
   })
 
