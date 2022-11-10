@@ -1,0 +1,56 @@
+@use 'public/styles/lib/functions' as *;
+@use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
+
+.WithMe {
+  &-UserPhotoContainer {
+    @include wh(rem(400), rem(350));
+    position: relative;
+    border-radius: $border-radius-small;
+    overflow: hidden;
+  }
+
+  &-Experience {
+    @include flex($direction: column, $align-items: flex-end);
+    width: 50%;
+    gap: rem(10);
+
+    &Container {
+      width: 100%;
+      gap: rem(10);
+      display: flex;
+      flex-direction: column;
+
+    }
+
+    &Item {
+      display: grid;
+      grid-template: [start] "period main" 100% [end] / auto 100%;
+      gap: rem(20);
+    }
+    &List {
+      grid-area: main;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &-Period {
+    grid-area: period;
+    height: 100%;
+    position: relative;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      top: 20%;
+      height: 70%;
+      width: rem(1);
+      background: white;
+    }
+  }
+}

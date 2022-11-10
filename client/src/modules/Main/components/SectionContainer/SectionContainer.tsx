@@ -1,5 +1,5 @@
 import { classnames } from '@bem-react/classnames'
-import React, { PropsWithChildren, ReactElement, useCallback, useMemo, useState } from 'react'
+import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
 import { Icon } from '@shared/components/Icon'
 import { Text } from '@shared/components/Text'
 import { useRect } from '@shared/hooks'
@@ -19,15 +19,15 @@ const visibleTypeSwitcherStart = visibleTypeSwitcher[0].value
 
 interface SectionContainerProps {
   className?: string
+  withSwitcher?: boolean
   title: string
   lastAdded: Date
   changeVisibleType?: (selectValue: string | number) => void
 }
 
 export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>) => {
-  const { title, lastAdded, className, changeVisibleType, children } = props
+  const { title, lastAdded, className, changeVisibleType, withSwitcher, children } = props
   const [rect, contentEl] = useRect<HTMLDivElement>(['width'])
-
 
   return (
     <div className={classnames(cn(), className)}>
@@ -39,13 +39,15 @@ export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>
             <Text color="title" size="2">{createDateFormat(lastAdded, DateFormats.FORMAT_3)}</Text>
           </div>
         ), [lastAdded])}
-        {useMemo(() => (
+        {useMemo(() => (withSwitcher
+          && (
           <Switch
             onChange={changeVisibleType}
             options={visibleTypeSwitcher}
             startWith={visibleTypeSwitcherStart}
           />
-        ), [changeVisibleType])}
+          )
+        ), [changeVisibleType, withSwitcher])}
       </div>
       <div className={cn('Content')} ref={contentEl}>
         {useMemo(() => React.Children.map(children, (child: ReactElement<any, string>) => React.cloneElement(child, {
@@ -54,4 +56,8 @@ export const SectionContainer = (props: PropsWithChildren<SectionContainerProps>
       </div>
     </div>
   )
+}
+
+SectionContainer.defaultProps = {
+  withSwitcher: true,
 }

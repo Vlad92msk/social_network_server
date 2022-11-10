@@ -19,6 +19,29 @@
     }
   }
 
+  &--content {
+
+    &_start {
+      align-content: flex-start;
+    }
+
+    &_end {
+      align-content: flex-end;
+    }
+
+    &_center {
+      align-content: center;
+    }
+
+    &_between {
+      align-content: space-between;
+    }
+
+    &_around {
+      align-content: space-around;
+    }
+  }
+
   &--wrap {
 
     &_wrap {
@@ -42,6 +65,21 @@
 
     &_25 {
       width: 25%;
+    }
+  }
+
+  &--height {
+
+    &_100 {
+      height: 100%;
+    }
+
+    &_50 {
+      height: 50%;
+    }
+
+    &_25 {
+      height: 25%;
     }
   }
 

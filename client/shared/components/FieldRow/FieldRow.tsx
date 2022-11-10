@@ -10,8 +10,10 @@ export interface FieldRowProps {
   className?: string
   align?: 'top' | 'bottom' | 'center'
   justify?: 'start' | 'center' | 'between' | 'around' | 'end'
+  content?: 'start' | 'center' | 'between' | 'around' | 'end'
   wrap?: 'wrap' | 'nowrap'
   width?: '100' | '50' | '25'
+  height?: '100' | '50' | '25'
   direction?: 'row' | 'column' | 'columnreverse' | 'rowreverse'
   style?: React.CSSProperties
   gap?: string
@@ -19,7 +21,7 @@ export interface FieldRowProps {
 
 export const FieldRow: React.FunctionComponent<FieldRowProps> = (props) => {
   const {
-    children, className, align, justify, wrap, width, direction, style, gap,
+    children, className, align, content, justify, wrap, width, height, direction, style, gap,
   } = props
 
   return (
@@ -31,7 +33,9 @@ export const FieldRow: React.FunctionComponent<FieldRowProps> = (props) => {
           justify,
           wrap,
           width,
+          height,
           direction,
+          content,
         }),
         className,
       )}
