@@ -4,14 +4,21 @@ import { Icon } from '@shared/components/Icon'
 import { Text } from '@shared/components/Text'
 import { cn } from './cn'
 import { ExperienceItem } from './ExperienceItem'
-import { Experience, experiencePrimary, experienceSecondary, skills } from './mock'
+import { Experience, Skills } from './mock'
 
 const enum VisibleExp {
   PRIMARY,
   SECONDARY
 }
 
-export const ExperienceAndSkills = () => {
+interface ExperienceAndSkillsProps {
+  experiencePrimary: Experience[]
+  experienceSecondary: Experience[]
+  skills: Skills []
+}
+
+export const ExperienceAndSkills = (props: ExperienceAndSkillsProps) => {
+  const { experiencePrimary, experienceSecondary, skills } = props
   const [selectExperience, setSelectExperience] = useState<Experience>(null)
   const [visibleExp, setVisibleExp] = useState(VisibleExp.PRIMARY)
 

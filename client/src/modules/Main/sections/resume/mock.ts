@@ -11,7 +11,7 @@ export interface Experience {
 }
 export const experienceSecondary: Experience[] = [
   {
-    id: 1,
+    id: 21,
     dateStart: new Date('2018-08-06'),
     dateEnd: null,
     responsibility: [
@@ -58,11 +58,14 @@ export const experiencePrimary: Experience[] = [
     skills: ['git', 'graphql', 'nest', 'nextLS', 'postgresql', 'react', 'redux', 'rxjs', 'sass', 'typeScript'],
   },
 ]
+
 export const hobbies:{id: number, name: IconName}[] = [
   { id: 1, name: 'bulb' },
   { id: 2, name: 'burger-split' },
   { id: 3, name: 'burger-dot' },
 ]
+export type Hobie = typeof hobbies[0]
+
 export const skills:{id: number, name: IconName}[] = [
   { id: 1, name: 'git' },
   { id: 2, name: 'graphql' },
@@ -75,8 +78,26 @@ export const skills:{id: number, name: IconName}[] = [
   { id: 9, name: 'sass' },
   { id: 10, name: 'typeScript' },
 ]
+export type Skills = typeof skills[0]
 
 export const contacts: {id: number, value: string, type: IconName}[] = [
   { id: 1, type: 'photo', value: '8-999-999-99-99' },
   { id: 2, type: 'eye', value: 'fvs011@yandex.ru' },
+]
+export type Contact = typeof contacts[0]
+
+export interface SchoolInfo {
+  id: number
+  vuz: string
+  profession: string
+  dateStart: Date
+  dateEnd: Date
+}
+
+export const schoolInfo: SchoolInfo[] = [
+  { id: 1,
+    vuz: 'Московский городской педагогический университет',
+    profession: 'Менеджмент организации',
+    dateStart: new Date('2009-01-09'),
+    dateEnd: new Date('2014-01-09') },
 ]
