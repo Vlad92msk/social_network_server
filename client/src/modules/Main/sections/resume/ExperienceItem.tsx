@@ -1,22 +1,27 @@
 import { format } from 'date-fns'
+import { ButtonBox } from '@shared/components/ButtonBox'
 import { FieldRow } from '@shared/components/FieldRow'
 import { Text } from '@shared/components/Text'
 import { DateFormats } from '@shared/utils'
 import { cn } from './cn'
+import { Experience } from './mock'
 
 export interface ExperienceItemProps {
-  id: number
-  dateStart: Date
-  dateEnd?: Date
-  responsibility: any[]
-  companyName: string
-  position: string
+  experience: Experience
+  setSelectExperience: (id: Experience) => void
+  activeId: number
 }
 
 export const ExperienceItem = (props: ExperienceItemProps) => {
-  const { dateStart, dateEnd, position, responsibility, companyName } = props
+  const { experience, setSelectExperience, activeId } = props
+  const {
+    id, dateStart, dateEnd, position, responsibility, companyName,
+  } = experience
   return (
-    <div className={cn('ExperienceItem')}>
+    <ButtonBox
+      className={cn('ExperienceItem', { active: activeId === id })}
+      onClick={() => setSelectExperience(experience)}
+    >
       <Text className={cn('Period')} color="title" weight="bold" size="4">
         {`${format(dateStart, DateFormats.FORMAT_4)}-${dateEnd ? format(dateEnd, DateFormats.FORMAT_4) : 'н/в'}`}
       </Text>
@@ -29,6 +34,6 @@ export const ExperienceItem = (props: ExperienceItemProps) => {
           <Text key={value} color="body" size="4">{`- ${value}`}</Text>
         ))}
       </div>
-    </div>
+    </ButtonBox>
   )
 }

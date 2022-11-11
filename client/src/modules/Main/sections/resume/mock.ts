@@ -1,7 +1,32 @@
-import { ExperienceItemProps } from '@modules/Main/sections/resume/ExperienceItem'
 import { IconName } from '@public/models/icon.model'
 
-export const experience: ExperienceItemProps[] = [
+export interface Experience {
+  id: number
+  dateStart: Date
+  dateEnd?: Date
+  responsibility: any[]
+  companyName: string
+  position: string
+  skills: IconName[]
+}
+export const experienceSecondary: Experience[] = [
+  {
+    id: 1,
+    dateStart: new Date('2018-08-06'),
+    dateEnd: null,
+    responsibility: [
+      'Разработка интерфейсов',
+      'Что еще делал',
+      'Что еще делал1',
+      'Что еще делал2',
+      'Что еще делал3',
+    ],
+    companyName: 'ООО "42"',
+    position: 'Главный инженер-разработчик',
+    skills: ['react', 'redux'],
+  },
+]
+export const experiencePrimary: Experience[] = [
   {
     id: 1,
     dateStart: new Date('2019-08-06'),
@@ -9,12 +34,13 @@ export const experience: ExperienceItemProps[] = [
     responsibility: [
       'Разработка интерфейсов',
       'Что еще делал',
-      'Что еще делал',
-      'Что еще делал',
-      'Что еще делал',
+      'Что еще делал1',
+      'Что еще делал2',
+      'Что еще делал3',
     ],
     companyName: 'ООО "42"',
     position: 'Главный инженер-разработчик',
+    skills: ['react', 'redux'],
   },
   {
     id: 2,
@@ -23,15 +49,15 @@ export const experience: ExperienceItemProps[] = [
     responsibility: [
       'Разработка интерфейсов',
       'Что еще делал',
-      'Что еще делал',
-      'Что еще делал',
-      'Что еще делал',
+      'Что еще делал1',
+      'Что еще делал2',
+      'Что еще делал3',
     ],
     companyName: 'ООО "42"',
     position: 'Главный инженер-разработчик',
+    skills: ['git', 'graphql', 'nest', 'nextLS', 'postgresql', 'react', 'redux', 'rxjs', 'sass', 'typeScript'],
   },
 ]
-
 export const hobbies:{id: number, name: IconName}[] = [
   { id: 1, name: 'bulb' },
   { id: 2, name: 'burger-split' },
