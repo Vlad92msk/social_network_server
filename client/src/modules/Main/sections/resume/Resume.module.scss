@@ -6,7 +6,7 @@
   margin: 0 7%;
 
   &-UserPhotoContainer {
-    @include wh(rem(400), rem(350));
+    @include wh(rem(300), rem(250));
     position: relative;
     border-radius: $border-radius-small;
     overflow: hidden;
@@ -68,8 +68,21 @@
     @include wh(40%, 100%);
     gap: rem(10);
 
+    &Container {
+      @include wh(100%, 100%);
+      position: relative;
+    }
+
+    &Box {
+      @include flex($wrap: wrap, $justify: center);
+      position: sticky;
+      top: rem(55);
+      gap: rem(10);
+    }
+
     &Item {
       transition: 0.5s;
+
 
       &--active {
         filter: drop-shadow(0px 0px 5px #00bff3);

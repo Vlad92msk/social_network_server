@@ -1,0 +1,21 @@
+@use 'public/styles/lib/functions' as *;
+@use 'public/styles/lib/mixins' as * ;
+@use 'public/styles/lib/templates' as * ;
+
+.ChangeInfoModal {
+  @include wh(70%, 70%);
+  flex-direction: row;
+  background: var(--Color-Background-App);
+
+  &-Switcher{
+    height: 100%;
+    margin-left: inherit;
+    & label{
+      flex: 1 0 auto;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

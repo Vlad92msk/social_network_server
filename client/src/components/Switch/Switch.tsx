@@ -1,23 +1,29 @@
+import { classnames } from '@bem-react/classnames'
 import React, { useCallback, useId, useState } from 'react'
 import { makeCn } from '@shared/utils'
 import styles from './Switch.module.scss'
 
 const cn = makeCn('Switch', styles)
 
-export interface SwitchOption {
+export interface SwitchOption<T = any> {
   groupName: string
   label: string
-  value: string|number
+  value: T
 }
-
+export const enum SwitchType {
+  VERTICAL='vertical',
+  HORISONTAL='horisontal',
+}
 interface SwitchProps {
+  className?: string
   options: SwitchOption[]
+  type?: SwitchType
   startWith: SwitchOption['value']
-  onChange: (selectValue: string | number) => void
+  onChange: (selectValue: any) => void
 }
 
-export const Switch = (props: SwitchProps) => {
-  const { options, startWith, onChange } = props
+export const Switch: React.FC<SwitchProps> = (props) => {
+  const { className, options, startWith, onChange, type } = props
   const [result, setResult] = useState<SwitchOption['value']>(startWith)
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +35,7 @@ export const Switch = (props: SwitchProps) => {
   const uuid = useId()
 
   return (
-    <div className={cn()}>
+    <div className={classnames(cn({ type }), className)}>
       {options.map(({ value, groupName, label }) => (
         <React.Fragment key={value}>
           <input
@@ -48,4 +54,8 @@ export const Switch = (props: SwitchProps) => {
       ))}
     </div>
   )
+}
+
+Switch.defaultProps = {
+  type: SwitchType.HORISONTAL,
 }

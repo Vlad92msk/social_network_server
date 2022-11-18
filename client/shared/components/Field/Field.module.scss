@@ -1,5 +1,4 @@
-@import 'public/styles/lib/functions';
-
+@use 'public/styles/lib/functions' as *;
 
 .Field {
   display: flex;

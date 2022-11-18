@@ -10,6 +10,16 @@
   width: fit-content;
   margin-left: auto;
 
+  &--type {
+    &_horisontal {
+      flex-direction: row;
+    }
+
+    &_vertical {
+      flex-direction: column;
+    }
+  }
+
   &-RadioInput {
     display: none;
 
@@ -27,6 +37,7 @@
     transition: .3s;
 
     cursor: pointer;
+
     &:not(:last-of-type) {
       border-right: rem(1) solid transparent;
     }
