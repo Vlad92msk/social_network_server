@@ -120,9 +120,12 @@
   --Color-Background-App: #1f233f;
   --Color-Background-Sub: #2b2f4d;
   --Color-Background-Sub1: rgba(43, 47, 77, 0.61);
+
   --Color-Text-Main: #d8dbee;
   --Color-Text-Sub-1: #1a1f3b;
   --Color-Text-Sub-2: #8084a3;
+  --Color-Text-Disabled: #8084a3;
+
   --Color-Status-Online: #2ce25d;
   --Color-Status-Offline: #ef181b;
   --Color-Background-icon: #afb4d5;
@@ -130,6 +133,7 @@
   --Color-Line: #d8dbee;
   --Color-Active-Card: rgba(0, 191, 243, 0.38);
   --Color-Button-Background-Blue: #afb4d5;
+  --Color-Button-Disabled: rgba(128, 132, 163, 0.61);
 }
 
 [data-theme='red']{

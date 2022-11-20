@@ -47,6 +47,7 @@ export const Experience = () => {
               }}
               render={({ field }) => (
                 <TextField
+                  autoWidth
                   label="Название компании"
                   placeholder=""
                   required
@@ -62,6 +63,7 @@ export const Experience = () => {
               }}
               render={({ field }) => (
                 <TextField
+                  autoWidth
                   label="Должность"
                   placeholder=""
                   required
@@ -69,7 +71,6 @@ export const Experience = () => {
                 />
               )}
             />
-
           </div>
         ))}
       </div>

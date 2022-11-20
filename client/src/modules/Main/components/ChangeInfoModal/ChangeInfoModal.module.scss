@@ -49,11 +49,14 @@
       grid-template-columns: 1fr;
       overflow-y: auto;
       gap: rem(30);
+      align-content: start;
+      margin-bottom: rem(20);
 
       &Item {
         display: grid;
         grid-template-columns: 1fr;
         gap: rem(10);
+        align-content: start;
       }
     }
 

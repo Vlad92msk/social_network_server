@@ -55,7 +55,7 @@ export interface TextInputProps {
   iconFill?: IconFill;
   iconClick?: () => void;
 
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'inherit';
   error?: boolean | string;
   disabled?: boolean;
   placeholder?: string;
@@ -94,7 +94,7 @@ export const TextInput: React.FunctionComponent<TextInputProps> = (props) => {
     placeholder,
     error,
   } = props
-  const [refWidth, ref] = useRect<HTMLDivElement>(['width'])
+  const [refWidth, ref] = useRect<HTMLDivElement>(['width'], false)
 
 
   const handleChange = useCallback(({ target: { value: nextValue } }) => {
@@ -104,13 +104,19 @@ export const TextInput: React.FunctionComponent<TextInputProps> = (props) => {
 
   return (
     <div ref={innerRef} className={classnames(cn({ error }), className)} style={style} onClick={onClick}>
-      <div ref={ref} className={cn('PrefixBox', { iconPosition })}>
-        {icon && <IconButton className={cn('Icon')} icon={icon} fill={iconFill} onClick={iconClick} />}
-        {prefix && <Text className={cn('Prefix')} color="note" weight="medium">{prefix}</Text>}
-      </div>
+      {
+        (icon || prefix) && (
+          <div ref={ref} className={cn('PrefixBox', { iconPosition })}>
+            {icon && <IconButton className={cn('Icon')} icon={icon} fill={iconFill} onClick={iconClick} />}
+            {prefix && <Text className={cn('Prefix')} color="note" weight="medium">{prefix}</Text>}
+          </div>
+        )
+      }
       <Text
         as="input"
-        style={{ [iconPosition === 'left' ? 'paddingLeft' : 'paddingRight']: refWidth.width + 16 + 8 }}
+        style={(icon || prefix) && ({
+          [iconPosition === 'left' ? 'paddingLeft' : 'paddingRight']: (refWidth.width || 0) + 10,
+        })}
         className={cn('Input', { size, error })}
         type={type}
         maxLength={maxLength}

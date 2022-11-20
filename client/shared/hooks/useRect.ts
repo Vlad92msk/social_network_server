@@ -1,7 +1,7 @@
 import { pick } from 'lodash'
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
 
-export const useRect = <T extends Element>(param: (keyof DOMRect)[], withScroll = true): [
+export const useRect = <T extends Element>(param: (keyof DOMRect)[] = [], withScroll = true): [
   Partial<DOMRect>,
   MutableRefObject<T | null>
 ] => {

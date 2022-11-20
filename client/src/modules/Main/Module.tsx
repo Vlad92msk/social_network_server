@@ -1,6 +1,6 @@
 import { makeCn } from '@shared/utils'
 import styles from './Module.module.scss'
-import { Photo, Video, Resume } from './sections'
+import { Photo, Resume, Video } from './sections'
 
 const cn = makeCn('Main', styles)
 
