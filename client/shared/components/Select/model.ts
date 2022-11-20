@@ -4,7 +4,11 @@ export type SelectValue = OptionValue | Array<OptionValue> | null
 
 export interface SelectContext {
   selectValue: SelectValue
-  handleChange: (valueOption: OptionValue) => void
+  name?: string
+  size?: string
+  handleChange: (valueOption: OptionValue, optionName?: string) => void
+  onChange: (value: SelectValue, name?: string) => void
   searchValue: string
   tokenfield?: Tokenfield
+  optionValues: OptionValue[]
 }

@@ -1,15 +1,18 @@
 import React, { useCallback } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { AreaField } from '@shared/components/AreaField'
+import { FormProvider, useForm } from 'react-hook-form'
+import { ResumeModel, useContextSelector } from '@modules/Main/service'
+import { Button } from '@shared/components/Button'
+import { FieldRow } from '@shared/components/FieldRow'
 import { Modal } from '@shared/components/Modal'
-import { TextField } from '@shared/components/TextField'
 import { useSwitcher } from '@shared/hooks'
-import { makeCn } from '@shared/utils'
 import { SwitchType } from 'src/components'
-import styles from './ChangeInfoModal.module.scss'
-
-
-const cn = makeCn('ChangeInfoModal', styles)
+import { cn } from './cn'
+import { Contacts } from './Contacts'
+import { Experience } from './Experience'
+import { Hobbies } from './Hobbies'
+import { School } from './School'
+import { Skills } from './Skills'
+import { WithMe } from './WithMe'
 
 
 const enum ChangeSections {
@@ -21,6 +24,27 @@ const enum ChangeSections {
   SCHOOL = 'school'
 }
 
+
+const sections: Record<ChangeSections, JSX.Element> = {
+  [ChangeSections.MAIN]: <WithMe />,
+  [ChangeSections.HOBBIES]: <Hobbies />,
+  [ChangeSections.CONTACTS]: <Contacts />,
+  [ChangeSections.SKILLS]: <Skills />,
+  [ChangeSections.EXP]: <Experience />,
+  [ChangeSections.SCHOOL]: <School />,
+}
+
+export type ChangeResume = {
+  school: ResumeModel['school']
+  hobbies: ResumeModel['hobbies']
+  contacts: ResumeModel['contacts']
+  skills: ResumeModel['experienceAndSkills']['skills']
+  experienceSecondary: ResumeModel['experienceAndSkills']['experienceSecondary']
+  experiencePrimary: ResumeModel['experienceAndSkills']['experiencePrimary']
+  position: ResumeModel['withMe']['position']
+}
+
+
 interface ChangeInfoModalProps {
   open: boolean
   setOpen: () => void
@@ -28,6 +52,12 @@ interface ChangeInfoModalProps {
 
 export const ChangeInfoModal = (props: ChangeInfoModalProps) => {
   const { open, setOpen } = props
+  const {
+    school, hobbies, contacts,
+    withMe: { position },
+    experienceAndSkills: { skills, experienceSecondary, experiencePrimary },
+  } = useContextSelector((store) => store.resume)
+
   const [openSection, switcher] = useSwitcher<ChangeSections>({
     initial: ChangeSections.MAIN,
     groupName: 'changeResumeInfoSection',
@@ -43,52 +73,46 @@ export const ChangeInfoModal = (props: ChangeInfoModalProps) => {
     ],
   })
 
-  const { control, handleSubmit } = useForm({
+  const methods = useForm<ChangeResume>({
     defaultValues: {
-      name1: 'a',
-      name2: 'b',
+      school, hobbies, contacts, skills, experienceSecondary, experiencePrimary, position,
     },
-
   })
-  const onSubmit = (data) => console.log(data)
+  const { handleSubmit } = methods
+
+  const handleSave = useCallback((data) => {
+    console.log('formData', data)
+  }, [])
 
 
   return (
     <Modal className={cn()} open={open} onClose={setOpen}>
       {switcher}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          control={control}
-          rules={{
-            required: 'Введите название',
-          }}
-          name="name1"
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              label="Название"
-              placeholder="Введите название..."
-              value={value}
-              onChange={onChange}
+      <FormProvider {...methods}>
+        <form
+          className={cn('Form')}
+          id="ChangeResume-form"
+          onSubmit={handleSubmit(handleSave)}
+        >
+          {sections[openSection]}
+          <FieldRow className={cn('Actions')} width="100" justify="end">
+            <Button
+              className={cn('Submit')}
+              styleType="filled"
+              buttonName="green"
+              type="reset"
+              icon="exit"
             />
-          )}
-        />
-        <Controller
-          control={control}
-          name="name2"
-          rules={{
-            required: 'Введите описание',
-          }}
-          render={({ field: { onChange, value } }) => (
-            <AreaField
-              label="Описание"
-              placeholder="Введите описание описание..."
-              value={value}
-              onChange={onChange}
+            <Button
+              className={cn('Submit')}
+              styleType="filled"
+              buttonName="green"
+              type="submit"
+              icon="user"
             />
-          )}
-        />
-        <input type="submit" />
-      </form>
+          </FieldRow>
+        </form>
+      </FormProvider>
     </Modal>
   )
 }

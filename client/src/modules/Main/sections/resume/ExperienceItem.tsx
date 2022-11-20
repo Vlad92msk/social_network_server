@@ -9,7 +9,7 @@ import { Experience } from './mock'
 export interface ExperienceItemProps {
   experience: Experience
   setSelectExperience: (id: Experience) => void
-  activeId: number
+  activeId: string
 }
 
 export const ExperienceItem = (props: ExperienceItemProps) => {

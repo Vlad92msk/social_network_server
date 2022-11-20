@@ -1,7 +1,7 @@
 import { IconName } from '@public/models/icon.model'
 
 export interface Experience {
-  id: number
+  id: string
   dateStart: Date
   dateEnd?: Date
   responsibility: any[]
@@ -11,7 +11,7 @@ export interface Experience {
 }
 export const experienceSecondary: Experience[] = [
   {
-    id: 21,
+    id: '21',
     dateStart: new Date('2018-08-06'),
     dateEnd: null,
     responsibility: [
@@ -28,7 +28,7 @@ export const experienceSecondary: Experience[] = [
 ]
 export const experiencePrimary: Experience[] = [
   {
-    id: 1,
+    id: '1',
     dateStart: new Date('2019-08-06'),
     dateEnd: null,
     responsibility: [
@@ -43,7 +43,7 @@ export const experiencePrimary: Experience[] = [
     skills: ['react', 'redux'],
   },
   {
-    id: 2,
+    id: '2',
     dateStart: new Date('2018-08-06'),
     dateEnd: new Date('2019-09-06'),
     responsibility: [

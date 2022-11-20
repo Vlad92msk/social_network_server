@@ -21,6 +21,7 @@ export interface StateModule {
   }
 }
 
+export type ResumeModel = StateModule['resume']
 
 export const initialState: StateModule = {
   resume: {

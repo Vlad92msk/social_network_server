@@ -72,7 +72,7 @@ export const ExperienceAndSkills = (props: ExperienceAndSkillsProps) => {
                 <ExperienceItem
                   key={item.id}
                   experience={item}
-                  activeId={selectExperience?.id}
+                  activeId={String(selectExperience?.id)}
                   setSelectExperience={setSelectExperience}
                 />
               ))}
