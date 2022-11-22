@@ -7,11 +7,12 @@ import styles from './Text.module.scss'
 const cn = makeCn('Text', styles)
 
 export type TextSize = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
+export type TextColor = 'inherit' | 'body' | 'title' | 'note' | 'disabled' | 'red'
 
 export interface TextOwnProps {
   size?: TextSize
   weight?: 'regular' | 'medium' | 'bold'
-  color?: 'inherit' | 'body' | 'title' | 'note' | 'disabled'
+  color?: TextColor
   textTransform?: 'uppercase'
   className?: string
   children?: any

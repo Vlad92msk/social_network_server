@@ -14,11 +14,19 @@ export enum DateFormats {
   FORMAT_2='LLLL dd, yyyy',
   FORMAT_3='dd.MM.yyyy',
   FORMAT_4='yyyy',
+  /**
+   * январь 2022 г.
+   */
+  FORMAT_5 = 'LLLL yyyy г.',
+  /**
+   * ПН/ВТ/СР/ЧТ и т.д.
+   */
+  FORMAT_6 = 'EEEEEE',
 }
 
 
 export const createDateFormat = (
   date: Date,
-  desiredFormat: DateFormats,
+  desiredFormat: DateFormats | string,
   locale: Locale = RU_LOCALE,
 ) => format(date, desiredFormat, locale && ({ locale }))

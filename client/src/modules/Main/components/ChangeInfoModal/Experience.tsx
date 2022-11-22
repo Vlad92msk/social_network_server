@@ -1,16 +1,21 @@
-import { useCallback, useId } from 'react'
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
+import { useCallback } from 'react'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { ChangeResume } from '@modules/Main/components'
 import { ButtonBox } from '@shared/components/ButtonBox'
 import { FieldRow } from '@shared/components/FieldRow'
 import { FieldSet } from '@shared/components/FieldSet'
 import { Icon } from '@shared/components/Icon'
-import { Option, SelectField } from '@shared/components/SelectField'
 import { Text } from '@shared/components/Text'
-import { TextField } from '@shared/components/TextField'
-import { phoneMask } from '@shared/utils'
 import { Experience as ExperienceType } from '../../sections/resume/mock'
 import { cn } from './cn'
+import {
+  ControlCompanyName,
+  ControlDateEnd,
+  ControlDateStart,
+  ControlPosition,
+  ControlResponsibility,
+  ControlSkills,
+} from './controls'
 
 const initConvoyPerson: ExperienceType = {
   id: '3613',
@@ -37,40 +42,16 @@ export const Experience = () => {
   return (
     <FieldSet className={cn('Experience')} label="Опыт">
       <div className={cn('ExperienceContainer')}>
-        {fields.map((teacher, index) => (
-          <div className={cn('ExperienceContainerItem')} key={teacher.id}>
-            <Controller
-              name={`experienceSecondary.${index}.companyName`}
-              control={control}
-              rules={{
-                required: 'Укажите название компании',
-              }}
-              render={({ field }) => (
-                <TextField
-                  autoWidth
-                  label="Название компании"
-                  placeholder=""
-                  required
-                  {...field}
-                />
-              )}
-            />
-            <Controller
-              name={`experienceSecondary.${index}.position`}
-              control={control}
-              rules={{
-                required: 'Укажите должность',
-              }}
-              render={({ field }) => (
-                <TextField
-                  autoWidth
-                  label="Должность"
-                  placeholder=""
-                  required
-                  {...field}
-                />
-              )}
-            />
+        {fields.map((field, index) => (
+          <div className={cn('ExperienceContainerItem')} key={field.id}>
+            <ControlCompanyName control={control} index={index} />
+            <ControlPosition control={control} index={index} />
+            <FieldRow justify="between" width="100" gap="10px">
+              <ControlDateStart control={control} index={index} />
+              <ControlDateEnd control={control} index={index} />
+            </FieldRow>
+            <ControlSkills control={control} index={index} />
+            <ControlResponsibility control={control} index={index} />
           </div>
         ))}
       </div>
